@@ -1,0 +1,15 @@
+---
+layout: post
+title: download changes from git
+date: '2017-02-08T17:26:00.001-05:00'
+author: umhau
+tags:
+- Linux
+- git
+- github
+modified_time: '2017-02-08T17:26:30.233-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-7076814109059388208
+blogger_orig_url: http://nixingaround.blogspot.com/2017/02/download-changes-from-git.html
+---
+
+So this should work when I've got multiple copies of the repo on different computers. &nbsp;Run this (and the first two commands are optional) to refresh the local repo to the latest version.<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">git reset --hard HEAD<br />git clean -f</pre>Those two will remove any local changes. &nbsp;The last one actually gets the new version.<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">git pull</pre><br />

