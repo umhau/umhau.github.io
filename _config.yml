@@ -1,13 +1,14 @@
-name: White Paper
+name: '*nixing around'
 description: >
-    A simple jekyll theme aimed at programmers who like clean interface to write posts
-    and show off some code.
+    Cut-and-paste walkthroughs of complicated projects
 about: >
-    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+    This blog is the sort of thing I wish I'd been able to find when I first started messing with programs and linux - ok, it's what I still hope to find when I research things.  It's intended for people who are way out of their depth, but still want to forge ahead with their cool project.  This is a place where I'm recording how I did things, step by step, with no assumptions of prior knowledge except how to paste into a linux command line.
+
+So that mostly just describes myself.  I'll probably forget how I did this stuff, and I want to remember how.  Plus, it helps me stay on track when I'm writing it down as I go.  This is my research journal.
 
 
-url: "http://vinitkumar.me/white-paper"
-baseurl: "/white-paper" 
+url: "https://umhau.github.io"
+#baseurl: "/white-paper" 
 markdown: kramdown
 highlighter: rouge
 
@@ -19,12 +20,12 @@ logo:             logo.png
 disqus_shortname:
 
 owner:
-  name:           whitepaper
+  name:           um.hau
   avatar:         ""
-  email:          ""
+  email:          "um.hau@outlook.com"
   # Social networking links used in footer. Update and remove as you like.
   twitter:
-  github:
+  github: umhau
   stackexchange:
   # For Google Authorship https://plus.google.com/authorship
   google_plus:
