@@ -1,0 +1,17 @@
+---
+layout: post
+title: Ubuntu Server 16.04 not detecting wifi card
+date: '2017-01-26T13:56:00.002-05:00'
+author: umhau
+tags:
+- Linux
+- ifconfig
+- hardware
+- Ubuntu Server 16.04.1 LTS
+- wifi
+modified_time: '2017-01-26T21:51:23.841-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-7984157029216623592
+blogger_orig_url: http://nixingaround.blogspot.com/2017/01/ubuntu-server-1604-not-detecting-wifi.html
+---
+
+This turns out to be a relatively simple issue. <br /><br />This command is my go-to for internet connection diagnostics, but it wasn't showing my wifi card. <br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">ifconfig</span></span></pre>This shows all interfaces, not just the activated ones. <br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">ifconfig -a</span></span></pre>to activate a hardware device after determining its name, run:<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">ifconfig "device name" up</span></span></pre>Bonus: this gives you way more than you'll ever need to know about the hardware capabilities of the device.<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">iw list</span></span></pre><div><span style="color: #333333;"><span style="font-size: 14px;"><br /></span></span></div>

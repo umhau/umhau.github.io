@@ -1,0 +1,15 @@
+---
+layout: post
+title: Show CPU info via command line
+date: '2017-01-27T15:40:00.005-05:00'
+author: umhau
+tags:
+- Linux
+- CPU
+- CLI
+modified_time: '2017-02-01T13:19:21.214-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-2834014717471078187
+blogger_orig_url: http://nixingaround.blogspot.com/2017/01/show-cpu-specs-via-command-line.html
+---
+
+This gives a ton of information - way more that I generally ever need.<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">less /proc/cpuinfo</span></span></pre>This is the tidy version.<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">lscpu</span></span></pre>This is the min and max clock speed of the CPU:<br /><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_max_freq</span></span></pre><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_min_freq </span></span></pre></div>This is a cool command to keep track of the current CPU clock speed.<br /><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">sudo watch -n 1  cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq</span></span></pre></div><br /><br />

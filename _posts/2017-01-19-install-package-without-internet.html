@@ -1,0 +1,21 @@
+---
+layout: post
+title: Install a package without internet
+date: '2017-01-19T16:32:00.003-05:00'
+author: umhau
+tags:
+- Linux
+- ethernet
+- ubuntu
+- Linux Mint 18
+- imitation is the highest form of flattery
+- Ubuntu Server 16.04.1 LTS
+- clever
+- no connection
+- shameless ripoff
+modified_time: '2017-01-19T17:00:39.297-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-567216765999007102
+blogger_orig_url: http://nixingaround.blogspot.com/2017/01/install-package-without-internet.html
+---
+
+So first of all, this isn't original. &nbsp;Credit goes <a href="http://askubuntu.com/questions/362009/how-i-can-install-build-essential-in-a-pc-without-internet-connection" target="_blank">here</a>. &nbsp;But it's fantastic, and I wish I'd known about this a long time ago. &nbsp;As usual, for my own memory/use: and actually, I'm just going to clean up what the other guy said. &nbsp;He did a great job. <br /><h4>On the Internet-less computer:</h4>In the terminal enter:<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">PACKAGENAME=&lt;The name of the Package to install&gt;</pre>and then<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">apt-get -qqs install $PACKAGENAME | grep Inst | awk '{print $2}' | xargs apt-cache show | grep 'Filename: ' | awk '{print $2}' | while read filepath; do echo "wget \"http://archive.ubuntu.com/ubuntu/${filepath}\""; done &gt;downloader.sh</pre>A ready-to-use downloader for the package has now been created in the home folder. &nbsp;Open your home directory in the file browser and move the file downloader.sh to the top-level directory of your flash drive. &nbsp;Then eject your flash drive.<br /><h4>On the computer with Internet:</h4>Insert your flash drive, and open your flash drive in the file browser. &nbsp;Copy the location of your flash drive:<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">[CTRL]-L</pre><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">[CTRL] C </pre>Move into the directory of the flash drive. &nbsp;In a terminal this time, type:<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">cd [CTRL]+[SHIFT]+V </pre>Run the downloader:<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">bash ./downloader.sh</pre>Wait for the download to complete and eject your flash drive.<br /><h4>Back to the Internet-less computer:</h4>Open your flash drive in the file browser. &nbsp;In the browser, type the following to copy the file location of the flash drive. <br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">[CTRL]-L</pre><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">[CTRL]-C</pre>Move into the directory of the flash drive. &nbsp;In a terminal this time, type:<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">cd [CTRL]+[SHIFT]+V <br />sudo dpkg --install *.deb</span></span></pre>That's it!<br /><br />
