@@ -11,6 +11,7 @@ url: "https://umhau.github.io"
 #baseurl: "/white-paper" 
 markdown: kramdown
 highlighter: rouge
+future: true
 
 gems: [jekyll-paginate,  jekyll-gist]
 
