@@ -45,3 +45,10 @@ Set a good fixed-width font so the symbols show up correctly.  Go here: https://
     fonts -> monospace -> APL385 Unicode Regular -> Select
 
 And you're done.
+
+Sources
+-------
+
+- https://stackoverflow.com/questions/27951582/apl-keymapping-on-linux-gnu-apl
+- https://unix.stackexchange.com/a/45499
+- https://unix.stackexchange.com/a/317057
