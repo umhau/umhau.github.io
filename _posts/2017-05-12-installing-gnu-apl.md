@@ -37,6 +37,8 @@ Enable the new keyboard layout:
 
     setxkbmap us,apl -option "grp:switch"
 
+Now the APL keyboard characters can be accessed while pressing down the Right Alt key.
+
 APL385 Unicode
 --------------
 
