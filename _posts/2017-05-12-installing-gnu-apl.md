@@ -13,8 +13,8 @@ tags:
 
 Three parts: the program itself, the keyboard layout and the font.  This is on Ubuntu GNOME 17.04.
 
-Install GNU APL
----------------
+GNU APL
+-------
 
     cd ~/Downloads
     wget ftp://ftp.gnu.org/gnu/apl/apl-1.7.tar.gz
@@ -33,11 +33,17 @@ Prevent Gnome Shell from reverting changes:
 
     gsettings set org.gnome.desktop.input-sources sources '[]'
 
-Enable the new keyboard layout:
+Clear any prior settings:
+
+    setxkbmap -option ""
+
+And enable the new keyboard layout:
 
     setxkbmap us,apl -option "grp:switch"
 
-Now the APL keyboard characters can be accessed while pressing down the Right Alt key.
+Now the APL keyboard characters can be accessed while pressing down the Right Alt key.  You can view the APL keyboard layout (if you're using Ubuntu GNOME 17.04) with this command:
+
+    gkbd-keyboard-display -l apl
 
 APL385 Unicode
 --------------
