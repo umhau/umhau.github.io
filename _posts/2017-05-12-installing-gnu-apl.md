@@ -45,7 +45,7 @@ Now the APL keyboard characters can be accessed while pressing down the Right Al
 
     gkbd-keyboard-display -l apl
 
-I wrapped all of this into a couple of scripts. One of them runs at startup (since setxkbmap isn't persistent across reboots), and the other displays the keyboard layout and is tied to a custom shortcut. The scripts are [here](https://github.com/umhau/scripts/blob/master/installation/keyboard_layout.sh) and [here] (https://github.com/umhau/scripts/blob/master/apl_keyboard_hint.sh).  Those link to the github where I stash most of my scripts.  If you look inside the initial_config.sh script, you'll see I've found a command to automatically set the script to run at startup.  For the other, I'd suggest the keyboard shotcut combination [win + .]. 
+I wrapped all of this into a couple of scripts. One of them runs at startup (since setxkbmap isn't persistent across reboots), and the other displays the keyboard layout and is tied to a custom shortcut. The scripts are [here](https://github.com/umhau/scripts/blob/master/installation/keyboard_layout.sh) and [here](https://github.com/umhau/scripts/blob/master/apl_keyboard_hint.sh).  Those link to the github where I stash most of my scripts.  If you look inside the initial_config.sh script, you'll see I've found a command to automatically set the script to run at startup.  For the other, I'd suggest the keyboard shotcut combination [win + .]. 
 
 APL385 Unicode
 --------------
