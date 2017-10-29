@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    minima (2.1.1)
+    jekyll-theme-minimal (0.1.0)
       jekyll (~> 3.5)
-      jekyll-seo-tag (~> 2.1)
+      jekyll-seo-tag (~> 2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -54,8 +54,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.12)
-  minima!
+  jekyll-theme-minimal!
 
 BUNDLED WITH
    1.16.0.pre.3
