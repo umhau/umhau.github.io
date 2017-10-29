@@ -1,0 +1,15 @@
+---
+layout: post
+title: tmux cheat sheet
+date: '2017-02-18T15:32:00.002-05:00'
+author: umhau
+tags:
+- cheat sheet
+- Linux
+- tmux
+modified_time: '2017-02-18T15:33:35.819-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-7809259327826710385
+blogger_orig_url: http://nixingaround.blogspot.com/2017/02/tmux-cheat-sheet.html
+---
+
+A few commands that are useful to know. <a href="https://robots.thoughtbot.com/a-tmux-crash-course" target="_blank">src</a>.<br /><h4>managing sessions</h4><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">tmux new -s foobar          | creates a new tmux session with given name foobar<br />tmux attach -t foobar       | attaches to an existing tmux session named foobar<br />tmux list-sessions          | list all available tmux sessions<br />tmux switch -t foobar       | switches to a session named foobar<br />tmux detach (ctrl + b, + d) | detach from the current session</span></span></pre></div><h4>managing windows</h4><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;"><span style="color: #333333;"><span style="font-size: 14px;">tmux new-window (ctrl + b, + c)     | create a new tmux window<br />tmux select-window -t :0-9 (ctrl + b, + 0-9) | choose an existing tmux window<br />tmux rename-window (ctrl + b, + ,)  | rename an existing tmux window</span></span></pre></div><div><br /></div>

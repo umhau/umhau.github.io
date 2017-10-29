@@ -1,0 +1,15 @@
+---
+layout: post
+title: My External Display Won't Play Ball
+date: '2016-07-26T17:21:00.001-04:00'
+author: umhau
+tags:
+- Linux
+- Ubuntu 16.04
+- display resolution
+modified_time: '2016-11-23T14:45:47.857-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-8839347444849617698
+blogger_orig_url: http://nixingaround.blogspot.com/2016/07/my-external-display-wont-play-ball.html
+---
+
+<div dir="ltr" style="text-align: left;" trbidi="on">Notes for next time I have to set up my external monitor. &nbsp;This is for Ubuntu 16.04 LTS.<br /><div><br /></div><div>I have an Acer VGA monitor, resolution 1600 x 900. &nbsp;The last time I reinstalled Mint, the resolution wasn't detected. &nbsp;Mint 17 couldn't do it, Ubuntu 16.04 couldn't do it; Windows 8.1 worked almost flawlessly (almost, because some of my attempts to fix the problem messed up the display on the windows side). &nbsp;</div><div><br /></div><div>This was fixed a while ago, but I'm making a record of the solution. &nbsp;I created a small file called set-screen.sh, put it in my home directory, and added it to my startup programs. &nbsp;It would automatically reset the resolution of my external monitor. &nbsp;Hackish, but it worked. &nbsp;</div><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">#!/bin/sh<br />sleep 7<br /><br />xrandr --newmode "1600x900_60.00"  118.25  1600 1696 1856 2112  900 903 908 934 -hsync +vsync<br />xrandr --addmode VGA1 1600x900_60.00<br />xrandr --output VGA1 --mode 1600x900_60.00</pre></div><div>The sleep 7 command ensured that my computer had a chance to turn on completely and actually detect the external monitor before running the command to modify the display. &nbsp;I have a pretty fast computer; the recommended sleep time was actually 15 seconds. &nbsp;</div></div>

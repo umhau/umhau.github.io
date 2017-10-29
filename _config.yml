@@ -1,5 +1,25 @@
-title: Minimal theme
-description: Minimal is a theme for GitHub Pages.
-show_downloads: true
-google_analytics:
-theme: jekyll-theme-minimal
+title: '*nixing around'
+author: umhau
+email: um.hau@outlook.com
+description: > # this means to ignore newlines until "baseurl:"
+  This is the site for my personal blog.  Formerly located at nixingaround.blogspot.com, now available at umhau.github.io.  I just use this for personal stuff.  Should probably mention that I forked this theme - see the repo history for the source. 
+
+twitter_username: jekyllrb
+github_username:  umhau
+
+# Minima date format
+# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
+minima:
+  date_format: "%b %-d, %Y"
+
+# If you want to link only specific pages in your header, uncomment
+# this and add the path to the pages in order as they should show up
+#header_pages:
+# - about.html
+
+# Build settings
+markdown: kramdown
+theme: minima
+exclude:
+  - Gemfile
+  - Gemfile.lock
