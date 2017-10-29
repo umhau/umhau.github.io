@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
 title: ['*nixing around']
 description: [a programming log]
-show_downloads: ["False"]
+show_downloads: [False]
