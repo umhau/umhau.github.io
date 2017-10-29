@@ -1,4 +1,4 @@
 theme: jekyll-theme-minimal
-title: [\*nixing around]
-description: [programming / everything websitee]
-show_downloads: ["true"]
+title: ['*nixing around']
+description: [a programming log]
+show_downloads: ["False"]
