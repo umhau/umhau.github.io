@@ -1,0 +1,14 @@
+---
+layout: post
+title: Accelerate an OpenBSD NFS server
+date: '2017-02-02T11:30:00.003-05:00'
+author: umhau
+tags:
+- NFS
+- OpenBSD
+modified_time: '2017-02-02T11:31:20.550-05:00'
+blogger_id: tag:blogger.com,1999:blog-2584289275272726799.post-21442072707983866
+blogger_orig_url: http://nixingaround.blogspot.com/2017/02/accelerate-openbsd-nfs-server.html
+---
+
+The nfs server on openbsd has been super slow. &nbsp;I thought it was the result of wifi&nbsp;+ an old computer until I tried an scp download. &nbsp;the difference was several orders of magnitude. &nbsp;Anyway, <a href="http://openbsd-archive.7691.n7.nabble.com/NFS-daemon-is-very-slow-in-server-to-client-direction-in-TCP-mode-td293939.html" target="_blank">the solution</a> was to cut down the size of the data packets used by the protocol. <br /><br />Here's my /etc/fstab - the change is in bold. &nbsp;Apparently there's a sweet spot of not-too-small and not-too-big. &nbsp;These sizes are measured in <i>bytes</i>, by the way. &nbsp;That's a packet size of 4 kb that I'm specifying.<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">one:/home/admin/storage     /storage  nfs  <b>rsize=4096,wsize=4096</b>  0 0</pre><br />
