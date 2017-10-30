@@ -26,21 +26,6 @@
           <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
         {% endif %}
 
-          <!-- HTML elements for search -->
-          <ul
-          <div id="search-container">
-            <input type="text" id="search-input" placeholder="search...">
-            <div id="results-container" /div>
-          </div>
-          </ul>
-
-          this is text
-
-          <div id="search-demo-container">
-            <input type="text" id="search-input" placeholder="search...">
-            <ul id="results-container"></ul>
-          </div>
-
         {% if site.show_downloads %}
           <ul>
             <li><a href="{{ site.github.zip_url }}">Download <strong>ZIP File</strong></a></li>
@@ -52,21 +37,6 @@
       <section>
 
       {{ content }}
-
-        <!-- script pointing to jekyll-search.js -->
-        <script src="{{ site.baseurl }}/js/simple-jekyll-search.min.js"></script>
-
-        <script type="text/javascript">
-          window.simpleJekyllSearch = new SimpleJekyllSearch({
-            searchInput: document.getElementById('search-input'),
-            resultsContainer: document.getElementById('results-container'),
-            json: '{{ site.baseurl }}/search.json',
-            searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
-            noResultsText: 'No results found',
-            limit: 10,
-            fuzzy: true,
-          })
-        </script>
 
       </section>
       <footer>
