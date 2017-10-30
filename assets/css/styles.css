@@ -114,7 +114,7 @@ header {
 /* WIDTH OF GREY BOX (UL) IN SIDE BAR */
 header ul {
   list-style:none;
-  height:200px;
+  height:230px;
   padding:0;
   background: #f4f4f4;
   border-radius:5px;
@@ -122,11 +122,26 @@ header ul {
   width:270px;
 }
 
+/* CONTROL TOP TWO SEARCH RESULT ENTRIES */
 header li {
-  width:89px;
+  width:100%;
   float:left;
   border-right:1px solid #e0e0e0;
-  height:40px;
+  height:20px;
+}
+
+/* SEARCH BAR STYLING */
+#search-input {
+  padding:3px;
+  width:264px;
+  background: #f4f4f4;
+  border-radius:5px;
+  border:1px solid #e0e0e0;
+  margin:0 0 20px;
+  font-size:11px;
+  color:#525151; /* originally 999 */
+  text-align:center;
+
 }
 
 header li:first-child a {
