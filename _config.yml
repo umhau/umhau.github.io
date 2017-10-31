@@ -1,5 +1,5 @@
 title: nixing around
 description: Cut-and-paste walkthroughs of complicated projects on UNIX & Linux.
-show_downloads: true
 google_analytics:
 theme: jekyll-theme-minimal
+permalink: pretty
