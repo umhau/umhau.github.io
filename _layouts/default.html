@@ -15,13 +15,13 @@
     <div class="wrapper">
       <header>
         <a href="{{ site.url }}"> <h1>*nixing around</h1> </a>
-        <p>Cut-and-paste walkthroughs of complicated projects on UNIX & Linux.</p>
+        <p>Cut-and-paste walkthroughs of complicated projects.</p>
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
 
-        <div id="search-container">
-          <input type="text" id="search-input" placeholder="search..." onkeydown="onkeypressed(event, this);" autofocus>
+        <ul id="search-container">
+          <input type="text" id="search-input" placeholder="linux | cluster | STT | bash | python " onkeydown="onkeypressed(event, this);" autofocus>
           <ul id="results-container"></ul>
-        </div>
+        </ul>
 
       </header>
       <section>
