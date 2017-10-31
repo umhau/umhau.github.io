@@ -54,8 +54,9 @@ a:hover small {
   color:#777;
 }
 
+/* WIDTH OF WHOLE SITE - but parts have giant space between */
 .wrapper {
-  width:860px;
+  width:90%;
   margin:0 auto;
 }
 
@@ -104,36 +105,62 @@ img {
   max-width:100%;
 }
 
+/* NEED TO DIFFERENTIATE BETWEEN DEFAULT AND POST HEADERS */
 header {
-  width:270px;
+  width:250px;
   float:left;
   position:fixed;
+  text-align:center;
   -webkit-font-smoothing:subpixel-antialiased;
 }
 
-/* WIDTH OF GREY BOX (UL) IN SIDE BAR */
+.post-header {
+
+  width:100%;
+  float:center;
+  position:static;
+  text-align:center;
+
+}
+
+/* GREY BOX (UL) IN SIDE BAR */
 header ul {
   list-style:none;
-  height:230px;
+  height:auto;
   padding:0;
-  background: #f4f4f4;
+  background: rgba(244, 244, 244, 0);
   border-radius:5px;
-  border:1px solid #e0e0e0;
-  width:270px;
+  width:100%;
 }
 
 /* CONTROL TOP TWO SEARCH RESULT ENTRIES */
 header li {
   width:100%;
   float:left;
-  border-right:1px solid #e0e0e0;
   height:20px;
+}
+
+#results-container {
+
+  list-style:none;
+  height:20px;
+  padding:2px;
+  line-height:1;
+  font-size:11px;
+  color:#525151; /* originally 999 */
+  display:block;
+  text-align:left;
+  padding-top:6px;
+  height:34px;
+  width:100%;
 }
 
 /* SEARCH BAR STYLING */
 #search-input {
-  padding:3px;
-  width:264px;
+  padding-right:0px;
+  padding-top:3px;
+  padding-bottom: 3px;  
+  width:100%;
   background: #f4f4f4;
   border-radius:5px;
   border:1px solid #e0e0e0;
@@ -158,7 +185,7 @@ header ul a {
   font-size:11px;
   color:#525151; /* originally 999 */
   display:block;
-  text-align:center;
+  text-align:left;
   padding-top:6px;
   height:34px;
 } 
@@ -189,8 +216,12 @@ header ul a strong {
   color:#222;
 }
 
-section {
-  width:500px;
+/* WIDTH OF PAGE BY ITSELF */
+section { 
+  width: -moz-calc(90% - 250px); /* Firefox */
+  width: -webkit-calc(90% - 250px); /* WebKit */
+  width: -o-calc(90% - 250px); /* Opera */
+  width: calc(90% - 250px); /* Standard */
   float:right;
   padding-bottom:50px;
 }
