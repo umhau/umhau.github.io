@@ -14,12 +14,12 @@
     <div class="wrapper">
       <header>
         <a href="{{ site.url }}"> <h1>*nixing around</h1> </a>
-        <p>Cut-and-paste walkthroughs of complicated projects on UNIX /& Linux.</p>
+        <p>Cut-and-paste walkthroughs of complicated projects on UNIX & Linux.</p>
 
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
 
         <div id="search-container">
-          <input type="text" id="search-input" placeholder="search..." onkeydown="onkeypressed(event, this);">
+          <input type="text" id="search-input" placeholder="search..." onkeydown="onkeypressed(event, this);" autofocus>
           <ul id="results-container"></ul>
         </div>
 
@@ -28,8 +28,6 @@
       <section>
 
       {{ content }}
-
-      does this show up?
 
         <!-- script pointing to jekyll-search.js -->
         <script src="{{ site.baseurl }}/js/simple-jekyll-search.min.js"></script>
@@ -45,8 +43,6 @@
             fuzzy: true,
           })
         </script>
-
-
 
 
       </section>
