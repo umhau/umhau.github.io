@@ -136,24 +136,42 @@ header ul {
 /* CONTROL TOP TWO SEARCH RESULT ENTRIES */
 header li {
   width:100%;
-  float:left;
-  height:20px;
+  float:center;
+  height: 27px;
 }
 
 #results-container {
 
   list-style:none;
   height:20px;
-  padding:2px;
   line-height:1;
   font-size:11px;
   color:#525151; /* originally 999 */
   display:block;
-  text-align:left;
+  text-align:center;
   padding-top:6px;
   height:34px;
   width:100%;
 }
+
+/* The following makes the search bar text bold and italicized */
+::-webkit-input-placeholder {
+  font-style: italic;
+  font-weight: bold;
+}
+:-moz-placeholder {
+  font-style: italic;  
+  font-weight: bold;
+}
+::-moz-placeholder {
+  font-style: italic; 
+  font-weight: bold; 
+}
+:-ms-input-placeholder {  
+  font-style: italic; 
+  font-weight: bold;
+}
+
 
 /* SEARCH BAR STYLING */
 #search-input {
@@ -185,7 +203,7 @@ header ul a {
   font-size:11px;
   color:#525151; /* originally 999 */
   display:block;
-  text-align:left;
+  text-align:center;
   padding-top:6px;
   height:34px;
 } 
