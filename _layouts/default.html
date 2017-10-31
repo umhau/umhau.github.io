@@ -32,11 +32,11 @@
         <script src="{{ site.baseurl }}/js/simple-jekyll-search.min.js"></script>
 
         <script type="text/javascript">
-          window.simpleJekyllSearch = new SimpleJekyllSearch({
+          SimpleJekyllSearch.init({
             searchInput: document.getElementById('search-input'),
             resultsContainer: document.getElementById('results-container'),
-            json: '{{ site.baseurl }}/search.json',
-            searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+            dataSource: '{{ site.baseurl }}/search.json',
+            searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}<\/a><\/li>',
             noResultsText: 'No results found',
             limit: 10,
             fuzzy: true,
