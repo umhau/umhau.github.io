@@ -19,7 +19,7 @@
         <p class="view"><a href="{{ site.github.owner_url }}">View My GitHub Profile</a></p>
 
         <div id="search-container">
-          <input type="text" id="search-input" placeholder="search...">
+          <input type="text" id="search-input" placeholder="search..." onkeydown="onkeypressed(event, this);">
           <ul id="results-container"></ul>
         </div>
 
@@ -28,6 +28,8 @@
       <section>
 
       {{ content }}
+
+      does this show up?
 
         <!-- script pointing to jekyll-search.js -->
         <script src="{{ site.baseurl }}/js/simple-jekyll-search.min.js"></script>
@@ -43,6 +45,8 @@
             fuzzy: true,
           })
         </script>
+
+
 
 
       </section>
