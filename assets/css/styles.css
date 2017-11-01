@@ -190,6 +190,12 @@ header li {
 
 }
 
+/* add vertical white space */
+
+.extra-space {
+  margin-bottom: 1cm;
+}
+
 header li:first-child a {
   border-radius:5px 0 0 5px;
 }
