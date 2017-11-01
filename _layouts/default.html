@@ -14,14 +14,14 @@
 
   </head>
   <body>
-    <div class="wrapper">
+    <box class="wrapper">
       <header>
         <a href="{{ site.url }}"> <h1>*nixing around</h1> </a>
         <p>Cut-and-paste walkthroughs of complicated projects.</p>
-        <p class="view"><a href="{{ site.github.owner_url }}">github</a> | <a href="{{ site.url }}/about">about</a> | <a href="{{ site.url }}/notes">notes</a></p>
+        <p class="view"><a href="{{ site.github.owner_url }}">github</a> | <a href="{{ site.url }}/about">about</a> | <a href="{{ site.url }}/explore">explore</a></p>
 
         <ul id="search-container">
-          <input type="text" id="search-input" placeholder="linux | cluster | STT | bash | python " onkeydown="onkeypressed(event, this);" autofocus>
+          <input type="text" id="search-input" placeholder="search examples:  server | cluster | linux" onkeydown="onkeypressed(event, this);" autofocus>
           <ul id="results-container"></ul>
         </ul>
 
@@ -41,16 +41,16 @@
             searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}<\/a><\/li>',
             noResultsText: 'No results found',
             limit: 10,
-            fuzzy: true,
+            fuzzy: false,
           })
         </script>
 
 
       </section>
       <footer>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+        <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a> and <a href="https://github.com/umhau">umhau</a></small></p>
       </footer>
-    </div>
+    </box>
     <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
 
 
