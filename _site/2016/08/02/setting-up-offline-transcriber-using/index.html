@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+
+<!-- Begin Jekyll SEO tag v2.3.0 -->
+<title>Setting Up an Offline Transcriber Using Kaldi - Part 3: Sphinx, not Kaldi | nixing around</title>
+<meta property="og:title" content="Setting Up an Offline Transcriber Using Kaldi - Part 3: Sphinx, not Kaldi" />
+<meta name="author" content="umhau" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="How to install PocketSphinx 5Prealpha on Mint 17.3. We&#39;re going to install work with these packages in a folder located at ~/tools. &nbsp;Make sure this exists.mkdir ~/toolsDownload pocketsphinx and sphinxbase from the downloads page:Look for the package called sphinxbase-5prealpha.tar.gz. &nbsp;https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/Look for the package called&nbsp;pocketsphinx-5prealpha.tar.gz. &nbsp;https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/Move the files from your downloads to your project folder and extract them. tar -xzf ~/Downloads/sphinxbase-5prealpha.tar.gz -C ~/tools/tar -xzf ~/Downloads/pocketsphinx-5prealpha.tar.gz -C ~/tools/Make sure dependencies are installed. &nbsp;You&#39;re installing&nbsp;libpulse-dev so that sphinxbase will configure itself to work with PulseAudio, the recommended audio framework on Ubuntu (and, by extension, on Mint).sudo apt-get install python-dev pulseaudio libpulse-dev gcc automake autoconf libtool bison swigNote: make sure that swig is at least version 2.0. &nbsp;You can check with this command:dpkg -p swig | grep VersionMove into the sphinxbase folder.cd ~/tools/sphinxbase-5prealphaSince you downloaded the release version, the configure file has already been generated. &nbsp;It&#39;s time to configure, make and make install!./configuremakesudo make installSphinxbase is installed in /usr/local/lib; in case Mint 17 doesn&#39;t look there for program libraries, you have to manually tell it to use that location. &nbsp;Here&#39;s the commands:export LD_LIBRARY_PATH=/usr/local/libexport PKG_CONFIG_PATH=/usr/local/lib/pkgconfigNow move into the pocketsphinx folder and do the same installation:cd ~/tools/pocketsphinx-5prealpha./configuremakesudo make installyou can test the installation by running the following; it should be recognizing what you speak into the microphone. pocketsphinx_continuous -inmic yesIf you want to transcribe a file, use this command:pocketsphinx_continuous -infile file.wavIf you run into trouble, this should help." />
+<meta property="og:description" content="How to install PocketSphinx 5Prealpha on Mint 17.3. We&#39;re going to install work with these packages in a folder located at ~/tools. &nbsp;Make sure this exists.mkdir ~/toolsDownload pocketsphinx and sphinxbase from the downloads page:Look for the package called sphinxbase-5prealpha.tar.gz. &nbsp;https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/Look for the package called&nbsp;pocketsphinx-5prealpha.tar.gz. &nbsp;https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/Move the files from your downloads to your project folder and extract them. tar -xzf ~/Downloads/sphinxbase-5prealpha.tar.gz -C ~/tools/tar -xzf ~/Downloads/pocketsphinx-5prealpha.tar.gz -C ~/tools/Make sure dependencies are installed. &nbsp;You&#39;re installing&nbsp;libpulse-dev so that sphinxbase will configure itself to work with PulseAudio, the recommended audio framework on Ubuntu (and, by extension, on Mint).sudo apt-get install python-dev pulseaudio libpulse-dev gcc automake autoconf libtool bison swigNote: make sure that swig is at least version 2.0. &nbsp;You can check with this command:dpkg -p swig | grep VersionMove into the sphinxbase folder.cd ~/tools/sphinxbase-5prealphaSince you downloaded the release version, the configure file has already been generated. &nbsp;It&#39;s time to configure, make and make install!./configuremakesudo make installSphinxbase is installed in /usr/local/lib; in case Mint 17 doesn&#39;t look there for program libraries, you have to manually tell it to use that location. &nbsp;Here&#39;s the commands:export LD_LIBRARY_PATH=/usr/local/libexport PKG_CONFIG_PATH=/usr/local/lib/pkgconfigNow move into the pocketsphinx folder and do the same installation:cd ~/tools/pocketsphinx-5prealpha./configuremakesudo make installyou can test the installation by running the following; it should be recognizing what you speak into the microphone. pocketsphinx_continuous -inmic yesIf you want to transcribe a file, use this command:pocketsphinx_continuous -infile file.wavIf you run into trouble, this should help." />
+<link rel="canonical" href="http://localhost:4000/2016/08/02/setting-up-offline-transcriber-using/" />
+<meta property="og:url" content="http://localhost:4000/2016/08/02/setting-up-offline-transcriber-using/" />
+<meta property="og:site_name" content="nixing around" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-08-02T18:36:00-04:00" />
+<script type="application/ld+json">
+{"name":null,"description":"How to install PocketSphinx 5Prealpha on Mint 17.3. We&#39;re going to install work with these packages in a folder located at ~/tools. &nbsp;Make sure this exists.mkdir ~/toolsDownload pocketsphinx and sphinxbase from the downloads page:Look for the package called sphinxbase-5prealpha.tar.gz. &nbsp;https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/Look for the package called&nbsp;pocketsphinx-5prealpha.tar.gz. &nbsp;https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/Move the files from your downloads to your project folder and extract them. tar -xzf ~/Downloads/sphinxbase-5prealpha.tar.gz -C ~/tools/tar -xzf ~/Downloads/pocketsphinx-5prealpha.tar.gz -C ~/tools/Make sure dependencies are installed. &nbsp;You&#39;re installing&nbsp;libpulse-dev so that sphinxbase will configure itself to work with PulseAudio, the recommended audio framework on Ubuntu (and, by extension, on Mint).sudo apt-get install python-dev pulseaudio libpulse-dev gcc automake autoconf libtool bison swigNote: make sure that swig is at least version 2.0. &nbsp;You can check with this command:dpkg -p swig | grep VersionMove into the sphinxbase folder.cd ~/tools/sphinxbase-5prealphaSince you downloaded the release version, the configure file has already been generated. &nbsp;It&#39;s time to configure, make and make install!./configuremakesudo make installSphinxbase is installed in /usr/local/lib; in case Mint 17 doesn&#39;t look there for program libraries, you have to manually tell it to use that location. &nbsp;Here&#39;s the commands:export LD_LIBRARY_PATH=/usr/local/libexport PKG_CONFIG_PATH=/usr/local/lib/pkgconfigNow move into the pocketsphinx folder and do the same installation:cd ~/tools/pocketsphinx-5prealpha./configuremakesudo make installyou can test the installation by running the following; it should be recognizing what you speak into the microphone. pocketsphinx_continuous -inmic yesIf you want to transcribe a file, use this command:pocketsphinx_continuous -infile file.wavIf you run into trouble, this should help.","author":{"@type":"Person","name":"umhau"},"@type":"BlogPosting","url":"http://localhost:4000/2016/08/02/setting-up-offline-transcriber-using/","publisher":null,"image":null,"headline":"Setting Up an Offline Transcriber Using Kaldi - Part 3: Sphinx, not Kaldi","dateModified":"2016-08-02T18:36:00-04:00","datePublished":"2016-08-02T18:36:00-04:00","sameAs":null,"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2016/08/02/setting-up-offline-transcriber-using/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/infinite-jekyll.js"></script>
+
+  </head>
+  <body>
+    <box class="wrapper">
+      <header>
+        <a href="http://localhost:4000"> <h1>*nixing around</h1> </a>
+        <p>A programmer's journal of complicated projects.</p>
+        <p class="view"><a href="">github</a> | <a href="http://localhost:4000/about">about</a> | <a href="http://localhost:4000/explore">explore</a></p>
+
+        <p>testing</p>
+
+      </header>
+      <section>
+
+      <div class="post">
+
+    <header class="post-header">
+        
+    <h1 class="post-title">Setting Up an Offline Transcriber Using Kaldi - Part 3: Sphinx, not Kaldi</h1>
+    <p 
+        class="post-meta">Aug 2, 2016 • <a  href="/2016/08/02/setting-up-offline-transcriber-using/">permalink</a>
+        <i>  • Linux • speech to text • success • Mint 17.3 • pulseaudio • STT • package installation • audio transcription • PocketSphinx 5prealpha</i> 
+    </p>
+    </header>
+
+    <article class="post-content">
+    <div dir="ltr" style="text-align: left;" trbidi="on">How to install PocketSphinx 5Prealpha on Mint 17.3. <br /><br />We're going to install work with these packages in a folder located at ~/tools. &nbsp;Make sure this exists.<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">mkdir ~/tools</pre>Download pocketsphinx and sphinxbase from the downloads page:<br /><ul style="text-align: left;"><li>Look for the package called<b> sphinxbase-5prealpha.tar.gz</b>. &nbsp;<a href="https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/">https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/</a></li><li>Look for the package called&nbsp;<b>pocketsphinx-5prealpha.tar.gz</b>. &nbsp;<a href="https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/">https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/</a></li></ul><div>Move the files from your downloads to your project folder and extract them. <br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">tar -xzf ~/Downloads/sphinxbase-5prealpha.tar.gz -C ~/tools/<br />tar -xzf ~/Downloads/pocketsphinx-5prealpha.tar.gz -C ~/tools/</pre></div><div>Make sure dependencies are installed. &nbsp;You're installing&nbsp;libpulse-dev so that sphinxbase will configure itself to work with PulseAudio, the recommended audio framework on Ubuntu (and, by extension, on Mint).</div><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">sudo apt-get install python-dev pulseaudio libpulse-dev gcc automake autoconf libtool bison swig</pre></div><div>Note: make sure that swig is at least version 2.0. &nbsp;You can check with this command:</div><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">dpkg -p swig | grep Version</pre></div><div>Move into the sphinxbase folder.</div><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">cd ~/tools/sphinxbase-5prealpha</pre></div><div>Since you downloaded the release version, the configure file has already been generated. &nbsp;It's time to configure, make and make install!</div><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">./configure<br />make<br />sudo make install</pre></div><div>Sphinxbase is installed in /usr/local/lib; in case Mint 17 doesn't look there for program libraries, you have to manually tell it to use that location. &nbsp;Here's the commands:</div><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">export LD_LIBRARY_PATH=/usr/local/lib<br />export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig</pre></div><div>Now move into the pocketsphinx folder and do the same installation:</div><div><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">cd ~/tools/pocketsphinx-5prealpha<br />./configure<br />make<br />sudo make install</pre></div><div>you can test the installation by running the following; it should be recognizing what you speak into the microphone. <br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">pocketsphinx_continuous -inmic yes</pre></div><div>If you want to transcribe a file, use this command:<br /><pre style="background-color: #eff0f1; border: 0px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;">pocketsphinx_continuous -infile file.wav</pre>If you run into trouble, <a href="http://cmusphinx.sourceforge.net/wiki/tutorialpocketsphinx" target="_blank">this</a> should help.</div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div><div><br /></div></div>
+    </article>
+
+    <p class="extra-space"></p>
+    <hr>
+    <p class="extra-space"></p>
+
+</div>
+
+
+
+
+
+      </section>
+      <footer>
+        <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a> and <a href="https://github.com/umhau">umhau</a></small></p>
+      </footer>
+    </box>
+    <script src="/assets/js/scale.fix.js"></script>
+
+
+  
+
+
+
+  </body>
+</html>

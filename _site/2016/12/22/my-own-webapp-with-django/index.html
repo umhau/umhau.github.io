@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
+
+<!-- Begin Jekyll SEO tag v2.3.0 -->
+<title>Installing Django | nixing around</title>
+<meta property="og:title" content="Installing Django" />
+<meta name="author" content="umhau" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="This is an incredible pain to figure out.  Dependencies - python 3.5, and don’t forget to set up virtualenvs…whatever those are.  Don’t get me wrong: I’ve done plenty of python, but never really wanted to deal with something that complicated. The goal here is to get django installed.  Stretch goals, dealt with later, are a) to get django-based website running locally and b) to do lots of cool pythonic things in the background.Based on further exploration of how these things work, I am amazed how complicated this is.  And the documentation is basically written for someone with complete conceptual understanding of the software, who just forgot the commands they need.  Not that beginner-friendly.&lt;h4&gt;Sources&lt;/h4&gt;&lt;div&gt;Installing djangovirtualenv&lt;/div&gt;&lt;div&gt;virtualenvwrapper&lt;/div&gt;&lt;h4&gt;Dependencies&lt;/h4&gt;Make sure python is installed. And the other stuff.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;sudo apt-get install python3.5sudo apt-get install python-pipsudo pip install virtualenv&lt;/pre&gt;&lt;h4&gt;Create your virtualenv (src)&lt;/h4&gt;&lt;div&gt;Apparently, it’s good to store your virtualenvs all in the same place.  The recommended location is ./.virtualenvs, so that’s what we’ll use.&lt;/div&gt;&lt;div&gt;&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;mkdir ~/.virtualenvspython3 -m venv ~/.virtualenvs/myfirstdjangowebsite&lt;/pre&gt;&lt;/div&gt;Note: if you’re using ubuntu, that last command might not work.  If it doesn’t, you’ll have to make sure the python3 versions of everything are installed and then use a different form of the command.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;sudo apt-get install python3-pipsudo pip3 install virtualenvvirtualenv –python=which python3 ~/.virtualenvs/myfirstdjangowebsite&lt;/pre&gt;Now activate the virtualenv.  If the first command doesn’t work, use the second.  Remember: you have to activate the virtualenv in every new terminal window.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;source ~/.virtualenvs/myfirstdjangowebsite/bin/activate. ~/.virtualenvs/myfirstdjangowebsite/bin/activate&lt;/pre&gt;&lt;h4&gt;Install Django&lt;/h4&gt;&lt;div&gt;Once that virtualenv is set up, install django.&lt;/div&gt;&lt;div&gt;&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;pip install Django &lt;/pre&gt;&lt;/div&gt;&lt;div&gt;Django is now available within the virtualenv you set up.&lt;/div&gt;" />
+<meta property="og:description" content="This is an incredible pain to figure out.  Dependencies - python 3.5, and don’t forget to set up virtualenvs…whatever those are.  Don’t get me wrong: I’ve done plenty of python, but never really wanted to deal with something that complicated. The goal here is to get django installed.  Stretch goals, dealt with later, are a) to get django-based website running locally and b) to do lots of cool pythonic things in the background.Based on further exploration of how these things work, I am amazed how complicated this is.  And the documentation is basically written for someone with complete conceptual understanding of the software, who just forgot the commands they need.  Not that beginner-friendly.&lt;h4&gt;Sources&lt;/h4&gt;&lt;div&gt;Installing djangovirtualenv&lt;/div&gt;&lt;div&gt;virtualenvwrapper&lt;/div&gt;&lt;h4&gt;Dependencies&lt;/h4&gt;Make sure python is installed. And the other stuff.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;sudo apt-get install python3.5sudo apt-get install python-pipsudo pip install virtualenv&lt;/pre&gt;&lt;h4&gt;Create your virtualenv (src)&lt;/h4&gt;&lt;div&gt;Apparently, it’s good to store your virtualenvs all in the same place.  The recommended location is ./.virtualenvs, so that’s what we’ll use.&lt;/div&gt;&lt;div&gt;&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;mkdir ~/.virtualenvspython3 -m venv ~/.virtualenvs/myfirstdjangowebsite&lt;/pre&gt;&lt;/div&gt;Note: if you’re using ubuntu, that last command might not work.  If it doesn’t, you’ll have to make sure the python3 versions of everything are installed and then use a different form of the command.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;sudo apt-get install python3-pipsudo pip3 install virtualenvvirtualenv –python=which python3 ~/.virtualenvs/myfirstdjangowebsite&lt;/pre&gt;Now activate the virtualenv.  If the first command doesn’t work, use the second.  Remember: you have to activate the virtualenv in every new terminal window.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;source ~/.virtualenvs/myfirstdjangowebsite/bin/activate. ~/.virtualenvs/myfirstdjangowebsite/bin/activate&lt;/pre&gt;&lt;h4&gt;Install Django&lt;/h4&gt;&lt;div&gt;Once that virtualenv is set up, install django.&lt;/div&gt;&lt;div&gt;&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;pip install Django &lt;/pre&gt;&lt;/div&gt;&lt;div&gt;Django is now available within the virtualenv you set up.&lt;/div&gt;" />
+<link rel="canonical" href="http://localhost:4000/2016/12/22/my-own-webapp-with-django/" />
+<meta property="og:url" content="http://localhost:4000/2016/12/22/my-own-webapp-with-django/" />
+<meta property="og:site_name" content="nixing around" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2016-12-22T23:20:00-05:00" />
+<script type="application/ld+json">
+{"name":null,"description":"This is an incredible pain to figure out.  Dependencies - python 3.5, and don’t forget to set up virtualenvs…whatever those are.  Don’t get me wrong: I’ve done plenty of python, but never really wanted to deal with something that complicated. The goal here is to get django installed.  Stretch goals, dealt with later, are a) to get django-based website running locally and b) to do lots of cool pythonic things in the background.Based on further exploration of how these things work, I am amazed how complicated this is.  And the documentation is basically written for someone with complete conceptual understanding of the software, who just forgot the commands they need.  Not that beginner-friendly.&lt;h4&gt;Sources&lt;/h4&gt;&lt;div&gt;Installing djangovirtualenv&lt;/div&gt;&lt;div&gt;virtualenvwrapper&lt;/div&gt;&lt;h4&gt;Dependencies&lt;/h4&gt;Make sure python is installed. And the other stuff.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;sudo apt-get install python3.5sudo apt-get install python-pipsudo pip install virtualenv&lt;/pre&gt;&lt;h4&gt;Create your virtualenv (src)&lt;/h4&gt;&lt;div&gt;Apparently, it’s good to store your virtualenvs all in the same place.  The recommended location is ./.virtualenvs, so that’s what we’ll use.&lt;/div&gt;&lt;div&gt;&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;mkdir ~/.virtualenvspython3 -m venv ~/.virtualenvs/myfirstdjangowebsite&lt;/pre&gt;&lt;/div&gt;Note: if you’re using ubuntu, that last command might not work.  If it doesn’t, you’ll have to make sure the python3 versions of everything are installed and then use a different form of the command.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;sudo apt-get install python3-pipsudo pip3 install virtualenvvirtualenv –python=which python3 ~/.virtualenvs/myfirstdjangowebsite&lt;/pre&gt;Now activate the virtualenv.  If the first command doesn’t work, use the second.  Remember: you have to activate the virtualenv in every new terminal window.&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;source ~/.virtualenvs/myfirstdjangowebsite/bin/activate. ~/.virtualenvs/myfirstdjangowebsite/bin/activate&lt;/pre&gt;&lt;h4&gt;Install Django&lt;/h4&gt;&lt;div&gt;Once that virtualenv is set up, install django.&lt;/div&gt;&lt;div&gt;&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;&quot;&gt;pip install Django &lt;/pre&gt;&lt;/div&gt;&lt;div&gt;Django is now available within the virtualenv you set up.&lt;/div&gt;","author":{"@type":"Person","name":"umhau"},"@type":"BlogPosting","url":"http://localhost:4000/2016/12/22/my-own-webapp-with-django/","publisher":null,"image":null,"headline":"Installing Django","dateModified":"2016-12-22T23:20:00-05:00","datePublished":"2016-12-22T23:20:00-05:00","sameAs":null,"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2016/12/22/my-own-webapp-with-django/"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+
+    <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/js/infinite-jekyll.js"></script>
+
+  </head>
+  <body>
+    <box class="wrapper">
+      <header>
+        <a href="http://localhost:4000"> <h1>*nixing around</h1> </a>
+        <p>A programmer's journal of complicated projects.</p>
+        <p class="view"><a href="">github</a> | <a href="http://localhost:4000/about">about</a> | <a href="http://localhost:4000/explore">explore</a></p>
+
+        <p>testing</p>
+
+      </header>
+      <section>
+
+      <div class="post">
+
+    <header class="post-header">
+        
+    <h1 class="post-title">Installing Django</h1>
+    <p 
+        class="post-meta">Dec 22, 2016 • <a  href="/2016/12/22/my-own-webapp-with-django/">permalink</a>
+        <i>  • Mint 18.1 • website • django • webapps • python • python 3.5</i> 
+    </p>
+    </header>
+
+    <article class="post-content">
+    This is an incredible pain to figure out. &nbsp;Dependencies - python 3.5, and don't forget to set up virtualenvs...whatever those are. &nbsp;Don't get me wrong: I've done plenty of python, but never really wanted to deal with something that complicated. <br /><br />The goal here is to get django installed. &nbsp;Stretch goals, dealt with later, are a) to get django-based website running locally and b) to do lots of cool pythonic things in the background.<br /><br />Based on further exploration of how these things work, I am amazed how complicated this is. &nbsp;And the documentation is basically written for someone with complete conceptual understanding of the software, who just forgot the commands they need. &nbsp;Not that beginner-friendly.<br /><h4>Sources</h4><div><a href="https://docs.djangoproject.com/en/1.10/intro/install/" target="_blank">Installing django</a><br /><a href="https://virtualenv.pypa.io/en/stable/installation/" target="_blank">virtualenv</a></div><div><a href="https://virtualenvwrapper.readthedocs.io/en/latest/" target="_blank">virtualenvwrapper</a></div><h4>Dependencies</h4>Make sure python is installed. And the other stuff.<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">sudo apt-get install python3.5<br />sudo apt-get install python-pip<br />sudo pip install virtualenv</pre><h4>Create your virtualenv (<a href="https://docs.djangoproject.com/en/1.10/intro/contributing/" target="_blank">src</a>)</h4><div>Apparently, it's good to store your virtualenvs all in the same place. &nbsp;The recommended location is ./.virtualenvs, so that's what we'll use.</div><div><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">mkdir ~/.virtualenvs<br />python3 -m venv ~/.virtualenvs/myfirstdjangowebsite</pre></div>Note: if you're using ubuntu, that last command might not work. &nbsp;If it doesn't, you'll have to make sure the python3 versions of everything are installed and then use a different form of the command.<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">sudo apt-get install python3-pip<br />sudo pip3 install virtualenv<br />virtualenv --python=`which python3` ~/.virtualenvs/myfirstdjangowebsite</pre>Now activate the virtualenv. &nbsp;If the first command doesn't work, use the second. &nbsp;<b>Remember:</b> you have to activate the virtualenv in every new terminal window.<br /><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">source ~/.virtualenvs/myfirstdjangowebsite/bin/activate<br />. ~/.virtualenvs/myfirstdjangowebsite/bin/activate</pre><h4>Install Django</h4><div>Once that virtualenv is set up, install django.</div><div><pre style="background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; overflow: auto; padding: 5px; text-align: justify; width: auto; word-wrap: normal;">pip install Django </pre></div><div>Django is now available within the virtualenv you set up.<br /><br /></div>
+    </article>
+
+    <p class="extra-space"></p>
+    <hr>
+    <p class="extra-space"></p>
+
+</div>
+
+
+
+
+
+      </section>
+      <footer>
+        <p><small>Hosted on GitHub &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a> and <a href="https://github.com/umhau">umhau</a></small></p>
+      </footer>
+    </box>
+    <script src="/assets/js/scale.fix.js"></script>
+
+
+  
+
+
+
+  </body>
+</html>

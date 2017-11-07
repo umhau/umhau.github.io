@@ -1,0 +1,105 @@
+{
+  "posts" : [
+    
+    "/2017/07/13/making-a-script-executable/",
+    
+    "/2017/07/07/installing-mimic/",
+    
+    "/2017/06/05/new-blog-location/",
+    
+    "/2017/05/12/installing-gnu-apl/",
+    
+    "/2017/05/06/detaching-modal-dialog-boxes-from/",
+    
+    "/2017/04/12/set-external-monitor-as-default-in/",
+    
+    "/2017/02/18/tmux-cheat-sheet/",
+    
+    "/2017/02/08/installing-word-rnn-on-ubuntu-server-16/",
+    
+    "/2017/02/08/download-changes-from-git/",
+    
+    "/2017/02/02/branches-on-github/",
+    
+    "/2017/02/02/git-cheat-sheet/",
+    
+    "/2017/02/02/basic-github-working-with-cloned/",
+    
+    "/2017/02/02/accelerate-openbsd-nfs-server/",
+    
+    "/2017/02/01/nfs-on-rpi2/",
+    
+    "/2017/02/01/so-i-have-old-chromebook-that-i-use-as/",
+    
+    "/2017/02/01/nfs-server-on-openbsd/",
+    
+    "/2017/01/27/command-line-system-resource-monitor/",
+    
+    "/2017/01/27/show-cpu-specs-via-command-line/",
+    
+    "/2017/01/26/ubuntu-server-1604-not-detecting-wifi/",
+    
+    "/2017/01/26/internet-via-ethernet-ssh-via-wireless/",
+    
+    "/2017/01/25/the-cheat-sheets-and-guides-out-there/",
+    
+    "/2017/01/24/rnn-with-torch-and-mpi/",
+    
+    "/2017/01/21/a-homemade-beowulf-cluster-part-2/",
+    
+    "/2017/01/19/when-ubuntu-server-doesnt-let-you-keep/",
+    
+    "/2017/01/19/install-package-without-internet/",
+    
+    "/2017/01/18/a-homebrew-beowulf-cluster-part-1/",
+    
+    "/2017/01/15/a-recurrent-neural-network-to-generate/",
+    
+    "/2016/12/23/lvm-gui-management/",
+    
+    "/2016/12/22/my-own-webapp-with-django/",
+    
+    "/2016/11/30/raspberry-pi-zero-usb-audio-on-raspbian/",
+    
+    "/2016/11/22/raspberry-pi-zero-usb-audio/",
+    
+    "/2016/11/22/speed-up-raspberry-pi/",
+    
+    "/2016/11/22/running-gui-programs-over-ssh-command/",
+    
+    "/2016/11/14/setting-up-raspberry-pi-zero-in/",
+    
+    "/2016/11/09/basic-filesharing-server-on-openbsd/",
+    
+    "/2016/11/09/open-usb-drive-on-openbsd/",
+    
+    "/2016/11/09/setting-up-openbsd/",
+    
+    "/2016/10/11/building-statistical-language-model_11/",
+    
+    "/2016/10/08/compressing-and-splitting-folder/",
+    
+    "/2016/09/07/shameless-copy-offline-language-model/",
+    
+    "/2016/08/09/using-pocketsphinx-within-python-code/",
+    
+    "/2016/08/09/training-cmu-sphinx-language-model-for/",
+    
+    "/2016/08/03/improving-accuracy-of-cmu-sphinx-for_3/",
+    
+    "/2016/08/02/setting-up-offline-transcriber-using/",
+    
+    "/2016/07/31/speech-recognition-final-verdict/",
+    
+    "/2016/07/31/mutt-on-openbsd/",
+    
+    "/2016/07/27/setting-up-offline-transcriber-using_27/",
+    
+    "/2016/07/26/setting-up-offline-transcriber-using/",
+    
+    "/2016/07/26/my-external-display-wont-play-ball/",
+    
+    "/2016/07/26/installing-kaldi-and-kaldi-gstreamer/"
+    
+  ]
+}

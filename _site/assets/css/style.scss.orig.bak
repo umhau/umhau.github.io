@@ -1,0 +1,25 @@
+@import "jekyll-theme-minimal";
+
+.container-1{
+    width: 100px;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+  }
+
+ul { 
+    display: list-item;
+    list-style-type: disc;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
+
+}
+
+li {
+    word-wrap: normal; 
+    white-space:no-wrap; 
+    text-overflow:ellipsis;
+}
