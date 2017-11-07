@@ -5,22 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?">
 
-<!-- Begin Jekyll SEO tag v2.3.0 -->
-<title>Compressing and splitting folder archives | nixing around</title>
-<meta property="og:title" content="Compressing and splitting folder archives" />
-<meta name="author" content="umhau" />
-<meta property="og:locale" content="en_US" />
-<meta name="description" content="This isn’t exactly about tar.gz files in particular - more like what to do when they’re too big to upload into github…i.e., this is how to split them into pieces. Compress the folder into a gzip archive (all you need when compressing a single folder):&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;gzip -c my_large_file split -b 1024MiB - myfile_split.gz_&lt;/pre&gt;If the folder has already been compressed, here’s the command for splitting it:&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;split -b 1024m “file.tar.gz” “file.tar.gz.part-“&lt;/pre&gt;Apparently, recombining is a good use for the cat command.  Pipe that output to gunzip and you won’t have to create an intermediary archive file before decompression. &lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;cat myfile_split.gz_* gunzip -c &gt; my_large_file&lt;/pre&gt;Basically, by using the pipes you avoid ever letting the unsplit archive sit on your drive.  I found the answer here." />
-<meta property="og:description" content="This isn’t exactly about tar.gz files in particular - more like what to do when they’re too big to upload into github…i.e., this is how to split them into pieces. Compress the folder into a gzip archive (all you need when compressing a single folder):&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;gzip -c my_large_file split -b 1024MiB - myfile_split.gz_&lt;/pre&gt;If the folder has already been compressed, here’s the command for splitting it:&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;split -b 1024m “file.tar.gz” “file.tar.gz.part-“&lt;/pre&gt;Apparently, recombining is a good use for the cat command.  Pipe that output to gunzip and you won’t have to create an intermediary archive file before decompression. &lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;cat myfile_split.gz_* gunzip -c &gt; my_large_file&lt;/pre&gt;Basically, by using the pipes you avoid ever letting the unsplit archive sit on your drive.  I found the answer here." />
-<link rel="canonical" href="http://localhost:4000/2016/10/08/compressing-and-splitting-folder/" />
-<meta property="og:url" content="http://localhost:4000/2016/10/08/compressing-and-splitting-folder/" />
-<meta property="og:site_name" content="nixing around" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2016-10-08T11:14:00-04:00" />
-<script type="application/ld+json">
-{"name":null,"description":"This isn’t exactly about tar.gz files in particular - more like what to do when they’re too big to upload into github…i.e., this is how to split them into pieces. Compress the folder into a gzip archive (all you need when compressing a single folder):&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;gzip -c my_large_file split -b 1024MiB - myfile_split.gz_&lt;/pre&gt;If the folder has already been compressed, here’s the command for splitting it:&lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;split -b 1024m “file.tar.gz” “file.tar.gz.part-“&lt;/pre&gt;Apparently, recombining is a good use for the cat command.  Pipe that output to gunzip and you won’t have to create an intermediary archive file before decompression. &lt;pre style=&quot;background-color: #eff0f1; border: 0px; color: #333333; font-size: 14px; margin-bottom: 1em; max-height: 600px; overflow: auto; padding: 5px; width: auto; word-wrap: normal;&quot;&gt;cat myfile_split.gz_* gunzip -c &gt; my_large_file&lt;/pre&gt;Basically, by using the pipes you avoid ever letting the unsplit archive sit on your drive.  I found the answer here.","author":{"@type":"Person","name":"umhau"},"@type":"BlogPosting","url":"http://localhost:4000/2016/10/08/compressing-and-splitting-folder/","publisher":null,"image":null,"headline":"Compressing and splitting folder archives","dateModified":"2016-10-08T11:14:00-04:00","datePublished":"2016-10-08T11:14:00-04:00","sameAs":null,"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2016/10/08/compressing-and-splitting-folder/"},"@context":"http://schema.org"}</script>
-<!-- End Jekyll SEO tag -->
-
 
     <link rel="stylesheet" type="text/css" href="/assets/css/styles.css">
     <meta name="viewport" content="width=device-width">
@@ -31,9 +15,9 @@
   <body>
     <box class="wrapper">
       <header>
-        <a href="http://localhost:4000"> <h1>*nixing around</h1> </a>
+        <a href=""> <h1>*nixing around</h1> </a>
         <p>A programmer's journal of complicated projects.</p>
-        <p class="view"><a href="">github</a> | <a href="http://localhost:4000/about">about</a> | <a href="http://localhost:4000/explore">explore</a></p>
+        <p class="view"><a href="">github</a> | <a href="/about">about</a> | <a href="/explore">explore</a></p>
 
         <p>testing</p>
 
