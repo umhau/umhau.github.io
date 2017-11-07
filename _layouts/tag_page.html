@@ -2,17 +2,16 @@
 layout: default
 ---
 
+<!–– this layout template used to auto-generate tag pages -->
+
 
 <h2>{{ page.tag }}</h2>
 <ul>
-  
 {% for post in page.posts %}
-  <li><a href="{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }}) </li>
+  <li><a href="{{ post.url }}">{{ post.title }}</a> ({{ post.date | date_to_string }})</li>
 {% endfor %}
-
 </ul>
 
-<div class='cloud'>
-  {% tag_cloud %}
+<div id="tag-cloud">
+  {{ site | tag_cloud }}
 </div>
-

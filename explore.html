@@ -1,4 +1,30 @@
 ---
-layout: tag_page
+layout: default
 title: explore
 ---
+
+<div id="search-container"; align="center">
+        <input type="text" id="search-input" placeholder="search examples:  server | cluster | linux" onkeydown="onkeypressed(event, this);" autofocus>
+</div>
+
+<ul id="results-container"; align="center"></ul>
+
+
+<div id="tag-cloud"> {{ site | tag_cloud }}</div>
+
+
+
+<!-- script pointing to jekyll-search.js -->
+<script src="{{ site.baseurl }}/js/simple-jekyll-search.min.js"></script>
+
+<script type="text/javascript">
+    SimpleJekyllSearch.init({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    dataSource: '{{ site.baseurl }}/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}<\/a><\/li>',
+    noResultsText: 'No results found',
+    limit: 10,
+    fuzzy: false,
+    })
+</script>
