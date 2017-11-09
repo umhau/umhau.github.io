@@ -4,8 +4,4 @@ google_analytics:
 permalink: pretty
 
 # https://github.com/pattex/jekyll-tagging
-tag_page_layout: tag_page
-tag_page_dir: tag
 
-tag_permalink_style: pretty
-ignored_tags: [shameless ripoff]
