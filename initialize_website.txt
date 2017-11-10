@@ -1,0 +1,31 @@
+set up new blog using minimal theme (built & customized locally)
+
+sudo apt install ruby ruby-dev nodejs npm; gem install jekyll bundler
+npm install simple-jekyll-search
+
+
+git clone [git repo]; cd [repo]
+
+
+script/bootstrap # build dependencies; don't run as root
+
+
+(don't install jekyll twice with apt and gem - it leads to some weird errors)
+
+
+
+create search.json
+
+
+gem install jekyll-tagging
+
+
+/favicon.ico
+
+
+
+linux system administration books
+
+work on linux certification - then eventually have it, and also say '...and am working on l. cert."
+
+

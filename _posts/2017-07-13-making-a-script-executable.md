@@ -11,6 +11,6 @@ tags:
 categories: memos
 ---
 
-Before I forget, because I always get this command mixed up.  this is the command to make a script executable.
+Before I forget, because I always get this command mixed up.  This is the command to make a script executable.
 
     chmod +x script.sh
