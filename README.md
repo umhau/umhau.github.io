@@ -4,8 +4,8 @@ This is the source for my personal programming website.
 
 ## personal links
 
-* [Basic guide for using markdown]({{ site.url }}/markdown_guide)
-* [commands for initializing website]({{ site.url }}/initialize_website.txt)
+* [Basic guide for using markdown](umhau.github.io/markdown_guide)
+* [commands for initializing website](umhau.github.io/initialize_website.txt)
 
 ## TODO
 
