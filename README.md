@@ -14,3 +14,7 @@ This is the source for my personal programming website.
 * change the about page...too many violins playing in the first paragraph or two.
 
 * removing the tag cloud scripts sped up the page regeneration from 4 sec to .2 sec. don't bring it back.
+
+* the sidebar looks unbalanced...center it (10% width on each side)
+
+* find a simple way to add more posts.
