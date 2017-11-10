@@ -1,7 +1,18 @@
 title: nixing around
 google_analytics:
 
-permalink: pretty
+# permalink: pretty
+permalink: /:title/
 
 # something for later: https://github.com/pattex/jekyll-tagging
 
+# https://blog.webjeda.com/jekyll-categories/#create-a-category-page
+# NOTE: category types
+# walkthoughs
+# cheatsheets
+# memos
+# experiments
+# tools
+# other
+
+# ('category' or 'categories'?)

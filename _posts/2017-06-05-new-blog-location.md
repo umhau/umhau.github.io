@@ -5,6 +5,7 @@ author: umhau
 tags:
 - announcement
 - github
+categories: other
 ---
 
 You may have noticed things look a little different.  I'm hosting on Github now!  The site is way faster (and a little more put-together!) and I really like how I post things in the new format.  Stuff is going to look a little different, however, since the old posts are all imported as html from the blogger site.  
