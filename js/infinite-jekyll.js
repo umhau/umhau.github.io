@@ -7,7 +7,7 @@ $(function() {
       loadNewPostsThreshold = 100;
   
   // Load the JSON file containing all URLs
-  $.getJSON('/all-posts.json', function(data) {
+  $.getJSON('/assets/all-posts.json', function(data) {
     postURLs = data["posts"];
     
     // If there aren't any more posts available to load than already visible, disable fetching
