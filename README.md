@@ -5,7 +5,7 @@ This is the source for my personal programming website.
 ## personal links
 
 * [Basic guide for using markdown](umhau.github.io/markdown_guide)
-* [commands for initializing website](umhau.github.io/initialize_website.txt)
+* [commands for initializing website locally](umhau.github.io/initialize_website.txt)
 
 ## TODO
 
