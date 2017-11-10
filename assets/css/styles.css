@@ -273,6 +273,9 @@ footer {
 }
 
 @media print, screen and (max-width: 720px) {
+
+  #categories { display:none}
+
   body {
     word-wrap:break-word;
   }
@@ -291,6 +294,9 @@ footer {
 }
 
 @media print, screen and (max-width: 480px) {
+
+  #categories { display:none}
+
   body {
     padding:15px;
   }
@@ -302,6 +308,12 @@ footer {
   header li, header ul li + li + li {
     width:33%;
   }
+}
+
+@media print, screen and (max-height: 600px) {
+
+  #categories { display:none}
+
 }
 
 @media print {
