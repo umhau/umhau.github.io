@@ -8,6 +8,7 @@ tags:
 - Ubuntu GNOME 17.04
 - Linux
 - Mimic
+categories: walkthroughs
 ---
 
 This is a step-by-step walkthrough for installing the mimic TTS engine developed by Mycroft A.I. for their AI system. 

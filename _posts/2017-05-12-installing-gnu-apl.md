@@ -9,6 +9,7 @@ tags:
 - Ubuntu GNOME 17.04
 - package installation
 - APL
+categories: walkthroughs
 ---
 
 Three parts: the program itself, the keyboard layout and the font.  This is on Ubuntu GNOME 17.04.

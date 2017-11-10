@@ -8,7 +8,7 @@ layout: default
     <h1 class="post-title">{{ page.title }}</h1>
     <p 
         class="post-meta">{{ page.date | date: "%b %-d, %Y" }} • <a  href="{{ page.url }}">permalink</a>
-        <i> {% for tag in page.tags %}{% capture tag_name %}{{ tag }}{% endcapture %} • {{ tag_name }}{% endfor %}</i> 
+        <i> {% for tag in page.tags %}{% capture tag_name %}{{ tag }}{% endcapture %} • {{ tag_name }}{% endfor %}</i> • <b>{{page.categories | join: ' • '}}</b>
     </p>
     </header>
 
