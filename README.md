@@ -4,8 +4,8 @@ This is the source for my personal programming website.
 
 ## personal links
 
-* [Basic guide for using markdown](https:umhau.github.io/markdown_guide)
-* [commands for initializing website locally](https:umhau.github.io/website_local_deps.sh)
+* [Basic guide for using markdown](/markdown_guide.md)
+* [commands for initializing website locally](/website_local_deps.sh)
 
 ## TODO
 
@@ -16,3 +16,4 @@ This is the source for my personal programming website.
 * find a simple way to add more posts.
 * on each category page, make all pages in the category do infinite scroll under an `<hr>` line and the current list.
 * category page lists of posts should match the explore page lists
+* add category for 'procedures' that I do on a regular basis - backing up computers, installing the deps for working with the blog, etc.  
