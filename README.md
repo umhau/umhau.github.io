@@ -4,8 +4,8 @@ This is the source for my personal programming website.
 
 ## personal links
 
-* [Basic guide for using markdown](umhau.github.io/markdown_guide)
-* [commands for initializing website locally](umhau.github.io/initialize_website.txt)
+* [Basic guide for using markdown](https:umhau.github.io/markdown_guide)
+* [commands for initializing website locally](https:umhau.github.io/website_local_deps.sh)
 
 ## TODO
 
@@ -15,3 +15,4 @@ This is the source for my personal programming website.
 * the sidebar looks unbalanced...center it (10% width on each side)
 * find a simple way to add more posts.
 * on each category page, make all pages in the category do infinite scroll under an `<hr>` line and the current list.
+* category page lists of posts should match the explore page lists
