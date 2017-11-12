@@ -15,5 +15,5 @@ This is the source for my personal programming website.
 * the sidebar looks unbalanced...center it (10% width on each side)
 * find a simple way to add more posts.
 * on each category page, make all pages in the category do infinite scroll under an `<hr>` line and the current list.
-* category page lists of posts should match the explore page lists
+* category page lists of posts should match the explore  page lists
 * add category for 'procedures' that I do on a regular basis - backing up computers, installing the deps for working with the blog, etc.  
