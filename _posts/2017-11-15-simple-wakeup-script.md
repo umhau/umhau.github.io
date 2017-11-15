@@ -42,9 +42,9 @@ Now that's done, you can open a new terminal instance and type
 
     wakeup
 
-and the computer will wake you up with whatever song you chose.  [Here's](https://www.youtube.com/watch?v=McdMwOV0y6c) a good one, by the way.  You'll see what I mean. 
+and the computer will wake you up after the default time period with whatever song you chose.  [Here's](https://www.youtube.com/watch?v=McdMwOV0y6c) a good one, by the way.  You'll see what I mean. 
 
-## usage
+### usage
 
 First, the super simple method: 
 
@@ -58,7 +58,7 @@ It will ask if you're sure.
 
 To stop the alarm (which, by the way, is set to repeat _ad nauseum_), press the space bar while the terminal running the alarm is focused.  
 
-## sources
+### sources
 
 * https://askubuntu.com/questions/164289/how-to-play-a-song-on-mplayer-on-repeat
 * https://stackoverflow.com/questions/29343245/execute-a-command-in-a-script-and-kill-it-when-pressing-a-key
