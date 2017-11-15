@@ -7,9 +7,7 @@ tags:
  - linux 
  - alarm clock 
  - bash
- - wake-me-up-before-you-go
  - don't sleep in
- - unironic hacker vibe
  - Ubuntu Server 17.10
  - i3
 categories: tools
@@ -44,7 +42,7 @@ Now that's done, you can open a new terminal instance and type
 
     wakeup
 
-and the computer will wake you up with whatever song you chose.  [Here's](https://www.youtube.com/watch?v=McdMwOV0y6c) a good one, by the way.  You'll see what I mean. 
+and the computer will wake you up with whatever song you chose.  Press the space bar to turn it off.  [Here's](https://www.youtube.com/watch?v=McdMwOV0y6c) a good one, by the way.  You'll see what I mean. 
 
 ### sources
 
