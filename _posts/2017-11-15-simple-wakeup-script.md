@@ -21,7 +21,7 @@ A quick script that plays a song after a chosen interval (I like that better tha
 key=' '; song="/path/to/music/file.mp3"; 
 
 if [ ! -z "$1" ]; then echo -n "confirm: $1 hrs until wakeup (press enter)"; read; h=$1; else h='8'; fi
-wt=$(date -d "today + $h hours + 15 minutes" +'%H:%M'); echo -n "alarm will sound at $wt"; 
+wt=$(date -d "today + $h hours + 5 minutes" +'%H:%M'); echo -n "alarm will sound at $wt"; 
 for i in 1 2 3 4 5; do sleep 1; echo -n ". "; done; sleep "$h"h 15m 
 
 { amixer set Speaker unmute; amixer set Master unmute; amixer set Master 100%; amixer set Speaker 100%; } &> /dev/null
@@ -42,7 +42,21 @@ Now that's done, you can open a new terminal instance and type
 
     wakeup
 
-and the computer will wake you up with whatever song you chose.  Press the space bar to turn it off.  [Here's](https://www.youtube.com/watch?v=McdMwOV0y6c) a good one, by the way.  You'll see what I mean. 
+and the computer will wake you up with whatever song you chose.  [Here's](https://www.youtube.com/watch?v=McdMwOV0y6c) a good one, by the way.  You'll see what I mean. 
+
+### usage
+
+First, the super simple method: 
+
+    wakeup
+    
+That uses the default 8 hours + 5 minutes.  If you want more or less, then give the number of hours with the command.  It will ask for confirmation.  
+
+    wakeup 5
+    
+It will ask if you're sure.  
+
+To stop the alarm (which, by the way, is set to repeat _ad nauseum_), press the space bar while the terminal running the alarm is focused.  
 
 ### sources
 
