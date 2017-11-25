@@ -12,9 +12,6 @@ tags:
 categories: walkthroughs
 ---
 
-how to set up a local apt repository
-====================================
-
 There's a lot of difficulties associated with installing packages to an offline computer, especially when the packages are complicated. (Banshee is _horrible_.)  So, after several errors and many trials, it looks like I should create a local apt repository.  I have about 20 packages I want to install, and that list is not getting shorter.  The following is my attempt to simplify the process as much as possible.  [src](https://askubuntu.com/questions/170348/how-to-create-a-local-apt-repository#176546).
 
 do this on the online computer
