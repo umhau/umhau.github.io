@@ -23,7 +23,7 @@ There's a process involved with downloading and saving packages and dependencies
 
 Run the following lines, one at a time, in the terminal.
 
-    p=(banshee vlc syncthing sublime-text )
+    pkgs=(banshee vlc syncthing sublime-text )
     fnm="/home/`whoami`/offline-apt-package-archive && mkdir $fnm
     for PKG in "${pkgs[@]}"; do sudo apt -d install $PKG -y; sudo cp -n /var/cache/apt/archives/*.deb "$fnm/"; sudo apt clean; done
 
