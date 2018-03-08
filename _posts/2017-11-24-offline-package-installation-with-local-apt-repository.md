@@ -54,7 +54,7 @@ You need to tell apt about the new repository!  Otherwise it won't have any idea
     echo "deb [trusted=yes] file:/usr/local/myrepository ./" | sudo tee -a /etc/apt/sources.list
     sudo apt-get update
 
-All done!  Now you can install the packages you downloades like you're online.  
+All done!  Now you can install the packages you downloaded just like you're online.  
 
     sudo apt-get install banshee vlc emacs
 
