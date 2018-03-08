@@ -56,6 +56,6 @@ You need to tell apt about the new repository!  Otherwise it won't have any idea
 
 All done!  Now you can install the packages you downloades like you're online.  
 
-    sudo apt-get install banshee syncthing vlc sublime-text
+    sudo apt-get install banshee vlc emacs
 
 The big advantage of this process over using dpkg is when there's lots of complicated dependencies - you can't make the .deb files install in order with dpkg, but you can with apt.
