@@ -21,13 +21,17 @@ Here's the workflow.
 ## get your computer running
 
 - Get an account with DigitalOcean, if you haven't already.  Or, if you have a really snazzy gaming computer, use that.  
-- At minimum, ask for a Standard, 32GB, 8 CPU instance.  You will have to open a ticket to verify yourself.  (They can't have fraudsters tying up all their resources)
+- At minimum, ask for a Standard, 32GB, 8 CPU instance.  You will have to open a ticket to verify yourself.
 
 ## install the software
 
 Log into your new computer.  If it's your own, your probably familiar with the procedure.  If it's a DigitalOcean computer, you'll need ssh (unless you can drive really, really fast).  By default, expect the password to the droplet to be emailed to you.  You can get the IP address from clicking on the sidebar to view your droplets; the username is root.
 
-Once inside, it's time to do the needful.  Note that I'm not worried here about cleanliness or extreme security; adding new user accounts and using virtual environments is for later.
+```shell
+ssh root@IP_ADDRESS
+```
+
+Once inside, it's time to do the needful.  Note that I'm not worried here about installation cleanliness or extreme security; adding new user accounts and using virtual environments is for later.
 
 ### install dependencies
 
