@@ -36,13 +36,12 @@ Once inside, it's time to do the needful.  Note that I'm not worried here about 
 ### install dependencies
 
 ```shell
-sudo apt update && apt upgrade
-sudo apt install python-pip 
-sudo pip install Cython tensorflow==1.14
+sudo apt update && apt upgrade -y
+sudo apt install python-pip -y
+sudo pip install Cython tensorflow==1.14 -y
 
 git clone https://github.com/glample/fastBPE.git && cd fastBPE
-sudo python setup.py install
-cd ..
+sudo python setup.py install && cd ..
 ```
 
 install & patch tensorflow
@@ -63,6 +62,7 @@ wget https://storage.googleapis.com/sf-ctrl/seqlen256_v1.ckpt/checkpoint
 wget https://storage.googleapis.com/sf-ctrl/seqlen256_v1.ckpt/model.ckpt-413000.index
 wget https://storage.googleapis.com/sf-ctrl/seqlen256_v1.ckpt/model.ckpt-413000.meta
 wget https://storage.googleapis.com/sf-ctrl/seqlen256_v1.ckpt/model.ckpt-413000.data-00000-of-00001
+cd ..
 ```
 
 ## run the model
@@ -70,8 +70,7 @@ wget https://storage.googleapis.com/sf-ctrl/seqlen256_v1.ckpt/model.ckpt-413000.
 Now we're all ready.  There's a lower memory version of the model, but it's not tested as well. We'll use the full-size version.  
 
 ```shell
-cd ctrl
-python generation.py ----model_dir /root/seqlen256_v1/
+cd ctrl && python generation.py --model_dir /root/seqlen256_v1/
 ```
 
 The startup will take a while, and you'll see some warnings.  If you have htop running in another ssh session or in another tmux pane, you'll see the memory usage grow up to something like 14.6GB. Once it gets there, the startup process is almost done.  Eventually, you'll see a prompt. 
