@@ -12,7 +12,7 @@ tags:
 categories: walkthroughs
 ---
 
-So here's the thing.  GPUs are often only needed for training neural nets. When it comes time to actually use them, a cluster of CPUs can do just fine.  From what I've found, the main branch of the salesforce CTRL neural net can run at about one sentence per minute on 32GB of RAM and 8CPUs.  If that sounds better than digging up a cutting-edge GPU from someone online, read on.
+So here's the thing.  GPUs are often only needed for training neural nets. When it comes time to actually use them, a cluster of CPUs can often do just fine.  From what I've found, the main branch of the salesforce CTRL neural net can run at about one sentence per minute and a half on 32GB of RAM and 8 halfway decent CPUs.  If that sounds better than digging up a cutting-edge GPU from someone online, read on.
 
 I'm using DigialOcean because I'm a sucker for good advertising.  So far, I've crashed the model using 16GB of ram, so we're going with 32.  The model, from my observations in htop, uses 14.6 GB at rest.
 
