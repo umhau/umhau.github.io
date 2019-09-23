@@ -38,7 +38,7 @@ Once inside, it's time to do the needful.  Note that I'm not worried here about 
 ```shell
 sudo apt update && apt upgrade -y
 sudo apt install python-pip -y
-sudo pip install Cython tensorflow==1.14 -y
+sudo pip install Cython tensorflow==1.14
 
 git clone https://github.com/glample/fastBPE.git && cd fastBPE
 sudo python setup.py install && cd ..
