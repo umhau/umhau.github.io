@@ -22,4 +22,4 @@ targetip=192.168.1.33
 dd if=/dev/sda bs=1M count=35000 | gzip | ssh root@$targetip "gunzip | sudo dd of=/dev/xvda"
 ```
 
-Also remember to replace the disks with the ones you're working with. If you don't know what I mean by that, then don't come anywhere near this post.
+I left out any kind of status indicator. Not sure how well that would play with the piping that's going on.  Also, remember to replace the disks with the ones you're working with. If you don't know what I mean by that, then don't come anywhere near this post.
