@@ -17,3 +17,6 @@ permalink: /:title/
 # other
 
 # ('category' or 'categories'?)
+
+gems:
+  - jekyll-feed
