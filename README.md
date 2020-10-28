@@ -1,4 +1,4 @@
-# nixing around
+# Weird.
 
 This is the source for my personal programming website. 
 
