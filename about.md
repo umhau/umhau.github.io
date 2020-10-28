@@ -15,4 +15,4 @@ Use the _explore_ button to see a sorted list of all posts on the site and to ac
 
 ## Notes
 
-This site was transferred from [Google Blogger](https://nixingaround.blogspot.com/2017/10/final-post-here.html), so the oldest pages are html and have a slightly different style.  [See here.](/2017/06/05/new-blog-location)  The newer ones are written in markdown and (I think) tend to look better.  
+This site was transferred from [Google Blogger](https://nixingaround.blogspot.com/2017/10/final-post-here.html), so the oldest pages are html and have a slightly different style.  [See here.](/new-blog-location)  The newer ones are written in markdown and (I think) tend to look better.  
