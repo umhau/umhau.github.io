@@ -29,10 +29,6 @@ the partition management commands will not work and it'll probably tell you to
 reboot the computer. This is not necessary, will not work, and does not solve
 the underlying issue.  Just remove the old RAID device.
 
-I'm including the contents of these two scripts at the bottom of this post;
-they're also in one of my repositories, but that might change and I might rename
-or otherwise alter them.
-
 The -m argument is the desired name of the new RAID conglomerate drive, or 
 'multi-device'.  The -d argument is the drive letters of each drive that should 
 either be added to the new RAID device, or removed from the old one. e.g., "c e"
@@ -43,6 +39,10 @@ marks.
 bash remove_raid_device.sh -m md0 -d "c e b d"
 bash raid-autoconf.sh -r 5 -m md0 -e ext4 -d "c e b d" -c 4
 ```
+
+I'm including the contents of these two scripts at the bottom of this post;
+they're also in one of my repositories, but that might change and I might rename
+or otherwise alter them.
 
 ### mount directly on the centos hypervisor
 
@@ -132,7 +132,7 @@ attach the device.  Then you can mount it from within the VM.
 
 #### remove_raid_device.sh
 
-```
+```bash
 #!/bin/bash
 
 set -e
@@ -172,7 +172,7 @@ rm -fv /etc/mdadm.conf        # delete file that identifies RAID devices on boot
 
 #### raid-autoconf.sh
 
-```
+```bash
 #!/bin/bash
 
 set -e
