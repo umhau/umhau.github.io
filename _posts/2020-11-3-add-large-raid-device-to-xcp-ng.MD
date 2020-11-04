@@ -130,8 +130,23 @@ LABEL="md_end"
 This rule will automatically make the /dev/md0 block device available to be 
 attached to any VM on the hypervisor host.  
 
-Reboot the hypervisor (ugh), open the management console and attach the device. 
-Then you can mount it from within the VM.
+The autobuild script at the beginning of this post also formatted the drive and
+added it to be automatically mounted with fstab.  You'll have to undo that.  Go 
+into the fstab and remove the line referencing the /dev/md0 device.
+
+```
+nano /etc/fstab
+```
+
+Reboot the hypervisor (ugh).  Within XCP-ng Center, go to 'Removable Storage', 
+then the 'Storage' tab, and if the device isn't already visible, click 'Scan'. 
+The disk should show up as an "Unrecognized bus type". That's OK; notice the 
+size of the disk - in my case, with four 2.7TB drives in RAID5, the disk shows
+up as 8.2 TB.  
+
+Open up the settings for the VM you want to add it to, and attach the disk. It 
+should be persistent accross reboots of the hypervisor - just be careful about
+creating a snapshot while it's attached.
 
 ### scripts
 
