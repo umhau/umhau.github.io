@@ -33,6 +33,12 @@ I'm including the contents of these two scripts at the bottom of this post;
 they're also in one of my repositories, but that might change and I might rename
 or otherwise alter them.
 
+The -m argument is the desired name of the new RAID conglomerate drive, or 
+'multi-device'.  The -d argument is the drive letters of each drive that should 
+either be added to the new RAID device, or removed from the old one. e.g., "c e"
+corresponds to "/dev/sdc" and "/dev/sde". Be sure to include the quotation 
+marks.
+
 ```
 bash remove_raid_device.sh -m md0 -d "c e b d"
 bash raid-autoconf.sh -r 5 -m md0 -e ext4 -d "c e b d" -c 4
