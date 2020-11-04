@@ -90,6 +90,8 @@ attach USBs with passthrough to a virtual machine. This is sometimes convenient
 when you want to, for instance, back up the contents of a VM to a drive you can 
 easily physically remove from the server in case of problems.
 
+Warning: this will require a reboot of the hypervisor.
+
 However, (and I think this is where the storage size limitations come into play)
 it's not possible to 'passthrough' very large drives to a VM this way. Something 
 to do with xen server still using the EXT3 filesystem, which has a max file size
@@ -106,9 +108,10 @@ with attached block devices):
 nano /etc/udev/rules.d/65-md-incremental.rules
 ```
 
-And then, just before the end of the file, add this line:
+And then, just before the end of the file, add these lines:
 
 ```
+# passthrough the RAID device md0 for attachment to VM
 KERNEL=="md0", SUBSYSTEM=="block", ACTION=="change", \
     SYMLINK+="xapi/block/%k", \
     RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
@@ -125,8 +128,10 @@ LABEL="md_end"
 ```
 
 This rule will automatically make the /dev/md0 block device available to be 
-attached to any VM on the hypervisor host.  Open the management console and 
-attach the device.  Then you can mount it from within the VM.
+attached to any VM on the hypervisor host.  
+
+Reboot the hypervisor (ugh), open the management console and attach the device. 
+Then you can mount it from within the VM.
 
 ### scripts
 
