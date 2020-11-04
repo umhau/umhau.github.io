@@ -132,7 +132,7 @@ attach the device.  Then you can mount it from within the VM.
 
 #### remove_raid_device.sh
 
-```bash
+```
 #!/bin/bash
 
 set -e
@@ -172,7 +172,7 @@ rm -fv /etc/mdadm.conf        # delete file that identifies RAID devices on boot
 
 #### raid-autoconf.sh
 
-```bash
+```
 #!/bin/bash
 
 set -e
@@ -200,26 +200,20 @@ set -v
 
 while getopts ":r:d:m:e:c:" opt; do
   case $opt in
-    r) raid_level="$OPTARG"
-    ;;
-    m) raid_multi_device="$OPTARG"
-    ;;
-    e) filesystemtype="$OPTARG"
-    ;;
-    d) drive_list="$OPTARG"
-    ;;
-    c) drive_count="$OPTARG"
-    ;;
-    \?) echo "Invalid option -$OPTARG. " >&2
-    ;;
+    r) raid_level="$OPTARG" ;;
+    m) raid_multi_device="$OPTARG" ;;
+    e) filesystemtype="$OPTARG" ;;
+    d) drive_list="$OPTARG" ;;
+    c) drive_count="$OPTARG" ;;
+    \?) echo "Invalid option -$OPTARG. " >&2 ;;
   esac
 done
 
-[ -z "$raid_level" ] && echo "raid level not specified." && exit
-[ -z "$raid_multi_device" ] && echo "multidevice not specified." && exit
-[ -z "$filesystemtype" ] && echo "filesystem type not specified." && exit
-[ -z "$drive_list" ] && echo "drive list not specified." && exit
-[ -z "$drive_count" ] && echo "number of drives not specified." && exit
+[ -z "$raid_level" ]        && echo "raid level not specified."       && exit
+[ -z "$raid_multi_device" ] && echo "multidevice not specified."      && exit
+[ -z "$filesystemtype" ]    && echo "filesystem type not specified."  && exit
+[ -z "$drive_list" ]        && echo "drive list not specified."       && exit
+[ -z "$drive_count" ]       && echo "number of drives not specified." && exit
 
 printf "Using RAID %s\n" "$raid_level"
 printf "Using /dev/sd[X] drive letters: %s\n" "$drive_list"
@@ -227,7 +221,7 @@ printf "Multidevice specified:  /dev/%s\n" "$raid_multi_device"
 printf "Filesystem chosen: %s\n" "$filesystemtype"
 printf "Number of drives to be formatted: %s\n" "$drive_count"
 
-for drive in ${drive_list[@]}
+for drive in ${drive_list[@]}                       # mount-related error checks
 do
     if mount | grep /dev/sd$drive > /dev/null
     then 
@@ -243,8 +237,8 @@ do
 done
 
 
-echo "confirm: using drives ${drive_list[@]} for new software RAID $raid_level array."
-echo -ne "\t ALL DATA ON ALL LISTED DRIVES WILL BE LOST! > "; read
+echo "confirm: using drives ${drive_list[@]} for new RAID $raid_level array."
+echo -n "ALL DATA ON ALL LISTED DRIVES WILL BE LOST! > "; read
 
 [ `which parted   2>/dev/null` ] || yum install parted
 [ `which mdadm    2>/dev/null` ] || yum install mdadm
@@ -269,12 +263,9 @@ for drive in ${drive_list[@]}; do                                 # turn on raid
     sudo parted /dev/sd$drive set 1 raid on                              && sync
 done
 
+for d in ${drive_list[@]}; do parted /dev/sd$d print; done   # verify formatting
 
-# verify drive formatting
-for drive in ${drive_list[@]}; do sudo parted /dev/sd$drive print; done
-
-echo "Drive count: $drive_count"
-echo "Multi device name: $raid_multi_device"
+echo -ne "Drive count: $drive_count\nMulti device name: $raid_multi_device\n"
 
 devicelist=$(eval echo  /dev/sd{`echo "$drive_list" | tr ' ' ,`}1)
 echo "Drives: $devicelist"
@@ -285,7 +276,7 @@ sudo mdadm  --create \
             --raid-devices=$drive_count $devicelist
 
 # backup the raid multi device so it's persistent on reboot
-mkdir -p /etc/mdadm
+mkdir -pv /etc/mdadm
 sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
 
 # ensure the device is assembled on boot
