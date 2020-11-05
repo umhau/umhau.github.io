@@ -16,15 +16,11 @@ its purview.
 
 There's three different ways that a RAID device can be used on a xen or xcp-ng
 hypervisor:
-
 1. obviously, a RAID device can be mounted directly on the centos 
 substrate, and used via scripts running outside the management consoles; 
-
 2. it can be added as a 'storage repository', which is somewhere that VMs can be
 placed; or
-
 3. it can be attached directly to one of the VMs.  
-
 The use-cases for each of these methods are fairly mutually-exclusive; you'll 
 have to know ahead of time what you need the drives for. 
 
