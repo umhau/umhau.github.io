@@ -206,9 +206,9 @@ location where the partition should be mounted within the VM operating system.
 
 When that script finishes, the drive will be ready for use. Success!
 
-# scripts
+## scripts
 
-## remove_raid_device.sh
+### remove_raid_device.sh
 
 ```bash
 #!/bin/bash
@@ -245,7 +245,7 @@ mdadm --zero-superblock $devicelist  # remove superblocks from all related disks
 rm -fv /etc/mdadm.conf        # delete file that identifies RAID devices on boot
 ```
 
-## raid-autoconf.sh
+### raid-autoconf.sh
 
 ```bash
 #!/bin/bash
@@ -376,7 +376,7 @@ echo "check the progress of the drive mirroring process with the command: \"cat"
 echo " /proc/mdstat\""
 ```
 
-## /etc/udev/rules.d/65-md-incremental.rules
+### /etc/udev/rules.d/65-md-incremental.rules
 
 ```
 KERNEL=="td[a-z]*", GOTO="md_end"
@@ -444,7 +444,7 @@ KERNEL=="md0", SUBSYSTEM=="block", ACTION=="change", SYMLINK+="xapi/block/%k", \
 LABEL="md_end"
 ```
 
-## format_block_device.sh
+### format_block_device.sh
 
 ```bash
 #!/bin/bash
