@@ -232,6 +232,7 @@ footer {
   float:left;
   position:fixed;
   bottom:50px;
+  text-align:center;
   -webkit-font-smoothing:subpixel-antialiased;
 }
 
