@@ -21,6 +21,7 @@ substrate, and used via scripts running outside the management consoles;
 2. it can be added as a 'storage repository', which is somewhere that VMs can be
 placed; or
 3. it can be attached directly to one of the VMs.  
+
 The use-cases for each of these methods are fairly mutually-exclusive; you'll 
 have to know ahead of time what you need the drives for. 
 
@@ -43,7 +44,7 @@ the limitation will be removed. For now, large drives like that are best
 passed through to the VM directly as 'block devices' and formatted within the 
 VM. 
 
-## build the new RAID array
+### build the new RAID array
 
 In any case, the first thing to do is clean the drives and create the new RAID 
 device. If there's a preexisting RAID device using any of the drives involved,
@@ -66,7 +67,7 @@ I'm including the contents of all the scripts I use at the bottom of this post;
 they're also in one of my repositories, but that might change and I might rename
 or otherwise alter them. 
 
-## mount directly on the centos hypervisor
+### mount directly on the centos hypervisor
 
 Mounting like this is relatively simple, but doesn't really do a lot of good.
 
@@ -88,7 +89,7 @@ ultimately adding the formatted partition to fstab, to be automatically mounted
 on boot.
 
 
-## attach as a storage repository 
+### attach as a storage repository 
 
 If you want the storage space of the RAID device to be available for putting 
 virtual machines on, then the RAID device should be made into a storage 
@@ -116,7 +117,7 @@ NOTE that setting up the storage like this will PREVENT it from being accessed
 from within a virtual machine. It will only be able to be used to HOLD virtual
 machines.
 
-## attach directly to a virtual machine
+### attach directly to a virtual machine
 
 This, finally, is the third use of a large drive.  Generally, you can just 
 attach USBs with passthrough to a virtual machine. This is sometimes convenient
