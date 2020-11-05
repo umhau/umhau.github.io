@@ -4,20 +4,21 @@ title: add large raid device to xcp-ng
 author: umhau
 description: "when you need a lot of storage on the hypervisor"
 tags: 
-- xcp-ng
+- xcp-ng 8.0
 - xen
 - RAID
 - block devices
 categories: walkthroughs
 ---
 
-(Relevant to xcp-ng 7.0)
-
 There's three different ways that a RAID device can be used on a xen or xcp-ng
 hypervisor: obviously, a RAID device can be mounted directly on the centos 
 substrate, and used via scripts running outside the management consoles; it can 
 be added as a 'storage repository', which is somewhere that VMs can be placed; 
 or it can be attached directly to one of the VMs.  
+
+Warning: this is a really big post, but it does try to be comprehensive within 
+its purview.
 
 There are some strange limitations around the size of large drives, that it may
 be well to be aware of.  If you want to attach a second drive, or 'storage 
@@ -186,11 +187,9 @@ parted -l | grep Error
 ```
 
 to find a list of `/dev/xyz` drives that cause parted to raise an error because 
-they have no partitions. 
-
-Once the `/dev/xyz` drive is identified, run the following script (again, inside
-the virtual machine) to format the drive and add it to fstab for automatic 
-mounting. 
+they have no partitions. Once the `/dev/xyz` drive is identified, run the 
+following script (again, inside the virtual machine) to format the drive and add
+it to fstab for automatic mounting. 
 
 ```
 bash format_block_device.sh \
