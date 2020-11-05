@@ -43,7 +43,7 @@ the limitation will be removed. For now, large drives like that are best
 passed through to the VM directly as 'block devices' and formatted within the 
 VM. 
 
-## basic preparations
+## build the new RAID array
 
 In any case, the first thing to do is clean the drives and create the new RAID 
 device. If there's a preexisting RAID device using any of the drives involved,
