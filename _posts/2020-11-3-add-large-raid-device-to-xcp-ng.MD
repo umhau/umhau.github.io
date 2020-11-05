@@ -11,38 +11,14 @@ tags:
 categories: walkthroughs
 ---
 
-Warning: this is a really big post, but it does try to be comprehensive within 
-its purview.
+There's three different ways that a RAID device can be used on a xen or xcp-ng hypervisor.
 
-There's three different ways that a RAID device can be used on a xen or xcp-ng
-hypervisor:
-1. obviously, a RAID device can be mounted directly on the centos 
-substrate, and used via scripts running outside the management consoles; 
-2. it can be added as a 'storage repository', which is somewhere that VMs can be
-placed; or
-3. it can be attached directly to one of the VMs.  
+Obviously, a RAID device can be mounted directly on the centos substrate, and used via scripts running outside the management consoles.  This is great, if none of the VMs running on the hypervisor ever need to interact with the disk. 
 
-The use-cases for each of these methods are fairly mutually-exclusive; you'll 
-have to know ahead of time what you need the drives for. 
+Second, the RAID device can be added as a 'storage repository'; this is a place that virtual disks that are attached to virtual machines can be put. However, there's a decision point at the two terabyte capacity size: smaller than that, you can use this second option to create virtual drives within the various xcp-ng management consoles and then attach them to the VM. This is the standard, GUI-supported mechanism for adding drives.
 
-There are some strange limitations around the size of large drives, that it 
-would be well to be aware of.  If you want to attach a second drive, or 'storage 
-repository' to a virtual machine, there's a decision point at the two terabyte 
-capacity size: smaller than that, you can create virtual drives within the 
-various xcp-ng management consoles and then attach them to the VM: this is the 
-standard, GUI-supported mechanism for adding drives. See option two, adding a 
-storage repository.  
+However, if your VM needs more than a 2TB drive attached (say, for a giant NAS) then option two won't work. The reason for this is in how xcp-ng is built - it uses the EXT3 filesystem, which has a maximum file size of around 2TB.  Since a virtual disk is stored on the hypervisor as a single very large file (think weird zip file), that means the size of the virtual disk is capped at 2TB.  Once the developers can get around to moving to EXT4 - apparently that's a really big undertaking - the limitation will be removed. For now, large drives like that are best passed through to the VM directly as 'block devices' and formatted within the VM. This is option three: passing the RAID device directly through to the VM. It's complicated, it's not very messy, and it takes some effort.
 
-However, if your VM needs more than a 2TB drive attached 
-(say, for a giant NAS) then you'll need to do something different.  The reason
-for this difference is in how xcp-ng is built - it still uses EXT3, which has a
-maximum file size of around 2TB.  Since a virtual storage repository is 
-presented to the hypervisor as a single very large file (think really 
-weird zip file), that means the size is capped at 2TB.  Once the developers can 
-get around to moving to EXT4 - I understand that's a really big undertaking - 
-the limitation will be removed. For now, large drives like that are best 
-passed through to the VM directly as 'block devices' and formatted within the 
-VM. 
 
 ### build the new RAID array
 
