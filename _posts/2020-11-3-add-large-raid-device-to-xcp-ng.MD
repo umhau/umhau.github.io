@@ -20,8 +20,21 @@ be added as a 'storage repository', which is somewhere that VMs can be placed;
 or it can be attached directly to one of the VMs.  
 
 There are some strange limitations around the size of large drives, that it may
-be well to be aware of.  I don't remember what they are, unfortunately, but they
-deal with drives around or larger than two terabytes.
+be well to be aware of.  If you want to attach a second drive, or 'storage 
+repository' to a virtual machine, there's a decision point at the two terabyte 
+capacity size: smaller than that, you can create virtual drives within the 
+various xcp-ng management consoles and then attach them to the VM: this is the 
+standard, GUI-supported mechanism for adding drives. See option two, adding a 
+storage repository.  However, if your VM needs more than a 2TB drive attached 
+(say, for a giant NAS) then you'll need to do something different.  The reason
+for this difference is in how xcp-ng is built - it still uses EXT3, which has a
+maximum file size of around 2TB.  Since a virtual storage repository is 
+presented to the hypervisor as a single very large file (consider it a really 
+weird zip file), that means the size is capped at 2TB.  Once the developers can 
+get around to moving to EXT4 - I understand that's a really big undertaking - 
+the limitation will be removed. For now, large drives like that are best 
+passed through to the VM directly as 'block devices' and formatted within the 
+VM. 
 
 In any case, the first thing to do is clean the drives and create the new RAID 
 device. If there's a preexisting RAID device using any of the drives involved,
