@@ -44,7 +44,7 @@ I'm including the contents of these two scripts at the bottom of this post;
 they're also in one of my repositories, but that might change and I might rename
 or otherwise alter them.
 
-### mount directly on the centos hypervisor
+## mount directly on the centos hypervisor
 
 Mounting like this is relatively simple. This WILL NOT make the drives 
 accessible through the management consoles (xen orchestra or XCP-ng Center), or 
@@ -68,7 +68,7 @@ ultimately adding the formatted partition to fstab, to be automatically mounted
 on boot.
 
 
-### attach as a storage repository 
+## attach as a storage repository 
 
 If you want the storage space of the RAID device to be available for putting 
 virtual machines on, then the RAID device should be made into a storage 
@@ -96,7 +96,7 @@ NOTE that setting up the storage like this will PREVENT it from being accessed
 from within a virtual machine. It will only be able to be used to HOLD virtual
 machines.
 
-### attach directly to a virtual machine
+## attach directly to a virtual machine
 
 This, finally, is the third use of a large drive.  Generally, you can just 
 attach USBs with passthrough to a virtual machine. This is sometimes convenient
@@ -194,9 +194,9 @@ location where the partition should be mounted within the VM operating system.
 
 When that script finishes, the drive will be ready for use. Success!
 
-### scripts
+## scripts
 
-#### remove_raid_device.sh
+### remove_raid_device.sh
 
 ```
 #!/bin/bash
@@ -233,7 +233,7 @@ mdadm --zero-superblock $devicelist  # remove superblocks from all related disks
 rm -fv /etc/mdadm.conf        # delete file that identifies RAID devices on boot
 ```
 
-#### raid-autoconf.sh
+### raid-autoconf.sh
 
 ```
 #!/bin/bash
@@ -364,7 +364,7 @@ echo "check the progress of the drive mirroring process with the command: \"cat"
 echo " /proc/mdstat\""
 ```
 
-#### /etc/udev/rules.d/65-md-incremental.rules
+### /etc/udev/rules.d/65-md-incremental.rules
 
 ```
 KERNEL=="td[a-z]*", GOTO="md_end"
@@ -432,7 +432,7 @@ KERNEL=="md0", SUBSYSTEM=="block", ACTION=="change", SYMLINK+="xapi/block/%k", \
 LABEL="md_end"
 ```
 
-#### format_block_device.sh
+### format_block_device.sh
 
 ```
 #!/bin/bash
