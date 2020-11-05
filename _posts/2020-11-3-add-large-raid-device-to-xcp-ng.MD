@@ -46,14 +46,27 @@ or otherwise alter them.
 
 ### mount directly on the centos hypervisor
 
-Mounting is pretty simple. This WILL NOT make the drives accessible through the
-management consoles (xen orchestra or XCP-ng Center), or through any of the VMs
-on the hypervisor.
+Mounting like this is relatively simple. This WILL NOT make the drives 
+accessible through the management consoles (xen orchestra or XCP-ng Center), or 
+through any of the VMs on the hypervisor.
+
+While the autoconf script created partitions on the constituents of the RAID 
+device, the conglomerate does not have either a partition or a filesystem.  To
+create these, run another script:
 
 ```
-mkdir /mnt/RAID
-mount /dev/md0 /mnt/RAID
+bash format_block_device.sh \
+  -d /dev/xyz \
+  -f ext4 \
+  -t gpt \
+  -l partlabel \
+  -a /mnt/newdrive
 ```
+
+This script will perform all the steps between creating the partition table and
+ultimately adding the formatted partition to fstab, to be automatically mounted
+on boot.
+
 
 ### attach as a storage repository 
 
@@ -127,6 +140,9 @@ The only line that follows the one you added should be this one:
 LABEL="md_end"
 ```
 
+The whole file is added at the bottom of this post, with the scripts from 
+earlier.
+
 This rule will automatically make the /dev/md0 block device available to be 
 attached to any VM on the hypervisor host.  
 
@@ -148,6 +164,36 @@ Open up the settings for the VM you want to add it to, and attach the disk. It
 should be persistent accross reboots of the hypervisor - just be careful about
 creating a snapshot while it's attached.
 
+Once it's attached to the VM, enter the VM and figure out what the device is. 
+Since the drive is new, there will not be a partition scheme on it yet. In that 
+case, use 
+
+```
+parted -l | grep Error
+```
+
+to find a list of `/dev/xyz` drives that cause parted to raise an error because 
+they have no partitions. 
+
+Once the `/dev/xyz` drive is identified, run the following script (again, inside
+the virtual machine) to format the drive and add it to fstab for automatic 
+mounting. 
+
+```
+bash format_block_device.sh \
+  -d /dev/xyz \
+  -f ext4 \
+  -t gpt \
+  -l partlabel \ 
+  -a /mnt/newdrive
+```
+
+Note that "partlabel" should be fairly unique, as this will identify the drive
+within fstab for automounting. The last argument, "/mnt/newdrive", is the 
+location where the partition should be mounted within the VM operating system.
+
+When that script finishes, the drive will be ready for use. Success!
+
 ### scripts
 
 #### remove_raid_device.sh
@@ -162,17 +208,14 @@ set -v
 
 while getopts ":m:d:" opt; do
   case $opt in
-    m) raid_device="$OPTARG"
-    ;;
-    d) drive_list="$OPTARG"
-    ;;
-    \?) echo "Invalid option -$OPTARG. " >&2
-    ;;
+    m) raid_device="$OPTARG" ;;
+    d) drive_list="$OPTARG" ;;
+    \?) echo "Invalid option -$OPTARG. " >&2 ;;
   esac
 done
 
-[ -z $raid_device ] && echo "Specify RAID device." && cat /proc/mdstat && exit
-[ -z $drive_list ] && echo "specify list of drives connected to RAID." && exit
+[ -z $raid_device ] && echo "Specify RAID device." && cat /proc/mdstat  && exit
+[ -z $drive_list ]  && echo "specify list of drives connected to RAID." && exit
 
 devicelist=$(eval echo  /dev/sd{`echo "$drive_list" | tr ' ' ,`}1)
 
@@ -256,7 +299,6 @@ do
     fi
 done
 
-
 echo "confirm: using drives ${drive_list[@]} for new RAID $raid_level array."
 echo -n "ALL DATA ON ALL LISTED DRIVES WILL BE LOST! > "; read
 
@@ -320,4 +362,179 @@ sudo mdadm --detail /dev/$raid_multi_device
 
 echo "check the progress of the drive mirroring process with the command: \"cat"
 echo " /proc/mdstat\""
+```
+
+#### /etc/udev/rules.d/65-md-incremental.rules
+
+```
+KERNEL=="td[a-z]*", GOTO="md_end"
+# This file causes block devices with Linux RAID (mdadm) signatures to
+# automatically cause mdadm to be run.
+# See udev(8) for syntax
+
+# Don't process any events if anaconda is running as anaconda brings up
+# raid devices manually
+ENV{ANACONDA}=="?*", GOTO="md_end"
+
+# Also don't process disks that are slated to be a multipath device
+ENV{DM_MULTIPATH_DEVICE_PATH}=="?*", GOTO="md_end"
+
+# We process add events on block devices (since they are ready as soon as
+# they are added to the system), but we must process change events as well
+# on any dm devices (like LUKS partitions or LVM logical volumes) and on
+# md devices because both of these first get added, then get brought live
+# and trigger a change event.  The reason we don't process change events
+# on bare hard disks is because if you stop all arrays on a disk, then
+# run fdisk on the disk to change the partitions, when fdisk exits it
+# triggers a change event, and we want to wait until all the fdisks on
+# all member disks are done before we do anything.  Unfortunately, we have
+# no way of knowing that, so we just have to let those arrays be brought
+# up manually after fdisk has been run on all of the disks.
+
+# First, process all add events (md and dm devices will not really do
+# anything here, just regular disks, and this also won't get any imsm
+# array members either)
+SUBSYSTEM=="block", ACTION=="add", ENV{ID_FS_TYPE}=="linux_raid_member", \
+        RUN+="/sbin/mdadm -I $env{DEVNAME}"
+
+# Next, check to make sure the BIOS raid stuff wasn't turned off via cmdline
+IMPORT{cmdline}="noiswmd"
+IMPORT{cmdline}="nodmraid"
+ENV{noiswmd}=="?*", GOTO="md_imsm_inc_end"
+ENV{nodmraid}=="?*", GOTO="md_imsm_inc_end"
+SUBSYSTEM=="block", ACTION=="add", ENV{ID_FS_TYPE}=="isw_raid_member", \
+        RUN+="/sbin/mdadm -I $env{DEVNAME}"
+LABEL="md_imsm_inc_end"
+
+SUBSYSTEM=="block", ACTION=="remove", ENV{ID_PATH}=="?*", \
+        RUN+="/sbin/mdadm -If $name --path $env{ID_PATH}"
+SUBSYSTEM=="block", ACTION=="remove", ENV{ID_PATH}!="?*", \
+        RUN+="/sbin/mdadm -If $name"
+
+# Next make sure that this isn't a dm device we should skip for some reason
+ENV{DM_UDEV_RULES_VSN}!="?*", GOTO="dm_change_end"
+ENV{DM_UDEV_DISABLE_OTHER_RULES_FLAG}=="1", GOTO="dm_change_end"
+ENV{DM_SUSPENDED}=="1", GOTO="dm_change_end"
+KERNEL=="dm-*", SUBSYSTEM=="block", ENV{ID_FS_TYPE}=="linux_raid_member", \
+        ACTION=="change", RUN+="/sbin/mdadm -I $env{DEVNAME}"
+LABEL="dm_change_end"
+
+# Finally catch any nested md raid arrays.  If we brought up an md raid
+# array that's part of another md raid array, it won't be ready to be used
+# until the change event that occurs when it becomes live
+KERNEL=="md*", SUBSYSTEM=="block", ENV{ID_FS_TYPE}=="linux_raid_member", \
+        ACTION=="change", RUN+="/sbin/mdadm -I $env{DEVNAME}"
+
+# added this to passthrough the /dev/md0 RAID array
+KERNEL=="md0", SUBSYSTEM=="block", ACTION=="change", SYMLINK+="xapi/block/%k", \
+        RUN+="/bin/sh -c '/opt/xensource/libexec/local-device-change %k 2>&1 >/dev/null&'"
+
+LABEL="md_end"
+```
+
+#### format_block_device.sh
+
+```
+#!/bin/bash
+
+set -e
+set -v
+
+# this is simple: given a hard drive, wipe it, create a clean partition table, 
+# and format it with the chosen filesystem type.
+
+# RUN THIS SCRIPT AS ROOT
+
+# bash format_block_device.sh \
+#   -d /dev/xyz \
+#   -f ext4 \
+#   -t gpt \
+#   -l partlabel \
+#   -a /mnt/newdrive
+#
+# d: the device to wipe
+# f: the new filesystem type to put on the device
+# t: the filesystem table type. gpt recommended, unless compatibility is needed.
+# l: partition label. this is used to identify the drive when automounted, so 
+#    ensure that it's unique.  It's not as good a system as using the UUID.
+# a: the location to auto mount the new drive
+
+while getopts ":d:f:l:a:t:" opt; do
+    case $opt in
+        d) device="$OPTARG" ;;
+        f) fstype="$OPTARG" ;;
+        t) table="$OPTARG" ;;
+        l) label="$OPTARG" ;;
+        a) mountpoint="$OPTARG" ;;
+        \?) echo "Invalid option -$OPTARG. " >&2 ;;
+    esac
+done
+
+[ -z "$device" ] && echo "raid level not specified."          && exit
+[ -z "$fstype" ] && echo "new filesystem type not specified." && exit
+[ -z "$table" ]  && echo "filesystem table type not given."   && exit
+[ -z "$label" ]  && echo "partition label not given."         && exit
+[ -z "$mountpoint" ] && echo "mount point of new partition not given." && exit
+
+if mount | grep -q $device > /dev/null
+then 
+    echo "ERROR: $drive is mounted."
+    exit
+elif mount | grep $mountpoint > /dev/null
+then
+    echo "$mountpoint in use."
+    exit
+elif cat /proc/mdstat | grep $device > /dev/null
+then
+   echo "ERROR: $device is in a RAID device, remove before proceeding."
+   exit 
+elif [ `whoami` != "root" ]
+then 
+    echo "run this script as root!"
+    exit
+fi
+
+echo "device to wipe: $device"
+echo "new filesystem: $fstype"
+echo "partition table: $table"
+echo "partition label: $label"
+echo -n "Confirm > " && read
+
+[ `which parted   2>/dev/null` ] || apt install parted
+[ `which mkfs     2>/dev/null` ] || apt install util-linux
+
+parted $device mklabel $table && sync               # create new partition table
+
+parted -a optimal $device mkpart primary 0% 100% && sync # new primary partition
+
+partition="$device"1                                # new variable for /dev/xyz1
+
+if ! partprobe -d -s $partition &>/dev/null                  # check for success
+then
+    echo "partition MISSING"
+    exit
+fi
+
+mkfs.$fstype -L $label $partition       # create the filesystem on the partition
+
+mkdir -pv $mountpoint                                     # make the mount point
+
+cp /etc/fstab /etc/fstab.$(date +"%FT%H%M%S").bak            # back up the fstab
+
+# fs_uuid=$(lsblk -no UUID $partition)                 # get the filesystem UUID
+# using the UUID would be better, but then there's no way to detect duplicates
+# echo "UUID="$fs_uuid" $mountpoint $fstype defaults 0 2" >> /etc/fstab
+
+# if the script has already been run, remove the extra fstab entry
+if grep $label /etc/fstab; then sed "/$label/d" /etc/fstab > /etc/fstab; fi
+
+echo "LABEL=$label $mountpoint $fstype defaults 0 2" >> /etc/fstab   # automount
+
+mount -a        # mount everything listed in the fstab - errors will be revealed
+
+lsblk #-o NAME,FSTYPE,LABEL,UUID,MOUNTPOINT  # view the partition and filesystem
+
+cat /etc/fstab                             # check for superfluous fstab entries
+
+if mount | grep -q $mountpoint > /dev/null; then echo "SUCCESS"; fi
 ```
