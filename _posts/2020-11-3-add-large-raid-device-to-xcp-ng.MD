@@ -89,9 +89,8 @@ example, 'raid_storage_1'.  The path of the storage device is something like
 to use the example above.  After running that command, the storage 
 should be available in the management console.
 
-NOTE that setting up the storage like this will PREVENT it from being accessed 
-from within a virtual machine. It will only be able to be used to HOLD virtual
-machines.
+Recall that setting up the storage like this will mean that it can only hold 
+smaller, less-than-two-terabyte virtual disks.
 
 ### attach directly to a virtual machine
 
