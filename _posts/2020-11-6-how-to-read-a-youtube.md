@@ -11,9 +11,6 @@ tags:
 - do this with a music video
 categories: walkthroughs
 ---
-
-Thankfully, youtube-dl is still online.
-
 There's a video on youtube a friend of mine recommended I watch...turns out, I'd recommended it to him first, but it's an hour long and that's too much time to just _watch_ something. 
 
 Be nice if I could just read it instead. Cuts the involvement time down from an hour to maybe 10 minutes. Enter youtube-dl, closed captions, and some bad scripting.
