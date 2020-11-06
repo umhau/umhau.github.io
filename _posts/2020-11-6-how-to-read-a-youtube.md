@@ -118,11 +118,9 @@ Putting the whole thing together into a script, we get this:
 #!/bin/bash
 
 link="$1"
-filename="captions"
+fn="captions"
 
-youtube-dl --output "$filename.%(ext)s" --write-auto-sub --skip-download $link
+youtube-dl --output $fn.%(ext)s --write-auto-sub --skip-download $link
 
-sed '/ --> /d' "$filename".en.vtt | \
-    sed '/<c>/d' | sed '/^[[:space:]]*$/d' | uniq > "$filename".txt
-
+sed '/-->/d' $fn.en.vtt | sed '/<c>/d' | sed '/^[[:space:]]*$/d' | uniq > $fn.txt
 ```
