@@ -110,7 +110,7 @@ distributed over a group of cells they
 themselves purely at the electrical
 level with no transcriptional changes
 ```
-And we have it! The whole thing is going to read like some strange poem, especially since the closed captions will probably have made each line take about the same amount of time to say.  
+And we have it! The whole thing is going to read like some strange poem, especially since the closed captions will probably have made each line take about the same amount of time to say.  But, it's better than the alternative, where we take out all the remaining line breaks and it turns into a giant wall of text.
 
 Putting the whole thing together into a script, we get this:
 
