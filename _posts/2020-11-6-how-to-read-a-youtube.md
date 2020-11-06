@@ -47,12 +47,10 @@ level with no transcriptional changes
 That example is from a video partially titled _Bioelectric Computation Outside the Nervous System_.  Interesting stuff, but long.
 
 So, time to experiment with some line manipulation.  Let's grab just the captions, and make the filename something easy.
-
 ```
 youtube-dl --output "captions.%(ext)s" --write-auto-sub --skip-download <video>
 ```
-
-The captions format is *.en.vtt...I'm assuming english, because it's easier. Let's start cutting down the noise.  
+The name of the downloaded file is captions.en.vtt. I'm assuming english, because it's easier. Let's start cutting down the noise.  
 ```
 sed '/ --> /d' captions.en.vtt
 ```
