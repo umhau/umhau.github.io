@@ -43,7 +43,6 @@ level<00:51:50.069><c> with</c><00:51:50.219><c> no</c><00:51:50.249><c> transcr
 
 00:51:51.229 --> 00:51:51.239 align:start position:0%
 level with no transcriptional changes
-
 ```
 That example is from a video partially titled _Bioelectric Computation Outside the Nervous System_.  Interesting stuff, but long.
 
@@ -72,7 +71,6 @@ themselves purely at the electrical
 level<00:51:50.069><c> with</c><00:51:50.219><c> no</c><00:51:50.249><c> transcriptional</c><00:51:51.209><c> changes</c>
 
 level with no transcriptional changes
-
 ```
 Better.  There's still some weird stuff in there, and it looks superfluous.  The `<c>` string looks like it's always in those lines, so let's cut any line with one of those.
 ```
@@ -91,7 +89,6 @@ themselves purely at the electrical
 themselves purely at the electrical
 
 level with no transcriptional changes
-
 ```
 But not finished yet. Tons of blank lines. 
 ```
