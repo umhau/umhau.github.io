@@ -11,7 +11,6 @@ tags:
 - do this with a music video
 categories: walkthroughs
 ---
-# how to read a youtube video
 
 Thankfully, youtube-dl is still online.
 
