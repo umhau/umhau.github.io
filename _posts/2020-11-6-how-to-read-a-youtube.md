@@ -102,7 +102,7 @@ level with no transcriptional changes
 ```
 Well, at least it's finally concise. Looks like each line is duplicated, though.  There's a cool linux tool that can find duplications - long as they're adjacent - and remove them. Often it's combined with `sort`, which can put similar or identical lines next to each other. In this case, we don't need that.
 ```
-sed '/ --> /d' captions.en.vtt | sed '/<c>/d' | sed '/^[[:space:]]*$/d' | uniq
+sed '/ --> /d' captions.en.vtt | sed '/<c>/d' | sed '/^[[:space:]]*$/d' | uniq 
 ```
 We just want each line to be unique.
 ```
