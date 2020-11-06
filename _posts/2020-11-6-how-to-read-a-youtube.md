@@ -50,7 +50,7 @@ So, time to experiment with some line manipulation.  Let's grab just the caption
 ```
 youtube-dl --output "captions.%(ext)s" --write-auto-sub --skip-download <video>
 ```
-The name of the downloaded file is captions.en.vtt. I'm assuming english, because it's easier. Let's start cutting down the noise.  
+The name of the downloaded file is `captions.en.vtt`. I'm assuming english, because it's easier. Let's start cutting down the noise.  
 ```
 sed '/ --> /d' captions.en.vtt
 ```
