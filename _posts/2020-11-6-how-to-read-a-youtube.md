@@ -101,7 +101,7 @@ Well, at least it's finally concise. Looks like each line is duplicated, though.
 ```
 sed '/ --> /d' captions.en.vtt | sed '/<c>/d' | sed '/^[[:space:]]*$/d' | uniq 
 ```
-We just want each line to be unique.
+We just want each line to be `uniq`.
 ```
 distributed over a group of cells they
 themselves purely at the electrical
