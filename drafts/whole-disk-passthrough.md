@@ -25,3 +25,25 @@ You can now use the XenCenter GUI or other management tool to add the disk in th
 I can say that the performance in this configuration is pretty close to theoretical maximums for the disk in my testing. The other peace of mind I have is that if the XenServer host gives up the ghost, I can take this disk as is and put it in another server to read from the filesystem on the disk directly.
 
 https://www.zerodispersion.com/xenserver-whole-disk-passthrough/
+
+## WHEN I DID IT
+
+```
+[20:08 daniel ~]# ls /srv/
+[20:08 daniel ~]# mkdir /srv/WIN_XP
+[20:08 daniel ~]# xe sr-create name-label=”WIN_XP_BLOCK_SR” name-description=”WIN_XP_BLOCK_SR” type=udev content-type=disk device-config:location=/srv/WIN_XP
+528b1453-78c4-06f3-938e-3b2ed231c41e
+[20:09 daniel ~]# ln -s /dev/sdk /srv/WIN_XP/sdk
+[20:09 daniel ~]# xe sr-scan uuid=528b1453-78c4-06f3-938e-3b2ed231c41e
+[20:10 daniel ~]# xe vdi-list sr-uuid=528b1453-78c4-06f3-938e-3b2ed231c41e
+uuid ( RO)                : 7301da29-c57a-4943-b526-8ed94f3b1fe2
+          name-label ( RW): SCSI 0:0:10:0
+    name-description ( RW): ATA model ST3250310AS rev A type 0
+             sr-uuid ( RO): 528b1453-78c4-06f3-938e-3b2ed231c41e
+        virtual-size ( RO): 250000000000
+            sharable ( RO): false
+           read-only ( RO): false
+
+
+[20:10 daniel ~]#
+```
