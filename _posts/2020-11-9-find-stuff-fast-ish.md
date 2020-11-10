@@ -23,6 +23,6 @@ I don't remember what the previous dude was looking for, but it was a situation 
 find / . | grep "search term"
 ```
 
-That's it. You have `find` spit out the path of every file on the system in succession, and then check each one for a match. 
+That's it. You have `find` spit out the path of every file on the system in succession, and then have `grep` check each one for a match. It'll return a list of file paths matching the search term.
 
 However, be careful: this will enumerate everything that the system can see. That might include some distant, high-latency, freeze-your-system-while-you-wait NFS mounts. If you can, replace the `/` with a more targeted initial search directory.
