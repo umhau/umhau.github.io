@@ -11,7 +11,9 @@ tags:
 categories: walkthroughs
 ---
 
-The most annoying part of xcp-ng is that there's no way to upload an installation disk image to the hypervisor to actually set up the first virtual machine. Far as I can tell, one is expected to set up a separate iSCI host to hold all the various disk images and ISOs needed. What I'll do later is an NFS share with the ISOs on it, but that's after I set up some sort of minimal management server running some tiny OS off a battery backup with out-of-band seconary access.  Seems like that's the ideal setup to reliably bootstrap a hypervisor in a (presumed) unreliable, remote environment.
+The most annoying part of xcp-ng is that there's no way to upload an installation disk image to the hypervisor to actually set up the first virtual machine. Far as I can tell, one is expected to set up a separate iSCI host to hold all the various disk images and ISOs needed; or, which is what I'll do later, set up an NFS share to share the ISOs across multiple hypervisor hosts. 
+
+But that'll happen after I set up a separate box to run that NFS share. The plan is for it to be some sort of minimal management server running some tiny OS off a battery backup with out-of-band seconary access.  Seems like that's the ideal setup to reliably bootstrap a hypervisor in a (presumed) unreliable, remote environment. Especially if it and the hosts are configured with a boot-on-lan setup, so that I can restart the whole thing from afar if need be.  
 
 For now, however, I'm putting superfluous ISO storage repositories on each server I set up (I can't share the "SR" between the servers, because one is running xcp-ng 8.0 and the other is 8.2). 
 
