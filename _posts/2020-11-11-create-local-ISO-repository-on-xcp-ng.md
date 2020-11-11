@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Create local ISO repository on xcp-ng / xenserver
+title: Create a local ISO repository on xcp-ng / xenserver
 author: umhau
 description: "short-term satisfaction"
 tags: 
