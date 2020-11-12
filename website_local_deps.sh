@@ -1,9 +1,9 @@
 # set up new blog using minimal theme (built & customized locally)
 
-npm install simple-jekyll-search
-git clone https://github.com/umhau/umhau.github.io.git; cd umhau.github.io
+# dependencies
 sudo apt install ruby ruby-dev nodejs npm
 sudo gem install jekyll bundler
+npm install simple-jekyll-search
 
 sudo script/bootstrap # builds dependencies
 bundle install # install gemfiles, etc
