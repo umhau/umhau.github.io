@@ -27,5 +27,6 @@ I don't think that's necessary for getting the site to run on github pages, thou
 
 ### utility
 
+* full text search.
 * find a simple way to add more posts.
 * add category for 'procedures' that I do on a regular basis - backing up computers, installing the deps for working with the blog, etc.  
