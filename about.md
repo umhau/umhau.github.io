@@ -7,7 +7,7 @@ title: Weird.
 
 This blog attempts to be the sort of resource I used to always look for when I was getting started with linux.  It's intended for people who are way out of their depth, but still want to forge ahead with their cool project.  
 
-This is where I record how I did my projects, step by step, with no assumptions of prior knowledge except how to paste into a linux command line.  It's my own hard-to-lose documentation. 
+This is where I record how I did my projects, step by step, with no assumptions of prior knowledge except how to paste into a linux command line.  It's my own hard-to-lose research journal. 
 
 ## How to use this site
 
