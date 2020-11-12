@@ -1,7 +1,7 @@
 _drafts
 _site
-_drafts
 .sass-cache
 .jekyll-metadata
 Gemfile.lock
 ruby*
+node_modules

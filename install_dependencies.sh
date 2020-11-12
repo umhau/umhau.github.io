@@ -1,29 +1,21 @@
 #!/bin/bash
 
-set -e 
-set -v
+#                 do this on ubuntu - debian isn't up-to-date on Ruby (at least)
 
-sudo apt update
+set -e                                    # if anything gives an error then exit
 
-# [ `which curl 2>/dev/null` ] || sudo apt install curl
+set -v                                        # echo every line before executing
 
-# if [ ! `which nodejs 2>/dev/null` ]
-# then
-#     curl -sL https://deb.nodesource.com/setup_15.x | sudo -E bash -
-#     sudo apt-get install build-essential nodejs
-# fi 
+sudo apt update                                           # on general principle
 
-sudo apt install nodejs npm
-# install ruby
-sudo apt install -y ruby ruby-dev ruby-full
+sudo apt install -y nodejs npm ruby ruby-dev ruby-full        # apt dependencies
 
-# sudo snap install ruby
+sudo gem install jekyll bundler kramdown-parser-gfm           # gem dependencies
 
-sudo gem install jekyll bundler
-sudo gem install kramdown-parser-gfm
+npm install simple-jekyll-search                              # npm dependencies
 
-npm install simple-jekyll-search
+sudo script/bootstrap                                      # builds dependencies
 
-script/bootstrap # builds dependencies
-bundle install # install gemfiles, etc
+bundle install                                           # install gemfiles, etc
 
+echo "run the site with\'bundle exec jekyll serve\'"    # start the site locally

@@ -12,7 +12,7 @@ tags:
 categories: memos
 ---
 
-Personal note, to remember the existence of Ubuntu Mini.  I usually think of Ubuntu Server as being the minimal installation, but Mini includes Server Edition as one of the extra package collections to add during installation. It's a netboot, which means that the .iso you download is just enough ubuntu to then download the rest from 'the cloud'. 
+Personal note, to remember the existence of Ubuntu Mini.  I usually think of Ubuntu Server as being the minimal installation, but Mini includes Server Edition as one of the _extra_ package collections to add during installation. It's a netboot, which means that the .iso you download is just enough ubuntu to then download the rest from 'the cloud'. 
 
 [http://cdimages.ubuntu.com/netboot/](http://cdimages.ubuntu.com/netboot/)
 
