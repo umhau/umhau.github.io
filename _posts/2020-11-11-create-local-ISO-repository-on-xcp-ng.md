@@ -34,6 +34,7 @@ Pick a name for your ISO repository. This is what will show up in XCP-ng Center 
 
 ```
 sr_name="installation disk images"
+```
 
 This is where the magic happens: tell the hypervisor about the purpose of the new folder, and specify that it's specifically for the purpose of holding ISOs that get inserted in virtual DVD drives.
 
