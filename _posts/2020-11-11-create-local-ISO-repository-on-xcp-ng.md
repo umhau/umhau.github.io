@@ -57,7 +57,7 @@ However, I've usually found it effective to download it to a different (linux) s
 ``` 
 hypervisor_ip_address="192.168.1.XXX"
 wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.6.0-amd64-netinst.iso
-scp debian-10.6.0-amd64-netinst.iso root@"$hypervisor_ip_address":"$sr_path"
+scp debian-10.6.0-amd64-netinst.iso root@"$hypervisor_ip_address":"$sr_path" 
 ```
 
 Note that I'm continuing to use the same bash variables defined earlier for the repository path.  At this point, you can go back into XCP-ng Center and refresh the contents of your storage repository and see the new disk image. If you do, it's ready for use setting up a new VM. If you don't...it worked for me. 
