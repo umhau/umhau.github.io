@@ -5,7 +5,7 @@ set -v
 
 sudo apt update
 
-[ `which curl 2>/dev/null` ] || sudo apt install curl
+# [ `which curl 2>/dev/null` ] || sudo apt install curl
 
 # if [ ! `which nodejs 2>/dev/null` ]
 # then
