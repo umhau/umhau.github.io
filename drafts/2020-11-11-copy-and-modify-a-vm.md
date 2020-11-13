@@ -22,3 +22,17 @@ You might be tempted to try and copy the virtual disk, mount it, make the edits,
 
 Instead, we'll take a different route. I'm going to manually set up the first VM, then snapshot it and create a template from the snapshot. Then each subsequent VM will be created using the snapshot; I'll then change the MAC address, and after it's turned on, ssh in and perform the needed changes.  Should be a piece of cake.
 
+I'll assume you can find your way more-or-less around XCP-ng Center. 
+
+## create the template virtual machine
+
+Create a new VM, using the 'other install media' template, and [install Alpine Linux](https://umhau.github.io/alpine-linux/) on it.  You'll have to [upload](https://umhau.github.io/create-local-ISO-repository-on-xcp-ng/) the correct disk to the hypervisor's ISO storage repository.
+
+![](https://raw.githubusercontent.com/umhau/umhau.github.io/master/images/other-install-media.JPG)
+
+Since it's a general-purpose template, there's no default disk included. You'll have to add one. I'm going with 1GB.
+
+![](https://raw.githubusercontent.com/umhau/umhau.github.io/master/images/add-virtual-disk.jpg)
+
+Start it & install Alpine.
+
