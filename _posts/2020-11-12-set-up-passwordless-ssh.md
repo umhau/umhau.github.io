@@ -27,7 +27,7 @@ For instance: I can create a new key really easily, with an empty password:
 ssh-keygen -N '' -f demokey
 ```
 
-That creates two files, `./demokey` and `./demokey.pub`.  You want to share the public key, and keep the private one...private.  The private key looks like this: 
+That creates two files, `./demokey` and `./demokey.pub`.  You want to share the public key, and keep the private one...private.  The default names, which you should expect and use, are `id_rsa` and `id_rsa.pub`.  The private key looks like this: 
 
 ```
 -----BEGIN RSA PRIVATE KEY-----
@@ -70,4 +70,56 @@ Obviously, these are both generated just for this little explanation, and are of
 There's also another couple files that go in that `~/.ssh` folder: `authorized_keys` and `known_keys`. We're interested in the first one. 
 
 ## copy & paste
+
+Ok, now we should be on the same page. Ideally, you should be at a linux computer, with your screen divided three ways between a terminal logged into your laptop, a terminal logged into your remote computer (that you want passwordless ssh on), and the words you're reading now.  
+
+Good? Good.
+
+**On the laptop:** check to see if you've already got ssh keys generated in the default location, if not generate them, then open the public key and copy the contents, which will be moved (in a moment) over to the other computer.
+
+```
+ls ~/.ssh/
+```
+If you see a file named id_rsa, you're good. _If you do not see that file_, then run this command:
+```
+ssh-keygen
+```
+It will prompt you for a location - press enter to accept the default. It will ask you for a password - you don't want one, press enter to give an empty password.
+
+Now you have your keys.  Open the public key:
+```
+cat ~/.ssh/id_rsa.pub
+```
+Copy the contents.
+
+**On the terminal of the remote computer:** you have it open at your laptop, right?  You'll need to log into the root account, then open up the `.ssh` folder associated with the root account.  Then paste the public key into the `authorized_keys` file (told you we'd want that later) and done.
+
+Get into the root account, then confirm.
+
+```
+su
+whoami
+```
+The result of the second command should be "root". If not, back up and make sure it is. Switch to the home folder of the root account.
+```
+cd
+```
+Now open the `authorized_keys` file and paste in the public key.
+```
+nano /root/.ssh/authorized_keys
+```
+Save and close nano with `CTRL+O` and `CTRL+X`. You're done! Try logging into the remote computer from the laptop with the public key you used, and it should put you right in without prompting. 
+
+Be aware, it is very dangerous to allow root ssh; no password is needed after that to modify anything. Of course, that also means it's ideal for when you need to modify system files remotely, with a script. 
+
+## the really easy alternative
+
+Now that we've done the whole thing by hand, here's the shortcut (do this from the laptop):
+
+```
+ssh-keygen  # if you haven't already
+ssh-copy-id root@<remote computer IP address>
+```
+
+Done. Note that this only works if you can log in to the root account with a password. In alpine linux, you can't. Believe me, [I tried](https://umhau.github.io/alpine-linux/).
 
