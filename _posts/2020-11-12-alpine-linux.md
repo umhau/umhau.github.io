@@ -25,7 +25,7 @@ to get the disk space used gives me a total of 98.8MB. Crazy, right?
 
 ## ssh access
 
-By the way: logging in as root over ssh with a password doesn't work. I was even on the freenode IRC channel, and those fine folks couldn't get it working. If you want to ssh in as root (an admittedly bad idea, but for scripted remote root file management there isn't a better alternative), you'll have to use a key. 
+By the way: logging in as root over ssh with a password doesn't work. I was even on the freenode IRC channel, and those fine folks couldn't get it working. If you want to ssh in as root (an admittedly bad idea, but for scripted remote root file management there isn't a better alternative), [you'll have to use a key](https://umhau.github.io/set-up-passwordless-ssh/). 
 
 Alternately, just create a new user after installation and use the new account for ssh access. 
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: set up ssh to use keys instead of passwords
+title: set up ssh with keys instead of passwords
 author: umhau
 description: "look ma, no passwords!"
 tags: 
@@ -12,7 +12,7 @@ tags:
 categories: walkthroughs
 ---
 
-Using ssh without a password involves encryption keys -- a public key and a private key -- to authenticate you. Those keys are stored, usually, in `~/.ssh/`. Though they can go anywhere else, too - just have to tell ssh where to find them.
+Using ssh without a password involves encryption keys -- a public key and a private key -- to authenticate you. Those keys are usually stored in `~/.ssh/`. Though they can go anywhere else, too - just have to tell ssh where to find them.
 
 ```
 ~/.ssh/id_rsa
