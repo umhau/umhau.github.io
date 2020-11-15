@@ -16,7 +16,7 @@ Found a cheap FPGA on ebay - 10 bucks. Can't say if it's any good yet, but it's 
 
 The collection of tools I had to put together to get code onto it is somewhat daunting, and I keep forgetting how to do it all. 
 
-There's two parts to process of programming an FPGA. First part, compile your code into a 'bitstream' - the FPGA equivalent of a binary, I guess. Second part, upload the bistream to the FPGA.  Each part is made harder by the proprietary nature of most of the tools involved. (Otherwise, the whole thing could be wrapped up into one or two commands, and I could run it from my linux laptop.)
+There's two parts to process of programming an FPGA. First part, compile your code into a 'bitstream' - the FPGA equivalent of a binary, I guess. Second part, upload the bistream to the FPGA.  Each part is made harder by the proprietary nature of most of the tools involved. (Otherwise, the whole thing could be wrapped up into one or two scripted, automatically-run commands, and I could run it from my linux laptop.)
 
 You'll need Quartus II, version 13. 
 
@@ -30,7 +30,7 @@ Open it.
 
 I still have the project files from last time, so I'll just go over the various settings. 
 
-Choose the device: the specific FPGA chip on whatever dev board you have. 
+Choose the device: the specific FPGA chip on whatever dev board you have. Note that the chip I'm using is highlighted below: `EP2C5T144C8`.
 
 ![](https://raw.githubusercontent.com/umhau/umhau.github.io/master/images/quartus2-device-window.png)
 
@@ -67,7 +67,7 @@ Open the programmer.  Right click on the selected option below and choose 'open'
 
 ![](https://raw.githubusercontent.com/umhau/umhau.github.io/master/images/quartus2-program-device-open.png)
 
-Now you're here: except this is the finished product. You'll have to make your programmer match mine. 
+Below is the window you get when the programmer opens. I've already filled in the information, so you'll have to just make your programmer match mine. 
 
 ![](https://raw.githubusercontent.com/umhau/umhau.github.io/master/images/quartus2-programmer-window.png)
 
