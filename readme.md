@@ -27,6 +27,11 @@ I don't think that's necessary for getting the site to run on github pages, thou
 
 ### utility
 
-* full text search.
+* full text search. I think this is part of the solution:
+
+```
+"content"  : "{{ page.content | strip_html | strip_newlines }}"
+```
+
 * find a simple way to add more posts.
 * add category for 'procedures' that I do on a regular basis - backing up computers, installing the deps for working with the blog, etc.  
