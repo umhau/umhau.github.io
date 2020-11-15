@@ -17,12 +17,10 @@ This site was transferred from [Google Blogger](https://nixingaround.blogspot.co
 
 ## Disclaimer
 
-I'm totally not responsible for anything.  All opinons given are irrelevant; all how-tos should be considered how-don'ts, the walkthroughs don't work, and all the links are broken. 
+I'm totally not responsible for anything.  All opinons given are irrelevant; all how-tos should be considered how-don'ts, the walkthroughs will fail, and all the links are broken. 
 
 If you do anything I describe here, your laptop will spontaneously catch fire and your server will start a civil war in a second world country.  
 
-If you ever mention this blog, your colleagues will look at you funny over their glasses and make odd sniffing noises, and whenever you walk over they'll suddenly stop talking.  
+## questions? comments? better ideas? comprehensive refutations? 
 
-## questions? comments? love it? hate it? 
-
-Shoot me an email! Especially if you've got something interesting on your mind. 
+Shoot me an [email](mailto:um.hau@outlook.com)! Especially if there's something interesting on your mind. 
