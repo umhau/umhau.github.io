@@ -51,6 +51,8 @@ Xen likes to talk about 'domains': `dom0`, `domU`, etc. There's probably some in
 
 A 'domain' is just a strange, xen-specific way of saying 'virtual machine'. 
 
+### pools
+
 There's also a concept called 'pools'; that's a collection of physical hypervisor host machines linked together. I don't know all that's involved with the linkage, but I think it enhances the ability of the machines to behave as a single, larger host. Among other things, I think it allows VMs to be migrated from one physical host to another.
 
 ## weights and caps
@@ -149,7 +151,7 @@ cpu MHz         : 3292.542
 Since I want to try and run my 'alpine standard' VM at 1GHz, the percent I need is 
 
 ```
-1 / 3.293 = 0.3037
+1 GHz / 3.293 GHz = 0.3037 = 30%
 ```
 
 Thus, 
@@ -162,4 +164,4 @@ Done.  This can be scripted, if you like, for when you start up a new VM. I thin
 
 ## the horse's mouth
 
-https://wiki.xen.org/wiki/Credit_Scheduler
+This is the source for all, or nearly all, of what's on this post: https://wiki.xen.org/wiki/Credit_Scheduler
