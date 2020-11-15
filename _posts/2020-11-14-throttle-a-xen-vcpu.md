@@ -13,17 +13,17 @@ tags:
 categories: walkthroughs
 ---
 
-This is a tough one. It took me 4 tries just to figure out the search terms that could lead me to a useful page.  The winning combo was "xen vcpu cap usage". How about that for cryptic? 
+This is a tough one. It took me 4 tries just to learn enough to figure out the search terms that could lead me to a useful page.  The winning combo was "xen vcpu cap usage". How about that for cryptic? 
 
-As I may have mentioned before (or maybe it's still in the drafts folder?), I'm trying to work out how to run a ton of small VMs on top of xcp-ng, and part of their smallness is that I want to cap the vcpu speed - as perceived by the virtual machine, the core it's using should look like it's only 1GHz instead of whatever 3-ish GHz the hypervisor itself has.  This is a difficult proposition. 
+As I may have mentioned before (or maybe it's still in the drafts folder?), I'm trying to work out how to run a ton of small VMs on top of xcp-ng, and part of their smallness is that I want to cap the vcpu speed - as perceived by the virtual machine, the core it's using should behave as if it's only running at 1GHz instead of whatever 3-ish GHz the hypervisor itself is running at.  This is a difficult proposition. 
 
 ## introductory materials
 
-### time management skills
+### time management
 
-Obviously, there's going to be some trickery involved. Having multiple virtual cpus on a single physical core doesn't somehow duplicate the physical core, and the virtual cpu doesn't _magically_ slow down it's processing speed relative to the physical core. I think.
+Obviously, there's going to be some trickery involved. Having multiple virtual cpus on a single physical core doesn't somehow duplicate the physical core, and the virtual cpu doesn't 'magically' slow down its processing speed relative to the physical core. I think.
 
-Instead, it looks like what xen does is allocate slices of time in a round-robin format: virtual machine A gets a few milliseconds of execution time, then virtual machine B gets a turn, and so on. This accomplishes the sharing -- it puts several virtual cores on a single physical core.  These timeslices measure the minimum time a VCPU is generally given every time it gets a turn on the physical core.  The variable is called `tslice_ms`, the units are milliseconds, and it can be adjusted at runtime with:
+Instead, it looks like what xen does is allocate slices of time in a round-robin format: virtual machine A gets a few milliseconds of execution time, then virtual machine B gets a turn, and so on. This accomplishes the sharing -- it lets several virtual cores exist on the same physical core.  These timeslices measure the minimum time a VCPU is generally given every time it gets a turn on the physical core.  The variable is called `tslice_ms`, the units are milliseconds, and it can be adjusted at runtime with:
 
 ```
 xl sched-credit -t 10
