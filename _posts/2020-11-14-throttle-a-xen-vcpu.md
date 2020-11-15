@@ -160,7 +160,13 @@ Thus,
 xl sched-credit -d 'alpine standard' -c 30
 ```
 
-Done.  This can be scripted, if you like, for when you start up a new VM. I think there's also a way to put it in a config script, but I'm not that fancy.
+Done.  You can test it by spiking the CPU usage on the virtual machine:
+
+```
+dd if=/dev/zero of=/dev/null
+```
+
+The capping process can be scripted, if you like, for when you start up a new VM. I think there's also a way to put it in a config script, but I'm not that fancy.
 
 ## the horse's mouth
 
