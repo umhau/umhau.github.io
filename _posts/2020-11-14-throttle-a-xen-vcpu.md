@@ -41,7 +41,7 @@ With me so far? Awesome. Things are gonna get hairy.
 
 ### what's a domain?
 
-Xen likes to talk about 'domains': `dom0`, `domU`, etc. There's probably some interesting details buried in the theory behind it, but the essence of the matter is that `dom0` is the guest virtual machine that manages the hypervisor, and `domu` refers to virtual machines spun up by the user.
+Xen likes to talk about 'domains': `dom0`, `domU`, etc. There's probably some interesting details buried in the theory behind it, but the essence of the matter is that `dom0` is the guest virtual machine that manages the hypervisor, and `domU` refers to virtual machines spun up by the user.
 
 ![](https://raw.githubusercontent.com/umhau/umhau.github.io/master/images/hypervisor-memory-usage-bare-metal-OS.png)
 
