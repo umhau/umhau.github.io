@@ -19,7 +19,6 @@ I don't think that's necessary for getting the site to run on github pages, thou
 
 ### aesthetic
 
-* the sidebar needs to accommodate being too short. create a media entry in the css file for limited height. (solution: hide categories list? display:__?)
 * removing the tag cloud scripts sped up the page regeneration from 4 sec to .2 sec. don't bring it back.
 * the sidebar looks unbalanced...center it (10% width on each side)
 * on each category page, make all pages in the category do infinite scroll under an `<hr>` line and the current list.
@@ -27,7 +26,7 @@ I don't think that's necessary for getting the site to run on github pages, thou
 
 ### utility
 
-* full text search. I think this is part of the solution:
+* full text search.  Will need a local copy of the site for testing. I think this is part of the solution:
 
 ```
 "content"  : "{{ page.content | strip_html | strip_newlines }}"
