@@ -21,7 +21,11 @@ As I may have mentioned before (or maybe it's still in the drafts folder?), I'm 
 
 ### time management skills
 
-Obviously, there's going to be some trickery involved -- having multiple virtual cpus on a single physical core doesn't somehow duplicate the physical core, and the virtual cpu doesn't magically slow down it's processing speed relative to the physical core. At least, there's no magic involved.  I think.
+Obviously, there's going to be some trickery involved -- having multiple virtual cpus on a single physical core doesn't somehow duplicate the physical core, and the virtual cpu doesn't _magically_ slow down it's processing speed relative to the physical core. 
+
+It's engineering, not magic.
+
+I think.
 
 Instead, it looks like what xen does is allocate slices of time in a round-robin format: virtual machine A gets a few milliseconds of execution time, then virtual machine B gets a turn, and so on. This accomplishes the sharing -- it puts several virtual cores on a single physical core.  These timeslices measure the minimum time a VCPU is generally given every time it gets a turn on the physical core.  The variable is called `tslice_ms`, the units are milliseconds, and it can be adjusted at runtime with:
 
