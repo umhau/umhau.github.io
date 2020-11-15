@@ -164,4 +164,4 @@ Done.  This can be scripted, if you like, for when you start up a new VM. I thin
 
 ## the horse's mouth
 
-This is the source for all, or nearly all, of what's on this post: https://wiki.xen.org/wiki/Credit_Scheduler
+[https://wiki.xen.org/wiki/Credit_Scheduler](https://wiki.xen.org/wiki/Credit_Scheduler)
