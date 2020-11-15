@@ -30,5 +30,5 @@ I don't think that's necessary for getting the site to run on github pages, thou
 "content"  : "{{ page.content | strip_html | strip_newlines }}"
 ```
 
-* find a simple way to add more posts.
+* find a simple way to add more posts: there's lots of small annoyances now, but nothing big.
 * add category for 'procedures' that I do on a regular basis - backing up computers, installing the deps for working with the blog, etc.  
