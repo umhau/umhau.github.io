@@ -26,15 +26,17 @@ Obviously, there's going to be some trickery involved. Having multiple virtual c
 Instead, it looks like what xen does is allocate slices of time in a round-robin format: virtual machine A gets a few milliseconds of execution time, then virtual machine B gets a turn, and so on. This accomplishes the sharing -- it lets several virtual cores exist on the same physical core.  These timeslices measure the minimum time a VCPU is generally given every time it gets a turn on the physical core.  The variable is called `tslice_ms`, the units are milliseconds, and it can be adjusted at runtime with:
 
 ```
-xl sched-credit -t 10
+xl sched-credit -s -t 10
 ``` 
+
+Note: in order to actually set the parameters for a whole pool of virtual machines ('pool' is defined later on), you have to use the -s argument.
 
 Every time a new VCPU takes a turn on the physical core, the data needed by the new VCPU has to be copied from RAM into the physical core's cache. This means there is a bare minimum amount of time that each VCPU should be allowed to run in order to improve efficiency -- a lot of time would be wasted if a new VCPU was started up, and as soon as it was done with its preparations was shut down again.  Thus, timeslices should not be made too short; longer turns, however, mean that VCPUs _waiting_ for their turn can be left waiting for a while and that's bad for audio processing, where a few tens of milliseconds is a noticable delay. The default timeslice is 30 milliseconds, but for some networking applications, audio, &c. where latency matters, a better timeslice would be closer to 10, 5 or even 1 ms.
 
 Similarly: different VCPUs can be given different priorities, and if a high priority VCPU wakes up and tries to interrupt a low-priority VCPU, then the low-priority VCPU will be interrupted before its timeslice is over. To maintain efficiency and prevent cores from wasting their preparation time, there is a bare minimum execution time guaranteed to every VCPU, regardless of priority. The default for this is 1000 microseconds, which is considered good.  The variable is called `ratelimit_us`, and the unit is microseconds. If it needs to be changed at runtime, the command is:
 
 ```
-xl sched-credit -r 1000
+xl sched-credit -s -r 1000
 ```
 
 With me so far? Awesome. Things are gonna get hairy.
@@ -68,6 +70,8 @@ The weight assigned to a domain (read: virtual machine) can range from 1 to 6553
 ```
 xl sched-credit -d [domain] -w [weight]
 ```
+
+Notice that since we're making a `sched-credit` adjustment that's specific to a domain, the `-s` argument is unneeded.
 
 A domain with a weight of 200 will get twice as much time on the physical CPU as a domain with a weight of 100, and it will get half as much time as a domain with a weight of 400.
 
@@ -130,7 +134,7 @@ Get the domain from the list.
 xl list
 ```
 
-Change the timeslice to something shorter - 5ms is good, 1ms might be better, depending.
+Change the timeslice to something shorter - 5ms is good, 1ms might be better, depending. Remember to use `-s`.
 
 ```
 xl sched-credit -s -t 5
@@ -142,31 +146,31 @@ Set the execution cap for the vm. Since this is relative to the speed of the phy
 cat /proc/cpuinfo
 ```
 
-You want the line that says `cpu MHz`. That's the current speed. The `model name` line has a speed as well, but that's just the marketing.  I got
+You want the line that says `cpu MHz`. That's the current speed. The `model name` line has a speed as well, but that's just the marketing.  I got:
 
 ```
 cpu MHz         : 3292.542
 ```
 
-Since I want to try and run my 'alpine standard' VM at 1GHz, the percent I need is 
+Since I want to try and run my 'alpine standard' VM at 1GHz, the percent I need is:
 
 ```
 1 GHz / 3.293 GHz = 0.3037 = 30%
 ```
 
-Thus, 
+Thus:
 
 ```
 xl sched-credit -d 'alpine standard' -c 30
 ```
 
-Done.  You can test it by spiking the CPU usage on the virtual machine:
+Done.  You can test it by spiking the CPU usage on the virtual machine; notice that on the VM, `htop` will show the usage at 100%, and XCP-ng Center will barely notice an uptick.  Spike the usage by copying a ton of zeros into 'nothing':
 
 ```
 dd if=/dev/zero of=/dev/null
 ```
 
-The capping process can be scripted, if you like, for when you start up a new VM. I think there's also a way to put it in a config script, but I'm not that fancy.
+This whole process of capping VCPU usage can be scripted, if you like, for when you start up a new VM. I think there's also a way to put it in a config script, but I'm not that fancy.
 
 ## the horse's mouth
 
