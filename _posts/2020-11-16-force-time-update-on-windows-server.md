@@ -12,7 +12,7 @@ tags:
 categories: memos
 ---
 
-One of my clients has a windows server, that's used as the time server for the local network. For some reason, the server itself stopped synchronizing with any external time servers. 
+One of my clients has a windows server that's used as the time server for the local network. For some reason, the server itself stopped synchronizing with any external time servers. 
 
 So all the windows machines on the network slowly drifted out of sync with the rest of the world. Of course, they were all in sync with each other, which led me to realize the source of the issue. 
 
