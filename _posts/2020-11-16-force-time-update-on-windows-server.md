@@ -8,6 +8,7 @@ tags:
 - powershell
 - NTP
 - time synchonization
+- sysadmin
 categories: memos
 ---
 
