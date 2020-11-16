@@ -16,11 +16,15 @@ One of my clients has a windows server, that's used as the time server for the l
 
 So all the windows machines on the network slowly drifted out of sync with the rest of the world. Of course, they were all in sync with each other, which led me to realize the source of the issue. 
 
-Do this in powershell:
+Do this in powershell. First make sure the machine has a list of time servers to synchronize from.
 
 ```
 w32tm /config /update /manualpeerlist:"0.pool.ntp.org,0x8 1.pool.ntp.org,0x8 2.pool.ntp.org,0x8 3.pool.ntp.org,0x8" /syncfromflags:MANUAL
+```
 
+Then force windows to actually synchronize.
+
+```
 w32tm /resync /force
 ```
 
