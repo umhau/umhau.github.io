@@ -118,9 +118,11 @@ Compare the above list to the list of virtual machines as presented by XCP-ng Ce
 
 ![](https://raw.githubusercontent.com/umhau/umhau.github.io/master/images/vm-list.png)
 
-There's a couple things to notice here. First, the name of the VM as given in the image is the same name used by the `xl` command. Super convenient.
+There's a few things to notice here. First, the name of the VM as given in the image is the same name used by the `xl` command. Super convenient.
 
-However, if the name of the VM is changed in XCP-ng Center, the name is _not changed_ in the backend, in that list. Notice that I renamed `Ubuntu Bionic Beaver 18.04 (2)` to `blog management` (yes, that's where I'm hosting the local copy of this blog -- Ubuntu Mini is surprisingly convenient), but it's still got the original name on the command line. It may be waiting for a reboot of the hypervisor, or it may not be. 
+Second, notice that only VMs that are currently running will be shown on the command line list. 
+
+Finally: if the name of the VM is changed in XCP-ng Center, the name is _not changed_ in the backend, in that list. Notice that I renamed `Ubuntu Bionic Beaver 18.04 (2)` to `blog management` (yes, that's where I'm hosting the local copy of this blog -- Ubuntu Mini is surprisingly convenient), but it's still got the original name on the command line. It may be waiting for a reboot of the hypervisor, or it may not be. 
 
 Just be warned -- the first name you pick might be permanent, and you should check for the correct name on the command line.
 
