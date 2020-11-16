@@ -34,6 +34,7 @@ java -version
 ```
 
 Pull down the unifi package into the `/tmp/` folder and install it.
+
 ```
 cd /tmp/
 wget https://dl.ui.com/unifi/6.0.22/unifi_sysvinit_all.deb
@@ -68,4 +69,4 @@ sudo service unifi status
 
 ### source
 
-https://gist.github.com/codeniko/381e8be3b0236a602e02f0a9fac13b3d
+[https://gist.github.com/codeniko/381e8be3b0236a602e02f0a9fac13b3d](https://gist.github.com/codeniko/381e8be3b0236a602e02f0a9fac13b3d)
