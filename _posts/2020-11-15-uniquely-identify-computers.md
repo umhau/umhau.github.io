@@ -39,4 +39,4 @@ ifconfig -a | awk '/^[a-z]/ { iface=$1; mac=$NF; next } /inet addr:/ { print ifa
 udevadm info --query=all --name=/dev/sdX | grep ID_SERIAL
 ```
 
-Apparently, only Pentium III CPUs have accessible serial numbers, that avenue is out.
+Apparently, only Pentium III CPUs have accessible serial numbers, so getting CPU IDs is out.
