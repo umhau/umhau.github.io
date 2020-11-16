@@ -24,3 +24,5 @@ w32tm /resync /force
 ```
 
 That forced the server to resync it's clocks, which in turn resynchronized the clocks on all the local windows machines. It doesn't solve the underlying issue, and I don't know why the server stopped synchronizing; but that can be solved after the immediate problem is addressed. If you have even a modicum of discipline to follow through on the proper fix, that attitude won't lead to tech debt.
+
+Source: https://superuser.com/a/1363801
