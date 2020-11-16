@@ -25,16 +25,18 @@ Remember that IP address. You'll need it to access the controller interface when
 
 ### installation
 
-Install dependencies and software.
+Install java.
 
 ```
 sudo apt-get update
 sudo apt-get install openjdk-8-jre-headless
 java -version
+```
 
+Pull down the unifi package into the `/tmp/` folder and install it.
+```
 cd /tmp/
 wget https://dl.ui.com/unifi/6.0.22/unifi_sysvinit_all.deb
-
 sudo apt-get install ./unifi_sysvinit_all.deb
 cd
 ```
