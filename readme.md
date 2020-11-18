@@ -10,8 +10,10 @@ Do this on ubuntu, unless you want to mess with updating Ruby past version 2.3. 
 git clone https://github.com/umhau/umhau.github.io.git
 cd umhau.github.io
 bash install_dependencies.sh
-bundle exec jekyll serve
+bundle exec jekyll serve --host 0.0.0.0
 ```
+
+The `--host 0.0.0.0` bit means that the site is accessible at that port and the machine's IP on the local network.
 
 I don't think that's necessary for getting the site to run on github pages, though.  It is necessary, however, if the site is going to be hosted somewhere else.
 
@@ -24,10 +26,11 @@ I don't think that's necessary for getting the site to run on github pages, thou
 
 ### utility
 
-* full text search.  Will need a local copy of the site for testing. I think this is part of the solution:
+* full text search.  Will need a local copy of the site for testing. See also: https://github.com/christian-fei/Simple-Jekyll-Search/wiki.  I think this is part of the solution:
 
 ```
 "content"  : "{{ page.content | strip_html | strip_newlines }}"
+{{ content }}
 ```
 
 * find a simple way to add more posts: there's lots of small annoyances now, but nothing big.
