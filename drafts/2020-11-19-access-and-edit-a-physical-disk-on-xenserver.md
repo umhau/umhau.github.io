@@ -18,7 +18,7 @@ It looks like the virtual disks on a xen server are some weird hybrid of files a
 
 In order to manipulate a virtual disk, an 'actual' file has to be created. This can be done at least two ways: via the creation of a snapshot, or by directly exporting it. I'm not sure what the pros and cons are yet, which is why this post is labeled under 'experiments' rather than 'walkthroughs'.
 
-In my case, I'm trying to find a programmatic way to start and stop hundreds of tiny virtual machines and be able to track the IP addresses and custom ssh keys / root passwords of each.  In other words, I need to be able to modify the hostname and ssh keys of each VM as it's created, and it shouldn't take more than about 30 seconds to go from start to finish.
+Note: this post doesn't actually have a solution. It's a record of some research I did, which eventually pointed me in a different direction altogether. Negative results only, though I might find some of the pieces useful in the future.
 
 ### exporting
 
