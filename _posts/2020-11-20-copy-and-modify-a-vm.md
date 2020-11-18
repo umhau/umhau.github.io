@@ -1,5 +1,6 @@
 ---
-layout: copy and modify a virtual machine
+layout: post
+title: copy and modify a virtual machine
 author: umhau
 description: "automate the deployment of virtual machines"
 tags: 
