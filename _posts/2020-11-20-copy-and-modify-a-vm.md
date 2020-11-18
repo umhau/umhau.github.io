@@ -53,7 +53,7 @@ xe vm-list
 
 It may be useful to store that UUID in a file for easy access, since it'll be needed every time a new VM is spun up. 
 
-e.g., store the UUID in a file:
+e.g.:
 
 ```
 echo "long-uuid-string" > vm-template.uuid

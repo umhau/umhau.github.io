@@ -18,28 +18,41 @@ permalink: /explore/
         <input type="text" id="search-input" placeholder="search tags and titles" onkeydown="onkeypressed(event, this);" autofocus>
 </div>
 
-<ul id="results-container"; align="center"></ul>
+<ul id="results-container"; align="left"></ul>
 
 <hr>
 
-<div id="archives">
-        {% for category in site.categories %}
-          <div class="archive-group">
-            {% capture category_name %}{{ category | first }}{% endcapture %}
-            <div id="#{{ category_name | slugize }}"></div>
-            <p></p>
-            
-            <h3 class="category-head">{{ category_name }}</h3>
-            <a name="{{ category_name | slugize }}"></a>
-            {% for post in site.categories[category_name] %}
-            <article class="archive-item">
-              <li><a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a></li>
-            </article>
-            {% endfor %}
-          </div>
-        {% endfor %}
-        </div>
+<div id="archives"; align="left">
 
+  {% for category in site.categories %}
+
+    <div class="archive-group">
+
+      {% capture category_name %}{{ category | first }}{% endcapture %}
+      <div id="#{{ category_name | slugize }}"></div>
+      <p></p>
+      
+      <h3 class="category-head">{{ category_name }}</h3>
+      <a name="{{ category_name | slugize }}"></a>
+
+      {% for post in site.categories[category_name] %}
+
+      <article class="category-head">
+      <!-- <article class="archive-item"> -->
+
+        <li><span>{{ post.date | date_to_string }}</span> &nbsp; <b href="{{ post.url }}">{{ post.title }}</b></li>
+
+        <!-- <li><a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a></li> -->
+        
+      </article>
+
+      {% endfor %}
+
+      </div>
+
+  {% endfor %}
+
+  </div>
 
 <!-- script pointing to jekyll-search.js -->
 <script src="{{ site.baseurl }}/js/simple-jekyll-search.min.js"></script>
