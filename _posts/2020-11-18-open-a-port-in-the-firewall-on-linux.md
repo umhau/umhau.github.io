@@ -16,6 +16,12 @@ Check the status of the firewall:
 ufw status
 ```
 
+Turn the firewall on, off, or restart it. Use the `--dry-run` option to see what happens before you do it for real.
+
+```
+ufw [--dry-run] enable|disable|reload
+```
+
 Users can specify rules using either a simple syntax or a full syntax. The simple syntax only specifies the port and optionally the protocol to be allowed or denied on the host. 
 
 Both syntaxes support specifying a comment for the rule. For existing rules, specifying a different comment updates the comment and specifying '' removes the comment.
