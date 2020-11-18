@@ -37,12 +37,12 @@ permalink: /explore/
 
       {% for post in site.categories[category_name] %}
 
-      <article class="category-head">
-      <!-- <article class="archive-item"> -->
+      <!-- <article class="category-head"> -->
+      <article class="archive-item">
 
-        <li><span>{{ post.date | date_to_string }}</span> &nbsp; <b href="{{ post.url }}">{{ post.title }}</b></li>
+        <!-- <li><span>{{ post.date | date_to_string }}</span> &nbsp; <b href="{{ post.url }}">{{ post.title }}</b></li> -->
 
-        <!-- <li><a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a></li> -->
+        <li><a href="{{ site.baseurl }}{{ post.url }}">{{post.title}}</a></li>
         
       </article>
 
