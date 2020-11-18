@@ -70,3 +70,4 @@ Now. Opening up the virtual hard drive associated with the VM is a no-go; I trie
 As a result: to edit the contents of the VM with a script, judicious use of `ssh` and `scp` will be required. The former can execute arbitrary commands inside the VM (remember how you put a root ssh key in the template VM?), and the latter can upload config files, scripts and tarballs into the VM. That's how we're going to do the customization.
 
 First, we need the IP address of the VM. To find that, we need the MAC address: the MAC address is a hardware configuration, which we can obtain through xen. Once we have that, we can search the assigned IP addresses for the one associated with that MAC address.
+
