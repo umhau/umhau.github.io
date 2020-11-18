@@ -19,9 +19,9 @@ I'm trying to find a programmatic way to start and stop hundreds of tiny virtual
 - an ssh key should be generated.
 - the root password should be changed.
 
-You might be tempted to try and copy the virtual disk, mount it, make the edits, and then start the new VM with all-fresh settings -- I was. However, it turns out that the virtual disk is very hard to access; for one thing, there isn't (apparently) even an image on-disk that can be mounted: it has to be exported, then [converted](https://github.com/eriklax/xva-img), then mounted, then re-converted, then imported. Not gonna happen.
+You might be tempted to try and copy the virtual disk, mount it, make the edits, and then start the new VM with all-fresh settings -- I was. However, it turns out that the virtual disk is very hard to access.
 
-Instead, we'll take a different route. I'm going to manually set up the first VM, then snapshot it and create a template from the snapshot. Then each subsequent VM will be created using the snapshot; I'll then change the MAC address, and after it's turned on, ssh in and perform the needed changes.  Should be a piece of cake.
+Instead, we'll take a different route. I'm going to manually set up the first VM, then snapshot it and create a template from the snapshot. Then each subsequent VM will be created using the snapshot; I'll then change the MAC address, and after it's turned on, `ssh` in and perform the needed changes.  Should be a piece of cake.
 
 ## set up the initial virtual machine
 
