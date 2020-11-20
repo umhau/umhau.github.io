@@ -40,3 +40,11 @@ su
 ```
 
 That command, in general, switches you to the specified account. If no argument is given, it assumes you want the `root` account.
+
+## turning it off
+
+The shutdown command isn't used on Alpine. Instead, use:
+
+```
+poweroff
+```
