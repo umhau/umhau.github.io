@@ -48,3 +48,11 @@ The shutdown command isn't used on Alpine. Instead, use:
 ```
 poweroff
 ```
+
+## install man pages
+
+Turns out, it doesn't come with man pages installed. Install them:
+
+```
+apk add mandoc man-pages
+```
