@@ -7,6 +7,12 @@ title: Weird.
 
 This blog attempts to be the sort of resource I find most helpful: intended for people who are way out of their depth, know very little about the subject matter and will probably break things, but still want to forge ahead with their cool project.
 
+### Philosophy
+
+> A program is generally exponentially complicated by the number of notions that it invents for itself. To reduce this complication to a minimum, you have to make the number of notions zero or one, which are two numbers that can be raised to any power without disturbing this concept. Since you cannot achieve much with zero notions, it is my belief that you should base systems on a single notion.
+
+- Ken Thompson
+
 ### How to use this site
 
 Use _explore_ to see a sorted list of all posts on the site, and access the search function.  The sidebar lists categories of posts available to browse.
