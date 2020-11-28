@@ -9,9 +9,7 @@ This blog attempts to be the sort of resource I find most helpful: intended for 
 
 ### Philosophy
 
-> A program is generally exponentially complicated by the number of notions that it invents for itself. To reduce this complication to a minimum, you have to make the number of notions zero or one, which are two numbers that can be raised to any power without disturbing this concept. Since you cannot achieve much with zero notions, it is my belief that you should base systems on a single notion.
-
-- Ken Thompson
+"A program is generally exponentially complicated by the number of notions that it invents for itself. To reduce this complication to a minimum, you have to make the number of notions zero or one, which are two numbers that can be raised to any power without disturbing this concept. Since you cannot achieve much with zero notions, it is my belief that you should base systems on a single notion." - Ken Thompson
 
 ### How to use this site
 
