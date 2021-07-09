@@ -36,4 +36,4 @@ I don't think that's necessary for getting the site to run on github pages, thou
 * find a simple way to add more posts: there's lots of small annoyances now, but nothing big.
 * add category for 'procedures' that I do on a regular basis - backing up computers, installing the deps for working with the blog, etc. 
 * multi-word categories: https://www.azurepatterns.com/2020/03/11/jekyll-categories
-* condense categories to only 2 or so? (e.g., walkthroughs & 'dev notes', to make space for larger variety of topics)
+* condense categories to only 2 or so? (e.g., procedures, experiments, & 'dev notes', to make space for larger variety of topics)
