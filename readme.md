@@ -19,6 +19,10 @@ I don't think that's necessary for getting the site to run on github pages, thou
 
 ## TODO
 
+### portfolio
+
+* create a section for finished projects: the sermon stream setup, the disk mounting tool, the beowulf cluster, the camera monitoring system. Call it the 'projects' section: the high-level projects that might be the culmination of many other posts on the site.
+
 ### aesthetic
 
 * the sidebar looks unbalanced...center it (10% width on each side)
