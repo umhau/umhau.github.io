@@ -3,17 +3,17 @@ layout: default
 title: Weird.
 ---
 
-### Welcome | About
+### Welcome
 
 This blog attempts to be the sort of resource I find most helpful: intended for people who are way out of their depth, know very little about the subject matter and will probably break things, but still want to forge ahead with their cool project.
 
-### Philosophy
+### General Philosophy, To Be Inflicted Wherever Possible
 
 "A program is generally exponentially complicated by the number of notions that it invents for itself. To reduce this complication to a minimum, you have to make the number of notions zero or one, which are two numbers that can be raised to any power without disturbing this concept. Since you cannot achieve much with zero notions, it is my belief that you should base systems on a single notion." - Ken Thompson
 
 ### How to use this site
 
-Use _explore_ to see a sorted list of all posts on the site, and access the search function.  The sidebar lists categories of posts available to browse.
+Use [explore](https://umhau.github.io/explore/) to see a sorted list of all posts on the site, and access the search function.  The sidebar lists categories of posts available to browse.
 
 ### Historical Note
 
@@ -21,9 +21,9 @@ This site was transferred from [Google Blogger](https://nixingaround.blogspot.co
 
 ### Disclaimer
 
-I'm totally not responsible for anything.  All opinons given are irrelevant; all how-tos should be considered how-don'ts, the walkthroughs will fail, and all the links are broken. 
+I'm totally not responsible for anything.
 
-If you do anything I describe here, your laptop will spontaneously catch fire and your server will start a civil war in a second world country.  
+The opinons given here are irrelevant.  The walkthroughs are going to break your system.  All the links are broken, except the ones that host viruses. If you do anything I describe here, your hat will combust and your laptop will start a civil war in a third world country.
 
 ### questions? comments? better ideas? comprehensive refutations? 
 
