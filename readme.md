@@ -23,6 +23,14 @@ I don't think that's necessary for getting the site to run on github pages, thou
 
 * create a section for finished projects: the sermon stream setup, the disk mounting tool, the beowulf cluster, the camera monitoring system. Call it the 'projects' section: the high-level projects that might be the culmination of many other posts on the site.
 
+### more posts:
+
+* walkthrough my custom OS installation setup.  
+* walkthrough some of the "unfinished, finished" projects: e.g., the RPI secretary project (that one's significant because it contains a complete init system)
+* minecraft setup scripts
+* connections script - RDP, ssh, sshfs all wrapped up in a single easy script.
+* powershell installation script (nothing fancy except it's my first real ps script)
+
 ### aesthetic
 
 * the sidebar looks unbalanced...center it (10% width on each side)
