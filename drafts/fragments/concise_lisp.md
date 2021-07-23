@@ -1,0 +1,1 @@
+This is my foray into learning lisp. Rather than attempting to learn some part of the greater whole of Common Lisp, I'm using a smaller variation. 
