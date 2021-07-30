@@ -82,6 +82,8 @@ to install python 2.7 - but to get that full package name, I have to do CTRL-F i
 
     pkg_add nano
 
+This can be simplified by an alias; e.g., `alias i='pkg_add '` and `alias r='pkg_delete '`.
+
 ## Turning the Computer Off
 
 ### Restarting
