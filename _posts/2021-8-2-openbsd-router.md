@@ -16,15 +16,13 @@ tags:
 categories: walkthroughs
 ---
 
-# OpenBSD Router
-
 One of my clients has a PFSense box and Active Directory box on-premise. I'd like to recombine their functions into an OpenBSD box for networking, and a Samba box (or two) for AD user authentication and the fileserver. This post covers the process of building the OpenBSD box. Additionally, I'm building a very similiar OpenBSD box for my personal network; given the similarity, I'll start the process identically, and comment on the divergence later, as a couple of addendums / diffs. 
 
 I remain blown away by the quality of the OpenBSD documentation. Given just how amazingly good it is, I'm going to quote extensively from the online documentation pages - this post may turn out to be an edited, annotated collection from those docs. Usually my posts require a lot more work than that, but these guys know how to write. Kudos.
 
 As it turns out, most of the comments and additions I'm making are definitions and explanations - I'm working off of the 'how to build a router' [page](https://www.openbsd.org/faq/pf/example1.html), but didn't know a lot of the terminology and concepts. So after a brief stint reading (nearly) all the `PF` docs, I'm back - and ready to write this post with a lower assumption of prior knowledge.
 
-## Introduction
+# Introduction
 
 This device we propose to build sits between your home network and the rest of the internet. It's a _router_: what's usually, in a home environment, a wifi router installed by the internet company. This thing creates the local subnet, manages DHCP queries, and (hopefully) runs a firewall of some kind. I say this, not to impune your intelligence, but to estabilsh clearly that that is, indeed, the sort of device we're talking about here. 
 
@@ -32,15 +30,15 @@ Sometimes we (I...) can get into the weeds so far -- trying to fix a 10-years-ou
 
 As such, there's some things that we want to set up and / or configure.  Some are fundamental, some are just icing, and some are just settings to set.
 
-### Useful links: 
+## Useful links: 
 
 - [Installing OpenBSD](https://umhau.github.io/setting-up-openbsd/)
 - [Building an OpenBSD router](https://www.openbsd.org/faq/pf/example1.html)
 - [openbsd networking](https://www.openbsd.org/faq/faq6.html)
 
-### Fundamental: 
+## Fundamental: 
 
-- [ ] **Network Address Translation** ([NAT](https://www.openbsd.org/faq/pf/nat.html)). This is another way of saying that since the Internet Service Provider (ISP) generally gives out a limited number of IP addresses, we have the _router_ create a subnet for the local devices to use. This is why we have an 'external' IP address, and an 'internal' IP address: all the devices share that external IP address, which could be anything: `143.15.27.189`, for instance, while the local network usually gives you an IP address that looks something like: `192.168.1.*`. 
+[ ] **Network Address Translation** ([NAT](https://www.openbsd.org/faq/pf/nat.html)). This is another way of saying that since the Internet Service Provider (ISP) generally gives out a limited number of IP addresses, we have the _router_ create a subnet for the local devices to use. This is why we have an 'external' IP address, and an 'internal' IP address: all the devices share that external IP address, which could be anything: `143.15.27.189`, for instance, while the local network usually gives you an IP address that looks something like: `192.168.1.*`. 
 
 Not everything is just software: in order for this new OpenBSD box to function as intended, there actually have to be two cables attached: one for the connection to the outside world, one for the connection to the smaller world inside. The 'outside world', in this case, is called the Wide Area Network (WAN), and the 'smaller inside world' with the local subnet is called the Local Area Network (LAN).  If you've heard of these terms before, now you know where they come from.
 
@@ -56,7 +54,7 @@ If you don't set this up, your router probably won't work, and you'll probably h
 
 Part of the firewall is [Port Forwarding](https://www.openbsd.org/faq/pf/rdr.html), which lets me do things like host a public website from a server inside the local network, or ssh into one of my machines when I'm not at home (possibly using a 'jump server', though I only heard of that term after I called mine a 'pivot server').
 
-### Icing (additional settings & functions)
+## Icing (additional settings & functions)
 
 - [ ] **DNS caching**. The 'natural' way to connect to another server, on the local network or on the wider internet, is through IP addresses like `192.168.1.23` (a local device), or `80.82.77.84` (a device/server on the WAN).  
 
@@ -72,9 +70,9 @@ I also want to set up a VPN-based LAN that I can share with my friends - a sort 
 
 Finally, I want to be able to connect to my home network remotely, and I wonder if a VPN is the best way to do that. However, that would mean disabling the VPN while those devices are on the home network, since otherwise there would be strange loops.
 
-## Initial System Configuration
+# Initial System Configuration
 
-### Hardware Arrangement
+## Hardware Arrangement
 
 [Hardware requirements.](https://www.openbsd.org/faq/pf/perf.html)
 
@@ -86,7 +84,7 @@ Just make sure the firmware is installed.
 	
 This can't be done without an internet connection, but will make sure that if the wifi card firmware is officially supported, it is installed without issue. [Supported wifi cards](https://www.openbsd.org/faq/faq6.html#Wireless).
 
-### package installation
+## package installation
 
 Make sure we can install packages. You only need one of the following two lines; use whichever works better.
 
@@ -111,7 +109,7 @@ Search for packages by name with
 
 
 
-### network devices
+## network devices
 
 _I don't think this section is needed._
 
@@ -124,9 +122,9 @@ To apply changes, use:
 	sh /etc/netstart
 
 
-## Router Setup
+# Router Setup
 
-### Network Definition
+## Network Definition
 
 First, let's outline how I'm setting up my local network. This router is going to be accessing the outside internet through a wireless connection - remember how I mentioned that your wifi card might need firmware, that has to be downloaded from online? Yeah...that was fun.  
 
@@ -172,7 +170,7 @@ BTW, I'm pretty sure there's a typo in the OpenBSD [doc](https://www.openbsd.org
 
 ...pretty sure. yeah.
 
-### Dynamic Host Configuration Protocol (DHCP)
+## Dynamic Host Configuration Protocol (DHCP)
 
 That's a really fancy way of saying 'this is the program that gives devices IP addresses'.  Since we're building a router, that's this baby.
 
@@ -207,9 +205,9 @@ Also note there are other options here: if you set up a domain name for the whol
 
 
 
-### Firewall: the PF Packet Filter
+## Firewall: the PF Packet Filter
 
-#### Intro
+### Intro
 
 Finally! The part we've all been waiting for. Previously, we've described the paths along which data may flow; now we get to be choosy, and filter the data to determine which datums get to use which paths. We generally talk about the units of data as _packets_, which have _headers_ and _bodies_.  
 
@@ -233,7 +231,7 @@ Things get more complicated when some of the parts are encrypted, or the body is
 
 So. We need to decide how to sort these packets, as they pass through the router. Remember, a packet can only be sorted / filtered by the router _if it passes through the router_.  Sometimes it won't, when you might think it would.
 
-#### Runtime Options
+### Runtime Options
 
 Note, `#` can be used to insert comments.
 
@@ -273,7 +271,7 @@ The loopback device (`lo0`) is a virtual device that doesn't have any traffic...
 
 > Skip all PF processing on interface. This can be useful on loopback interfaces where filtering, normalization, queueing, etc, are not required. This option can be used multiple times. By default, this option is not set. 
 
-#### Rules
+### Rules
 
 Next we're going to do the actual packet processing; previously, we were just setting some general options, now we set up rules that run per-packet. As you read through, imagine holding a single packet in one hand, and this list of rules in the other. Where does the packet say it came from? Where does the packet say it's going? What is the format of the data it contains? Then, look at the list of rules, and read them from top to bottom.  Only some of the rules will match the packet: each rule says what sorts of packets it applies to, and what to do with the matching packets. Maybe one rule talks about blocking "UDP" packets, and another talks about letting all packets through that are coming out of the "em0" device. If you're holding a packet that is "UDP", and is, indeed, coming out of the "em0" device, then what do you do? One rule says to block it, another says to let it through. PF uses a simple solution: the _last matching_ rule wins.  Since the 'let all em0 packets through' rule came second, it gets the final say.  (This isn't actually crude, though it might seem that way at first: this allows us to define general rules first, and then precise exceptions later.  For instance, a good best-practice is to make the first rule block everything, and then later rules (which win against the older rule) create exceptions to let specific packets through.) 
 
