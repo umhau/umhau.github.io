@@ -1,3 +1,21 @@
+---
+layout: post
+title: OpenBSD Router
+author: umhau
+description: "from start to finish"
+tags: 
+- OpenBSD
+- networking
+- UNIX
+- router
+- NAT
+- PF
+- DHCP
+- DNS
+- firewall
+categories: walkthroughs
+---
+
 # OpenBSD Router
 
 One of my clients has a PFSense box and Active Directory box on-premise. I'd like to recombine their functions into an OpenBSD box for networking, and a Samba box (or two) for AD user authentication and the fileserver. This post covers the process of building the OpenBSD box. Additionally, I'm building a very similiar OpenBSD box for my personal network; given the similarity, I'll start the process identically, and comment on the divergence later, as a couple of addendums / diffs. 
@@ -170,7 +188,7 @@ Now, when a device sends DHCP IP address request packets that bubble up through 
 
 Finally, even though the DHCP server knows to answer packets on those two devices, it doesn't actually know what to say: what address ranges to hand out. Should it give out `192.168.1.5`? How about `10.10.10.123`? And what should it say, when the device on the subnet wants to know the IP address of the OpenBSD router itself?  We edit the file `/etc/dhcpd.conf` to hash this out.
 
-	option domain-name "example.org";
+	option domain-name "yourdomain.net";
 	
 	subnet 10.0.0.0 netmask 255.255.255.0 {
 		option routers 10.0.0.1;
@@ -189,22 +207,44 @@ Also note there are other options here: if you set up a domain name for the whol
 
 
 
-### Firewall
+### Firewall: the PF Packet Filter
 
-Finally! The part we've all been waiting for. Previously, we've described the paths, along which 'data' may flow; now we get to say what data can go where. We generally talk about the 'data' as _packets_, which have _headers_ and _bodies_.  
+#### Intro
 
-    [ header ] [ body ]
-	
-The headers contain information like 'where the data is going' and 'where it came from' and 'what sort of data it is'.  Sometimes there may be several layers to the header, and sometimes the body itself may be multiple packets stored together.  Things get more complicated when some of the parts are encrypted, or the body is itself an encrypted packet. It's all very confusing, but there's a definite logic to it: just a lot of possibilities.
+Finally! The part we've all been waiting for. Previously, we've described the paths along which data may flow; now we get to be choosy, and filter the data to determine which datums get to use which paths. We generally talk about the units of data as _packets_, which have _headers_ and _bodies_.  
+
+	+----------------------------+
+	| header |        body       |
+	+----------------------------+
+
+The headers contain information like _'where the data is going'_ and _'where it came from'_ and _'what sort of data it is'_.  Sometimes there may be several layers to the header, and sometimes the body itself may be multiple packets stored together.  This often happens when the packet is being forwarded from one place to another, or when the original sender knows it has to bounce the packet through multiple intermediaries in succession.
+
+	+--------+---------------------------+
+	|        | +--------+--------------+ |
+	| header | | header |     body     | |
+	|        | +--------+--------------+ |
+	+--------+---------------------------+
+
+Things get more complicated when some of the parts are encrypted, or the body is itself an encrypted packet. It's all very confusing, but there's a definite logic to it: just a lot of possibilities.
+
+	+----------+----------+----------------------------------+
+	| header 1 | header 2 | header 3 |         body          |
+	+----------+----------+----------------------------------+
 
 So. We need to decide how to sort these packets, as they pass through the router. Remember, a packet can only be sorted / filtered by the router _if it passes through the router_.  Sometimes it won't, when you might think it would.
 
-All our firewall configurations and alterations go in `/etc/pf.conf`, and are managed by...`PF`.  We're going to be dealing with three devices, so we'll enumerate them at the top of the file, with variables in case we change the ports.
+#### Runtime Options
+
+Note, `#` can be used to insert comments.
+
+All our firewall configurations and alterations go in `/etc/pf.conf`, and are managed by...`PF`.  This is a fairly involved program, though it can, once understood, at least appear logical - if not simple.  It's best if you stop reading this post now, go over [here](https://www.openbsd.org/faq/pf/), and read through the pages of this PF user's guide. Don't try to understand everything, but read it critically. Then come back here, and the rest of this section will appear familiar - and the implementation it describes will answer questions you may have generated while reading that user's guide.  Good? Good.
+
+Moving on rapidly. We're going to be dealing with three devices, so we'll enumerate them at the top of the file, with variables in case we change the ports.
 
     secure   = "em0"
     insecure = "em1"
 
-Instead of setting a similar variable for the device connected to the outside internet, there's a [group name](https://man.openbsd.org/ifconfig#group) that covers the [egress point](https://www.thefreedictionary.com/egress) of the local network: `egress`. 
+Instead of setting a similar variable for the device connected to the outside internet, there's a [group name](https://man.openbsd.org/ifconfig#group) that covers the [egress point](https://www.thefreedictionary.com/egress) of the local network: `egress`. This is a built-in variable name, that automatically refers to the device we need, so we don't even have to define it - unless we're doing something weird.
 
 >  In this case, the egress group is being used rather than a specific interface name. By doing so, the interface holding the default route (em0) will be chosen automatically. [src](https://www.openbsd.org/faq/pf/example1.html#pf)
 
@@ -221,7 +261,7 @@ Now we're going to set some PF [options](https://www.openbsd.org/faq/pf/options.
 
 	set block-policy drop
 	
-If we block a package, we will not send a return message saying that we blocked it; we'll just silently drop it.  
+If we block a package, setting the `block-policy` option to `drop` [instead of](https://man.openbsd.org/pf.conf#block) some form of `return`, that means we will not send a return message saying that we blocked it: we just [ghost](https://www.urbandictionary.com/define.php?term=Ghost) it.
 
 	set loginterface egress
 	
@@ -229,9 +269,32 @@ We're going to collect some logging information on the interface(s) that are con
 
 	set skip on lo0
 	
-The loopback device (`lo0`) is a virtual device that doesn't have an traffic...so we're going to just not do anything with it, and skip it.
+The loopback device (`lo0`) is a virtual device that doesn't have any traffic...so we're going to just not do anything with it, and skip it.
 
 > Skip all PF processing on interface. This can be useful on loopback interfaces where filtering, normalization, queueing, etc, are not required. This option can be used multiple times. By default, this option is not set. 
+
+#### Rules
+
+Next we're going to do the actual packet processing; previously, we were just setting some general options, now we set up rules that run per-packet. As you read through, imagine holding a single packet in one hand, and this list of rules in the other. Where does the packet say it came from? Where does the packet say it's going? What is the format of the data it contains? Then, look at the list of rules, and read them from top to bottom.  Only some of the rules will match the packet: each rule says what sorts of packets it applies to, and what to do with the matching packets. Maybe one rule talks about blocking "UDP" packets, and another talks about letting all packets through that are coming out of the "em0" device. If you're holding a packet that is "UDP", and is, indeed, coming out of the "em0" device, then what do you do? One rule says to block it, another says to let it through. PF uses a simple solution: the _last matching_ rule wins.  Since the 'let all em0 packets through' rule came second, it gets the final say.  (This isn't actually crude, though it might seem that way at first: this allows us to define general rules first, and then precise exceptions later.  For instance, a good best-practice is to make the first rule block everything, and then later rules (which win against the older rule) create exceptions to let specific packets through.) 
+
+There's an exception to this arrangement, however: if the rule contains the keyword `quick`, then if that rule applies to the packet you're holding, you apply that rule immediately and stop reading through the rest of the list of rules. 
+
+	match in all scrub (no-df random-id max-mss 1440)
+
+Gibberish, right? Not even greek to me.  Or not: if we break that up, `match in all` just means it literally matches all packets; the rest (inside the parentheses) is a definition of _how_ we're supposed to [scrub](https://man.openbsd.org/pf.conf#Scrub) the matching packets - which is all of them, since every packet matches. The `no-df random-id` bit deals with 'fragmented packets', which can apparently be generated by some operating systems. The `no-df` part removes the "don't fragment" bit on the packets, and the `random-id` makes sure the packets are still unique.  It's a bit strange, but there ya go. Kinda makes sense.  After that, the `max-mss 1440` enforces a "maximum segment size (MSS) for matching TCP packets"...which I take to mean, TCP packets can be broken into pieces, and we don't want the pieces to be too big.  Or something.  In general, this rule 'normalizes packets'.
+
+In case you're wondering how the syntax works (I was), there's a [section on grammar](https://man.openbsd.org/pf.conf#GRAMMAR). If you peruse that, do so from the top, down.  You'll notice that the unknown terms used in one definition are defined thereafter. It's actually fairly well-written.
+
+	match out on egress inet from !(egress:network) to any nat-to (egress:0)
+
+High-level: this rule 'performs network address translation, with the `egress` interface between the LAN and the public internet. Helpful? Didn't think so. The `match out` part means, according to the grammar section and some `CTRL-F`-ing in the pf.conf page and the building-a-router page, to [match](https://man.openbsd.org/pf.conf#match) packets going [out](https://man.openbsd.org/pf.conf#in) (instead of in); [on egress](https://man.openbsd.org/pf.conf#on) means we're looking at stuff happening on the network devices that are connected to the outside internet (as opposed to, say, `on em4`, or `any`, where we'd be dealing with just the specific `em4` device, or all of the devices); [inet](https://man.openbsd.org/pf.conf#inet) means we're only dealing with IPV4 packets, not the newer IPV6 packet type; 
+
+
+
+
+
+
+
 
 
 
