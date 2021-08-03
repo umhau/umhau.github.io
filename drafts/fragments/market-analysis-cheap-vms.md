@@ -4,11 +4,12 @@ I think the storage can be reasonable, 1-5 GB.
 
 What's the value of such a machine?
 
-- external node: 
-    * DIY VPN
-    * gateway for external connections to an internal network on a fluctuating or residential IP address
+- DIY VPN
+- gateway for external connections to an internal network on a fluctuating or residential IP address
 - webhost for a static site
 - git repo
 - anonymous server (purchase with crypto)
+- IRC server host
+- IRC client host
 
 Note that because I'm making such a list, I don't have a specific pain point in mind. However, that being said, I have noticed that no one has attempted to sell dollar-store virtual machines, and I would chalk it up to the demographic making these products (skews heavily towards nerds, and away from anyone who might have learned marketing), rather than any real problems associated with selling it that cheaply. And if there are such problems, I'd bet I can find acceptable trade-offs.
