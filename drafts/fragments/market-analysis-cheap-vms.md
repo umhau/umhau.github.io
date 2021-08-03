@@ -1,4 +1,8 @@
-When I say "cheap", I mean _cheap_: 1 USD per month per vm, maybe even $0.50.  For that price, there's some limitations: shared cores limit the speed to an effective 100 MHz, and Spectre (etc.) type attacks are totally possible. Unless the sheer number of concurrent VMs makes cache speculation impossible, since things change rapidly and randomly.  Also, dedicated IPV4 addresses are out of the question: possibly a shared IPV4 via ports, but more likely a dedicated IPV6 address. 
+When I say "cheap", I mean _cheap_: 1 USD per month per VM, maybe even $0.50, charged per month (or even per-day? that would hit sub-cent pricing though, so not practical without either using satoshis or credits).  For that price, there's some limitations: 
+
+- shared cores limit the speed to an effective 100 MHz
+- Spectre (etc.) type attacks are totally possible (unless the sheer number of concurrent VMs makes cache speculation impossible, since processes would be changing rapidly and randomly)
+- dedicated IPV4 addresses are out of the question: possibly a shared IPV4 via ports, but more likely a dedicated IPV6 address
 
 I think the storage can be reasonable, 1-5 GB.
 
