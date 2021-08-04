@@ -340,22 +340,22 @@ sudo mdadm --detail --scan | sudo tee -a /etc/mdadm/mdadm.conf
 # sudo update-grub              # WATCH OUT! could mess up a separate boot drive
 mdadm --verbose --detail -scan > /etc/mdadm.conf       # used to id RAID devices 
 
-sudo mkfs.ext4 -F /dev/$raid_multi_device                # Create the filesystem
+# sudo mkfs.ext4 -F /dev/$raid_multi_device                # Create the filesystem
 
-sudo mkdir -p /mnt/$raid_multi_device
-sudo mount /dev/$raid_multi_device /mnt/$raid_multi_device
+# sudo mkdir -p /mnt/$raid_multi_device
+# sudo mount /dev/$raid_multi_device /mnt/$raid_multi_device
 
 # add new mount to fstab
-echo "/dev/$raid_multi_device /mnt/$raid_multi_device ext4 defaults,nofail,discard 0 0" | sudo tee -a /etc/fstab
+# echo "/dev/$raid_multi_device /mnt/$raid_multi_device ext4 defaults,nofail,discard 0 0" | sudo tee -a /etc/fstab
 
 # verify
-df -h -t ext4
+# df -h -t ext4
 lsblk
 cat /proc/mdstat
 sudo mdadm --detail /dev/$raid_multi_device
 
-echo "check the progress of the drive mirroring process with the command: \"cat"
-echo " /proc/mdstat\""
+echo "check the progress of the drive mirroring process with the command:" 
+echo "\"cat /proc/mdstat\""
 ```
 
 ### /etc/udev/rules.d/65-md-incremental.rules
