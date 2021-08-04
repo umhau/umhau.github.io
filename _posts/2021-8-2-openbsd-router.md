@@ -245,6 +245,23 @@ Note, `#` can be used to insert comments.
 
 All our firewall configurations and alterations go in `/etc/pf.conf`, and are managed by...`PF`.  This is a fairly involved program, though it can, once understood, at least appear logical - if not simple.  It's best if you stop reading this post now, go over [here](https://www.openbsd.org/faq/pf/), and read through the pages of this PF user's guide. Don't try to understand everything, but read it critically. Then come back here, and the rest of this section will appear familiar - and the implementation it describes will answer questions you may have generated while reading that user's guide.  Good? Good.
 
+These are the options that I figure are worth using. See [here](https://www.openbsd.org/faq/pf/options.html) for the rest. 
+
+    set skip on interface
+
+Skip all PF processing on `interface`. This can be useful on loopback interfaces where filtering, normalization, queueing, etc, are not required. This option can be used multiple times. By default, this option is not set. 
+
+    set optimization option
+
+Optimize PF for one of the following network environments:
+
+- `normal` - suitable for almost all networks.
+- `high-latency` - high latency networks such as satellite connections.
+- `aggressive` - aggressively expires connections from the state table. This can greatly reduce the memory requirements on a busy firewall at the risk of dropping idle connections early.
+- `conservative` - extremely conservative settings. This avoids dropping idle connections at the expense of greater memory utilization and slightly increased processor utilization. 
+
+The default is normal. 
+
 Moving on rapidly. We're going to be dealing with three devices, so we'll enumerate them at the top of the file, with variables in case we change the ports.
 
     secure   = "em0"
@@ -372,130 +389,129 @@ This was explained earlier: since the last matching rule wins, after this (fairl
 
 	pass out quick inet
 
-This means that outgoing traffic that's IPV4 (that's more-or-less trivially 'everything', since this network doesn't deal with IPV6) will be allowed through.
+This means that all IPV4 traffic leaving the OpenBSD router (that's more-or-less trivially 'everything', since this network doesn't deal with IPV6) will be allowed to leave.  So, if the packet is trying to head out in the direction of the open internet, or if it's trying to leave the router in the direction of one of the local subnets, it will be allowed to leave.  This works because we're going to filter the packets as they come in, rather than when they leave. No need to analyze each packet twice.
 
-(THE ORDER IS WRONG? Wouldn't this invalidate the previous antispoof rules?)
+There's also a wrinkle here that might be confusing on the first read: this last rule seems to immediately allow all outbound packets to pass through - but what about the previous antispoof rule, and the 'martians' rules? Doesn't this `pass` rule come later and overwrite them? The answer is, notice that they're using the `quick` keyword: if the antispoof or 'martians' rules are matched, the rest of the list of rules is immediately ignored, and the packet is dropped. This `pass out quick inet` rule only applies to packets that didn't match those rules with `quick`.  
 
+    pass in on { $secure $insecure } inet
 
+Now we analyze the packets as they come into the router (`pass in`).  We're only looking at the packets on the internal networks, for now, so we restrict the rule to those.  Also note that we're only looking at the IPV4 addresses. If we had an IPV6 network, we'd leave that `inet` bit off, I think.
 
-
-
-
-
-
+And there we go! That's the basic version.  No real filtering of the secure network, so far, but that's for a later post.
 
 
+## DNS
+
+### DNS Cache service
+
+> While a DNS cache is not required for a gateway system, it is a common addition to one. When clients issue a DNS query, they'll first hit the unbound(8) cache. If it doesn't have the answer, it goes out to the upstream resolver. Results are then fed to the client and cached for a period of time, making future lookups of the same address quicker.
+
+Enable the cache service.
+
+    rcctl enable unbound
+
+Then set up the configuration file: `/var/unbound/etc/unbound.conf`.
+
+    server:
+        interface: 10.0.0.1
+        interface: 10.0.1.1
+        interface: 127.0.0.1
+        access-control: 10.0.0.1/24 allow
+        access-control: 10.0.1.1/24 allow
+        do-not-query-localhost: no
+        hide-identity: yes
+        hide-version: yes
+
+    forward-zone:
+            name: "."
+            forward-addr: 1.2.3.4  # IP of the upstream resolver
+
+That's complicated: let's unpack it.
+
+    server:
+	  ⋮
+    forward-zone:
+      ⋮
+
+The Unbound DNS validating resolver configuration file has multiple configuration zones. Each of these zones... No. Let's back up for a sec.  
+
+### config file review
+
+We know that we're trying to set up a cache for DNS queries; we talked about that earlier. We also know, more or less, what a DNS query and a DNS resolver are.  However, this '[unbound](https://man.openbsd.org/unbound)' DNS cache service is new.  
+
+> Unbound is a caching DNS resolver.
+
+> It uses a built in list of authoritative nameservers for the root zone (.), the so called root hints. On receiving a DNS query it will ask the root nameservers for an answer and will in almost all cases receive a delegation to a top level domain (TLD) authoritative nameserver. It will then ask that nameserver for an answer. It will recursively continue until an answer is found or no answer is available (NXDOMAIN). For performance and efficiency reasons that answer is cached for a certain time (the answer's time-to-live or TTL). A second query for the same name will then be answered from the cache. Unbound can also do DNSSEC validation.
+
+There's also a config file that we use for unbound: [unbound.conf](https://man.openbsd.org/unbound.conf).  In general, the syntax of that file seems to be fairly simple:
+
+> The file format has attributes and values. Some attributes have attributes inside them. The notation is: attribute: value.  There must be whitespace between keywords. Attribute keywords end with a colon ':'. An attribute is followed by a value, or its containing attributes in which case it is referred to as a clause. Clauses can be repeated throughout the file (or included files) to group attributes under the same clause.
+
+Also, just in case the config file got complicated, there's a tool for checking it before use: [unbound-checkconf]().
+
+Are we good now? 
+
+### config file walkthrough
+
+Back to unpacking the contents of that `unbound.conf` file.
+
+    server:
+	  ⋮
+    forward-zone:
+      ⋮
+
+These are, according to that quote on the syntax above, general top-level attributes: they indicate that the settings we're putting inside each are related to that aspect of the DNS resolver. In the first case, we're telling `unbound` about the environment that the _server_ is in: the networks it's connected to, and things it should and should not be doing. 
+
+In the second case, the `forward-zone` clause describes where to forward DNS queries; since this OpenBSD router doesn't have it's own list of IP/URL conversions, it has to send those queries elsewhere. Best it can do is just answer repeats.  
+
+	interface: 10.0.0.1
+	interface: 10.0.1.1
+	interface: 127.0.0.1
+
+This is where the DNS resolver should listen for DNS queries. Notice that not only is it listening to it's IP address on both of the subnets (for any DNS queries directed to those IP addresses), but it's also listening on the `localhost` address: this means that when the OpenBSD router itself tries to contact an external site, the DNS cache it's running will answer it, if possible.
+
+> Interface to use to connect to the network. This interface is listened to for queries from clients, and answers to clients are given from it. Can be given multiple times to work on several interfaces. If none are given the default is to listen to localhost. If an interface name is used instead of an ip address, the list of ip addresses on that interface are used. The interfaces are not changed on a reload (kill -HUP) but only on restart. A port number can be specified with @port (without spaces between interface and port number), if not specified the default port (from port) is used. [src.](https://man.openbsd.org/unbound.conf#interface:)
+
+	access-control: 10.0.0.1/24 allow
+	access-control: 10.0.1.1/24 allow
+
+This is another matching scenario.  The `allow` action means that the DNS cache (the OpenBSD machine) is allowed to answer queries that originate from the listed network range. If the packet comes from somewhere not inside any listed network, the packet is denied, and not answered. 
+
+> The most specific netblock match is used
+
+	do-not-query-localhost: no
+
+This means that the localhost - the OpenBSD machine - can be sent DNS queries, by processes on itself. [By default]*(https://man.openbsd.org/unbound.conf#do~7) this is off.
+
+	hide-identity: yes
+	hide-version: yes
+
+Apparently there's types of DNS queries that ask for indentifying information of the OpenBSD server. They are refused when these settings are `yes`.  
+
+    forward-zone:
+            name: "."
+            forward-addr: 1.2.3.4  # IP of the upstream resolver
+
+This is where we specify the actual DNS resolver, that keeps the list of URLs and associated IP addresses. In a simple case, like ours, we only need a single forward zone, and we can make it just foward everything to one place to make it easy.  That's what's happening here: by setting the `name` attribute to `'.'`, and giving a single `forward-addr` target, we're using a shortcut that indicates we just want everything forwarded to one place. 
+
+### The upstream DNS resolver
+
+This is going to be a provider that you trust. Often, your ISP will provide this service; check with them to figure out what the IP address is. Alternately, you could use a public service like the ones mentioned earlier, by Cloudflare or Google; time will tell just how idiotic trusting those services would be.
+
+There's some interesting resources in this area. In fact, it even looks like it's [easier](https://zwischenzugs.com/2018/01/26/how-and-why-i-run-my-own-dns-servers/_) [than](https://docs.pi-hole.net/guides/unbound/) [I](https://jamsek.dev/posts/2019/Jul/28/openbsd-dns-server-with-unbound-and-nsd/) [thought](https://www.petekeen.net/how-i-run-my-own-dns) to run your own DNS resolver - to keep your own list of the URLS that exist in the world. 
+
+There's also DNS providers which will filter out various types of websites (malicious, porn, etc) for you.  These might be interesting to use, in specific situations. There's also [this guy](https://www.reddit.com/r/sevengali/comments/8fy15e/dns_cloudflare_quad9_etc/) on reddit who really wanted people to read his essay about which DNS providers to use. Might be crazy, might be monomaniacal, might be altruistic; whichever way, it's worth a read.
+
+For now, I'm just going to stick with cloudflare (`1.1.1.1`), though I might try my hand at running my own DNS system in the future.  Whatever you do, don't use Google.
 
 
+### nameserver configuration
 
+Make sure to put a proper [nameserver](https://en.wikipedia.org/wiki/Name_server) in the `/etc/resolv.conf` [file](https://man.openbsd.org/resolv.conf).  
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## PF runtime options
-
-These are the options that I figure are worth using. See [here](https://www.openbsd.org/faq/pf/options.html) for the rest. 
-
-    set skip on interface
-
-Skip all PF processing on `interface`. This can be useful on loopback interfaces where filtering, normalization, queueing, etc, are not required. This option can be used multiple times. By default, this option is not set. 
-
-    set optimization option
-
-Optimize PF for one of the following network environments:
-
-- `normal` - suitable for almost all networks.
-- `high-latency` - high latency networks such as satellite connections.
-- `aggressive` - aggressively expires connections from the state table. This can greatly reduce the memory requirements on a busy firewall at the risk of dropping idle connections early.
-- `conservative` - extremely conservative settings. This avoids dropping idle connections at the expense of greater memory utilization and slightly increased processor utilization. 
-
-The default is normal. 
-
-## PF config
-
-The [pf(4)](https://man.openbsd.org/pf.conf) packet filter modifies, drops, or passes packets according to rules or definitions specified in pf.conf.
-
-Each packet is evaluated against the filter ruleset from top to bottom. By default, the packet is marked for passage, which can be changed by any rule, and could be changed back and forth several times before the end of the filter rules. **The last matching rule wins,** but [there is one exception](https://www.openbsd.org/faq/pf/filter.html#quick) to this: The `quick` option on a filtering rule has the effect of canceling any further rule processing and causes the specified action to be taken.
-
-
-
-### Examples
-
-Allow ssh connections in on the external interface as long as they're NOT destined for the firewall (i.e., they're destined for a machine on the local network). log the initial packet so that we can later tell who is trying to connect. Uncomment last part to use the tcp syn proxy to proxy the connection.
-
-    pass in log on egress proto tcp to ! <firewall> port ssh # synproxy state
-
-
-The recommended practice when setting up a firewall is to take a "default deny" approach. That is to deny everything and then selectively allow certain traffic through the firewall. This approach is recommended because it errs on the side of caution and also makes writing a ruleset easier.  To create a default deny filter policy, the first filter rule should be:
-
-    block all
-
-This will block all traffic on all interfaces in either direction from anywhere to anywhere. 
-
-
-
-### DNS Resolution
-
-Make sure to put a proper [nameserver](https://en.wikipedia.org/wiki/Name_server) in the `/etc/resolv.conf` [file](https://man.openbsd.org/resolv.conf).  E.g., `8.8.8.8`, which is the Google DNS server. 
+Since we're setting up a DNS cache on the router, we may want the router itself to use that cache. In that case, set the router's nameserver to itself: `127.0.0.1`. 
 
     search example.org
-    nameserver 8.8.8.8
+    nameserver 127.0.0.1
 
-# Security Considerations and Mechanisms
-
-The recommended practice when setting up a firewall is to take a "default deny" approach. That is to deny everything and then selectively allow certain traffic through the firewall. This approach is recommended because it errs on the side of caution and also makes writing a ruleset easier. 
-
-Whenever traffic is permitted to pass through the firewall, the rule(s) should be written to be as restrictive as possible. This is to ensure that the intended traffic, and only the intended traffic, is permitted to pass.
-
-## Port forwarding
-
-See the section "Security Implications" [here](https://www.openbsd.org/faq/pf/rdr.html).
-
-Redirection does have security implications. Punching a hole in the firewall to allow traffic into the internal, protected network potentially opens up the internal machine to compromise. If traffic is forwarded to an internal web server and a vulnerability is discovered in the web server daemon, that machine can be compromised by an intruder on the internet. From there, the intruder has a doorway to the internal network: one that is permitted to pass right through the firewall.
-
-These risks can be minimized by keeping the externally accessed system tightly confined on a separate network. This network is often referred to as a **demilitarized zone (DMZ)** or a private service network (PSN). This way, if the web server is compromised, the effects can be limited to the DMZ/PSN network by careful filtering of the traffic permitted to and from them. 
-
-## Blocking spoofed packets
-
-Address spoofing is when a malicious user fakes the source IP address in transmitted packets in order to either hide the real address or to impersonate another node on the network. Once the address has been spoofed, a network attack can be launched without revealing the true source of the attack. An attacker can also attempt to gain access to network services that are restricted to certain IP addresses.  PF offers some protection against address spoofing through the antispoof keyword:
-
-    antispoof [log] [quick] for interface [af]
-
-Where, 
-
-- `log` Specifies that matching packets should be logged via [pflogd(8)](https://man.openbsd.org/pflogd).
-- `quick` If a packet matches this rule then it will be considered the "winning" rule and ruleset evaluation will stop.
-- `interface` The network interface to activate spoofing protection on. This can also be a list of interfaces.
-- `af` The address family to activate spoofing protection for, either inet for IPv4 or inet6 for IPv6. 
-
-For example:
-
-    antispoof for fxp0 inet
-
-
-
-# For Future Consideration
-
-(Advanced stuff that I don't think I need right now.)
-
-## Anchors
-
- In addition to the main ruleset, PF can also evaluate sub-rulesets. Since sub-rulesets can be manipulated on the fly by using pfctl(8), they provide a convenient way of dynamically altering an active ruleset. Whereas a table is used to hold a dynamic list of addresses, a sub-ruleset is used to hold a dynamic set of rules. A sub-ruleset is attached to the main ruleset by using an anchor. 
-
+And we're done!
