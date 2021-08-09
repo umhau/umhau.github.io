@@ -16,5 +16,6 @@ What's the value of such a machine?
 - IRC server host
 - IRC client host
 - DNS resolver
+- IP address synchronization between changing nodes (small home network, or large meshnet)
 
 Note that because I'm making such a list, I don't have a specific pain point in mind. However, that being said, I have noticed that no one has attempted to sell dollar-store virtual machines, and I would chalk it up to the demographic making these products (skews heavily towards nerds, and away from anyone who might have learned marketing), rather than any real problems associated with selling it that cheaply. And if there are such problems, I'd bet I can find acceptable trade-offs.
