@@ -23,7 +23,7 @@ Some definitions before we get started:
 
 - **motor** This is the thing that converts liquid fuel into rotation. In this case, it's a diesel engine modded to drink vegetable oil of some kind. 
 - **alternator** Takes rotation and converts it into alternating current. Is a rotating magnetic core, with a stationary wire around it, in which a current is induced.
-  - **generator head** a domain-specific term for an alternator designed for attachment to a motor for the purpose of electricity generation. 
+- **generator head** a domain-specific term for an alternator designed for attachment to a motor for the purpose of electricity generation. 
 - **transformer** Used with alternating current, not DC; transforms high voltage into low voltage, and _vice versa_. 
 - **generator** a device that converts mechanical power into electrical power.
 - **inverter** changes direct current (DC) into alternating current (AC)
