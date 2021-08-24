@@ -39,7 +39,7 @@ The downside is obvious: if you can't run your generator at a consistent 1800 rp
 
 However, you can always use a pulley system to alter the ratios between the generator head and the motor - that way, if you just want to run the motor at a minimim fuel consumption, you can still get the generator head at the correct RPM. 
 
-The AC Generator is called a 'generator head' in this context. Find one and hook it onto the motor. It's pretty much that simple, I think. 
+The AC Generator is called a '[generator head](https://www.alibaba.com/products/generator_head/CID410402.html)' in this context. Find one and hook it onto the motor. It's pretty much that simple, I think. 
 
 ## Motor -> AC Generator -> DC Rectifier -> AC Inverter
 
