@@ -13,9 +13,11 @@ tags:
 categories: other
 ---
 
+Excellent resource: [Build a High Power Homemade AC/DC Generator System](https://theepicenter.com/blog/ac-dc-generator/)
+
 The previous post described various alternatives to generate cheap power. I like the diesel motor running vegetable oil, so this is an exploration of the details of making that work.  There's a few different ways this could be set up.  Each of them involve a diesel engine, like this one I found on Craigslist: 
 
-![diesel engine](/images/diesel/engine.jpg)
+![](/images/diesel/engine.jpg)
 
 In general, the question is what kind of electricity the rotational energy of the motor is converted into, and how the potential for aberrations in the RPMs is handled. 
 
@@ -33,7 +35,9 @@ Some definitions before we get started:
 
 This is the best version for constant, high load. The engine is connected directly to the generator, and the generator creates AC current at whatever frequency the engine drives it at: which means you have to run the engine at a specific speed in order to make 60Hz household current.  This is an example; in the second image, you can see where you can hook it into your wiring system; it can provide a full 240 Volts at the proper 60Hz, if operated correctly. It's called a "Single-Phase AC Synchronous Generator."
 
-![generator](/images/diesel/generator.jpg) ![generator 2](/images/diesel/generator_2.jpg)
+![](/images/diesel/generator.jpg) 
+
+![](/images/diesel/generator_2.jpg)
 
 The downside is obvious: if you can't run your generator at a consistent 1800 rpm, then you'll fry the electronics hooked into the electricity it's producing. Not great. Plus, what if you don't need a whole lot of power right now? Tough luck - you can't idle the engine, or the power won't be at the right frequency and you won't be able to use it for anything.
 
@@ -76,9 +80,5 @@ Then I have a choice: run the motor at a consistent RPM, and use pulley ratios t
 
 Also, a building to house the generator installation will probably be a good idea. 
 
-![generator installation](/images/diesel/generator_installation.png)
-
-# Sources
-
-- [Build a High Power Homemade AC/DC Generator System](https://theepicenter.com/blog/ac-dc-generator/)
+![](/images/diesel/generator_installation.png)
 

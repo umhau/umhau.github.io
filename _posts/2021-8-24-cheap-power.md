@@ -43,7 +43,7 @@ These are better than I guessed at first. That being said, I don't have access t
 
 Craigslist is a great source of panels, however. I found these for an ask of $80:
 
-![Solar panels](/images/diesel/solar_panels.jpg)
+![](/images/diesel/solar_panels.jpg)
 
 They produce 100 Watts each. If you recall your electrical engineering, that means at perfect efficiency:
 
@@ -65,8 +65,8 @@ However, used vegetable oil can be found for free, and with the right mechanical
     84 gallons per week * 8 lbs = 672 lbs per week
     336 gallons per month * 8 lbs = 2688 lbs per month
 
-Looks like, if the suppliers (local restaurants) are willing, I could do bi-monthly trips to pick up oil, and that would be within the weight limits of my vehicle and (barely over) the volume limits of one of those giant plastic containers. Note this is a conservative estimate, since I'm not likely to use a 4-cylinder engine, and the diesel consumption is less than what I'm guessing here for biofuel.
+Looks like, if the suppliers (local restaurants) are willing, I could do bi-monthly trips to pick up oil, and that would be within the weight limits of my vehicle and (barely over) the volume limits of one of those giant 325 gallon plastic containers. Note this is a conservative estimate, since I'm not likely to use a 4-cylinder engine, and the diesel consumption is less than what I'm guessing here for biofuel.
 
-![325 gallon fluid container](/images/diesel/325gal_container.jpg)
+![](/images/diesel/325gal_container.jpg)
 
 The problem becomes sourcing the veggie oil.  There's a decent population center nearby, but given the popularity of the idea of burning veggie oil, it's possible there's no available sources left. 
