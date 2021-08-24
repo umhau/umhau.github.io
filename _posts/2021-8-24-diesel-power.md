@@ -1,6 +1,6 @@
 ---
 layout: post
-title: vegan dieselpunk
+title: Personal Power Possibilities
 author: umhau
 description: "An exploration into cheap electricity"
 tags: 
