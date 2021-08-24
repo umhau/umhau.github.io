@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Cheap Electricity through Altnernative Means
+title: Cheap Electricity through Alternative Means
 author: umhau
 description: "Cliche Survivalism"
 tags: 
@@ -57,7 +57,7 @@ So far, we're up to `9 + 7 + 5 + 5`, conservatively.  That's 26 Amps total, and 
 
 I like this the best: it's reliable, produces a lot of power, cheap to set up,and cheap to run.  A premade all-in-one is going to run $10k or more, so this is DIY all the way!  Ouch. 
 
-However, used vegetable oil can be found for free, and with the right mechanical arrangement this can be a dirt-cheap energy supply. Looks like the machines can use something like half a gallon of diesel an hour on low power; so if I run the generator on idle constantly, a week's fuel requirement would be:
+However, used vegetable oil can be found for free, and with the right mechanical arrangement this can be a dirt-cheap energy supply. Looks like a [4-cylinder motor](http://www.centralmainediesel.com/order/Kohler-Diesel-DC-Generator.asp?page=Kohler_Diesel_DC) can use something like a third of a gallon of diesel an hour; I assume veggie oil is less efficient.  If biofuel consumption is closer to 0.5 gallons per hour, then if I run the generator on idle constantly, a week's fuel requirement would be:
 
     0.5 gallons per hour * 24 hours * 7 days = 84 Gallons per week
     84 gallons per week * 4 = 336 gallons per month
@@ -65,7 +65,7 @@ However, used vegetable oil can be found for free, and with the right mechanical
     84 gallons per week * 8 lbs = 672 lbs per week
     336 gallons per month * 8 lbs = 2688 lbs per month
 
-Looks like, if the suppliers (local restaurants) are willing, I could do bi-monthly trips to pick up oil, and that would be within the weight limits of my vehicle and (barely over) the volume limits of one of those giant plastic containers. 
+Looks like, if the suppliers (local restaurants) are willing, I could do bi-monthly trips to pick up oil, and that would be within the weight limits of my vehicle and (barely over) the volume limits of one of those giant plastic containers. Note this is a conservative estimate, since I'm not likely to use a 4-cylinder engine, and the diesel consumption is less than what I'm guessing here for biofuel.
 
 ![325 gallon fluid container](/images/diesel/325gal_container.jpg)
 
