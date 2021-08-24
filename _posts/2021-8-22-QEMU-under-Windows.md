@@ -30,7 +30,7 @@ dir
 "C:\Program Files\qemu\qemu-img.exe" create void.musl.img 8G
 ```
 
-## install the OS
+## Install the OS
 
 Download the OS installation disk - this can be the 'CD' or 'DVD' version instead of the USB version, since it'll be presented to the OS as an optical disk.  Beware! This is a very long command.  
 
@@ -42,7 +42,7 @@ Note the hardcoded values in the command below: 2G of RAM; the VM's name is `voi
 start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=void.musl.img,index=0,media=disk,format=raw -cdrom void-live-x86_64-musl-20210218.iso -m 2G -L Bios -usbdevice mouse -usbdevice keyboard -boot menu=on -rtc base=localtime,clock=host -parallel none -serial none -name void_musl -no-acpi -no-hpet -no-reboot 
 ```
 
-This will run the VM with a console (virtual monitor screen). To run it without that screen, use `qemu-system-x86_64w.exe` as the executable.
+This will run the VM with a console (virtual monitor screen). To run it without that screen, use `qemu-system-x86_64w.exe` as the executable. (Note the `w`.)
 
 ## Run the VM
 
