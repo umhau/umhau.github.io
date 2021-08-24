@@ -23,7 +23,7 @@ Some definitions before we get started:
 
 - **motor** This is the thing that converts liquid fuel into rotation. In this case, it's a diesel engine modded to drink vegetable oil of some kind. 
 - **alternator** Takes rotation and converts it into alternating current. Is a rotating magnetic core, with a stationary wire around it, in which a current is induced.
-- **generator head** a domain-specific term for an alternator designed for attachment to a motor for the purpose of electricity generation. 
+- **generator head** a domain-specific term for an alternator designed for attachment to a motor for the purpose of electricity generation. You can get these in single-phase, two-phase, or even three-phase variations. Dunno what the functional difference is, besides the easy access to 240 volts in the two-phase system.
 - **transformer** Used with alternating current, not DC; transforms high voltage into low voltage, and _vice versa_. 
 - **generator** a device that converts mechanical power into electrical power.
 - **inverter** changes direct current (DC) into alternating current (AC)
@@ -31,7 +31,7 @@ Some definitions before we get started:
 
 ## Motor -> AC Generator
 
-This is the best version for constant, high load. The engine is connected directly to the generator, and the generator creates AC current at whatever frequency the engine drives it at: which means you have to run the engine at a specific speed in order to make 60Hz household current.  This is an example; in the second image, you can see where you can hook it into your wiring system; it can provide a full 240 Volts at the proper 60Hz, if operated correctly. It's called a "Single-Phase AC Syncronous Generator."
+This is the best version for constant, high load. The engine is connected directly to the generator, and the generator creates AC current at whatever frequency the engine drives it at: which means you have to run the engine at a specific speed in order to make 60Hz household current.  This is an example; in the second image, you can see where you can hook it into your wiring system; it can provide a full 240 Volts at the proper 60Hz, if operated correctly. It's called a "Single-Phase AC Synchronous Generator."
 
 ![generator](/images/diesel/generator.jpg) ![generator 2](/images/diesel/generator_2.jpg)
 
