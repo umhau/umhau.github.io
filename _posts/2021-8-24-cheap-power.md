@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Personal Power Possibilities
+title: Cheap Electricity through Altnernative Means
 author: umhau
-description: "An exploration into cheap electricity"
+description: "Cliche Survivalism"
 tags: 
 - diesel
 - electricity
@@ -10,10 +10,13 @@ tags:
 - AC/DC
 - engines
 - power
+- solar
+- thermal
+- generation
 categories: other
 ---
 
-Crypto mining is apparently getting pretty big, and apparently GPU crypto mining is still a thing these days. The cool part is how it's become an arbitrage (big word...am I using it right?) to convert electricity into dollarinos.  Since I have some space, and my neighbors aren't likely to be bothered by noise pollution, I think it could be valuable to find the cheapest (legal) source of electricity I can.  
+Crypto mining is apparently getting pretty big, and apparently GPU crypto mining is still a thing these days. The cool part is how it's become an arbitrage (big word...am I using it right?) to convert electricity into dollarinos.  Since I have some space, and my neighbors aren't likely to be bothered by noise pollution, I think it could be valuable to find the cheapest (legal) source of electricity I can and convert it into crypto.
 
 Considered options:
 
@@ -62,6 +65,8 @@ However, used vegetable oil can be found for free, and with the right mechanical
     84 gallons per week * 8 lbs = 672 lbs per week
     336 gallons per month * 8 lbs = 2688 lbs per month
 
-Looks like, if the suppliers (local restaurants) are willing, I could do monthly trips to pick up oil, and that would be within the weight limits of my vehicle and (barely over) the volume limits of one of those giant plastic containers. 
+Looks like, if the suppliers (local restaurants) are willing, I could do bi-monthly trips to pick up oil, and that would be within the weight limits of my vehicle and (barely over) the volume limits of one of those giant plastic containers. 
 
-![](/images/diesel/325gal_container.jpg)
+![325 gallon fluid container](/images/diesel/325gal_container.jpg)
+
+The problem becomes sourcing the veggie oil.  There's a decent population center nearby, but given the popularity of the idea of burning veggie oil, it's possible there's no available sources left. 
