@@ -37,7 +37,7 @@ This is the best version for constant, high load. The engine is connected direct
 
 ![](/images/diesel/generator.jpg) 
 
-![](/images/diesel/generator_2.jpg)
+![](/images/diesel/generator_coupling.jpg)
 
 The downside is obvious: if you can't run your generator at a consistent 1800 rpm, then you'll fry the electronics hooked into the electricity it's producing. Not great. Plus, what if you don't need a whole lot of power right now? Tough luck - you can't idle the engine, or the power won't be at the right frequency and you won't be able to use it for anything.
 
