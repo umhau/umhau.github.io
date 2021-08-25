@@ -43,7 +43,9 @@ The downside is obvious: if you can't run your generator at a consistent 1800 rp
 
 However, you can always use a pulley system to alter the ratios between the generator head and the motor - that way, if you just want to run the motor at a minimim fuel consumption, you can still get the generator head at the correct RPM. 
 
-The AC Generator is called a '[generator head](https://www.alibaba.com/products/generator_head/CID410402.html)' in this context. Find one and hook it onto the motor. It's pretty much that simple, I think. 
+The AC Generator is called a '[generator head](https://www.alibaba.com/products/generator_head/CID410402.html)' in this context. Find one and hook it onto the motor. It's pretty much that simple, I think. In fact, the image below is what the result looks like: on the left is the generator head, on the right is the generator, they're connected with a belt in a specific ratio, and there's a tensioner in the middle to keep them connected. As the description says, _"built on a brand new Hatz 1B30 engine and brand new Mecc Alte generator head. Vibration isolating base with carry handles."_  It really is that simple.
+
+![](/images/diesel/generator_and_head.jpg)
 
 ## Motor -> AC Generator -> DC Rectifier -> AC Inverter
 
