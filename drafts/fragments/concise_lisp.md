@@ -15,6 +15,14 @@ I've been wanting to figure out lisp for a while.  So, this is my rubber ducking
 
 We're using femtolisp, because I think it's cool.
 
+This is my foray into learning lisp. Rather than attempting to learn some part of the greater whole of Common Lisp, I'm using a smaller variation called (femtolisp)[https://github.com/JeffBezanson/femtolisp]. This is considered a dialect of Scheme, and a "lisp-1 with lexical scope," (which means that)[https://stackoverflow.com/a/4578888] you cannot have a function and a variable that share the same name. I think it's a neat version of lisp because it's small and fast and claims to have among its focii "to keep the code concise and interesting."  Also, I think it was used in the development of the Julia language -- and a similar lisp can be accessed through the Julia interface. 
+
+There's a number of concepts that seem based on lisp, that I haven't run into before, including "tail recursion" and "gensyms."   I'll include sections to try and cover the strange concepts.  Also this should include documentation of the available functions, and how to use them.
+
+## Installation & a 'Hello World'
+
+This is one of the simpler compilations I've encountered.
+
     git clone https://github.com/JeffBezanson/femtolisp.git
     cd femtolisp
     make
@@ -65,3 +73,21 @@ Keep these in mind.
 - **The Law of Null?** The primitive null? is defined only for lists.
 
 - **The Law of Eq?** The primitive eq? takes two arguments. Each must be a non-numeric atom.
+There doesn't seem to be a way to run `make install`, so you'll have to do that manually, by trial and error. I'm content to just leave the stuff where it was compiled.
+
+You can run it interactively (is that what's known as a Read-Eval-Print Loop (REPL) ?), by running 
+
+    ./flisp
+
+from inside the directory.  Print to the command line with
+
+    (print "Hello World")
+
+though, this will append a `#t` to the string. Don't know why. Get out with
+
+    (exit)
+
+## The Impatient Schemer
+
+Now we're gonna do a crash course in Lisp, because why not.  It's probably been written only a thousand times before. However: it's never been written by me, and that means I've never had the chance to learn by teaching. So here goes. 
+
