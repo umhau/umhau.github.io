@@ -13,14 +13,17 @@ tags:
 - DHCP
 - DNS
 - firewall
+- unbound
 categories: walkthroughs
 ---
 
-One of my clients has a PFSense box and Active Directory box on-premise. I'd like to recombine their functions into an OpenBSD box for networking, and a Samba box (or two) for AD user authentication and the fileserver. This post covers the process of building the OpenBSD box. Additionally, I'm building a very similiar OpenBSD box for my personal network; given the similarity, I'll start the process identically, and comment on the divergence later, as a couple of addendums / diffs. 
+This post covers the process of building an OpenBSD router box. 
 
-I remain blown away by the quality of the OpenBSD documentation. Given just how amazingly good it is, I'm going to quote extensively from the online documentation pages - this post may turn out to be an edited, annotated collection from those docs. Usually my posts require a lot more work than that, but these guys know how to write. Kudos.
+I remain blown away by the quality of the OpenBSD documentation. Given just how amazingly good it is, I'm basically just going through their documentation and rewriting it into something far more verbose, but which makes sense to me, and uses fewer assumptions of knowledge. I had to do a lot of back-and-forth to look up definitions and explanations (wikipedia FTW), so I'm including those definitions and explanations inline, restated in my own words (best way to learn...is to teach. I feel for the poor sods reading this atrocity. "If I had more time, I would have made it shorter.").   
 
-As it turns out, most of the comments and additions I'm making are definitions and explanations - I'm working off of the 'how to build a router' [page](https://www.openbsd.org/faq/pf/example1.html), but didn't know a lot of the terminology and concepts. So after a brief stint reading (nearly) all the `PF` docs, I'm back - and ready to write this post with a lower assumption of prior knowledge.
+I'm working off of the 'how to build a router' [page](https://www.openbsd.org/faq/pf/example1.html), but didn't know a lot of the terminology and concepts. So after a brief stint reading (nearly) all the `PF` docs, I'm back - and ready to write this post with a lower assumption of prior knowledge.
+
+After the extreme length of this post, I'll follow up with a shorter one that just sticks with the basics - I think the how to build a router page the openbsd folks put out isn't quite what it needs to be.
 
 # Introduction
 
@@ -481,7 +484,7 @@ This is another matching scenario.  The `allow` action means that the DNS cache 
 
 	do-not-query-localhost: no
 
-This means that the localhost - the OpenBSD machine - can be sent DNS queries, by processes on itself. [By default]*(https://man.openbsd.org/unbound.conf#do~7) this is off.
+This means that the localhost - the OpenBSD machine - can be sent DNS queries, by processes on itself. [By default](https://man.openbsd.org/unbound.conf#do~7) this is off.
 
 	hide-identity: yes
 	hide-version: yes
