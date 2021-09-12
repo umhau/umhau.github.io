@@ -25,6 +25,12 @@ As before, we assume this is a fresh installation of OpenBSD 6.9 on a dedicated 
 
 We're using another source: https://openbsdrouterguide.net/#dns-hijacking.
 
+Looks like there's a specific domain I should use for my local network, since I haven't registered one properly: `.home.arpa`. Guess that's a holdover from the early days. 
+
+> Some people recommend that you register a domain name and then use that internally on your LAN, and while that certainly works, it is not necessary at all. According to the RFC 8375 you should use the .home.arpa domain as this is meant to be used inside a small network, such as a home network.
+
+
+
 # network design
 
 Nonstandard diagram, but might be a little less obtuse than the standard. 
@@ -96,7 +102,7 @@ rcctl set dhcpd flags em0 em1
 ### /etc/dhcpd.conf
 
 ```sh
-option domain-name "ninthiteration.lab";
+option domain-name "home.arpa";
 
 subnet 10.0.0.0 netmask 255.255.255.0 {
         option routers 10.0.0.1;
@@ -119,12 +125,6 @@ secure   = "em0"
 insecure = "em1"
 external = "em2"
 
-# other source:
-# ext_if="em0" # External NIC connected to the ISP modem (Internet).
-# g_lan="em1"  # Grown-ups LAN.
-# c_lan="em2"  # Children's LAN.
-# dmz="em3"    # Public LAN (DMZ).
-
 table <martians> { 0.0.0.0/8 10.0.0.0/8 127.0.0.0/8 169.254.0.0/16     \
                    172.16.0.0/12 192.0.0.0/24 192.0.2.0/24 224.0.0.0/3 \
                    192.168.0.0/16 198.18.0.0/15 198.51.100.0/24        \
@@ -142,13 +142,9 @@ block in quick on egress from <martians> to any
 block return out quick on egress from any to <martians>
 block all
 
-# pass out quick inet
-pass out on $external inet from $secure:network   to any nat-to ($external)
-pass out on $external inet from $insecure:network to any nat-to ($external)
-
-# other source:
-# pass out on $ext_if inet from $g_lan:network to any nat-to ($ext_if)
-# pass out on $ext_if inet from $c_lan:network to any nat-to ($ext_if)
+pass out quick inet
+# pass out on $external inet from $secure:network   to any nat-to ($external)
+# pass out on $external inet from $insecure:network to any nat-to ($external)
 
 pass in on { $secure $insecure } inet
 ```
@@ -174,25 +170,6 @@ chmod -R 774 /var/unbound/log
 
 ```sh
 server:
-    interface: 10.0.0.1
-    interface: 10.0.1.1
-    interface: 127.0.0.1
-
-    access-control: 0.0.0.0/0   refuse
-    access-control: 10.0.0.1/24 allow
-    access-control: 10.0.1.1/24 allow
-    access-control: 127.0.0.0/8 allow
-    do-not-query-localhost: no
-    hide-identity: yes
-    hide-version: yes
-
-forward-zone:
-        name: "."
-        forward-addr: 192.168.43.79  # IP of the upstream resolver
-```
-
-```sh
-server:
 
     # Logging (default is no).
     # Uncomment this section if you want to enable logging.
@@ -202,7 +179,6 @@ server:
     # log-replies: yes
     # log-tag-queryreply: yes
     # log-local-actions: yes
-
     # logfile: "/log/unbound.log"
     # use-syslog: no
     # log-time-ascii: yes
@@ -214,9 +190,9 @@ server:
     # Control who has access.
     access-control: 0.0.0.0/0 refuse
     access-control: ::0/0 refuse
-    access-control: 127.0.0.0/8 allow
     access-control: ::1 allow
 
+    access-control: 127.0.0.0/8 allow
     access-control: 10.0.0.0/24 allow
     access-control: 10.0.1.0/24 allow
 
@@ -231,13 +207,26 @@ server:
 
     # Our LAN segments.
     private-address: 10.0.0.0/16
+    
+    # local domain
+    private-domain: home.arpa
+
+    # otherwise unbound tries to get DNS info from IPV6 addresses:
+    # "info: error sending query to auth server"
+    do-ip6: no
+
+    # save cached lookups for way longer than I should
+    #   3600 = 1 hour
+    #  86400 = 1 day
+    # 604800 = 1 week
+    cache-min-ttl: 604800
+    serve-expired: yes
+
+    # use an updated root hints file
+    root-hints: "/var/unbound/etc/named.cache"
 
     # We want DNSSEC validation.
     # auto-trust-anchor-file: "/var/unbound/db/root.key"
-
-    # retain DNS lookups far beyond the average TTL (recommended 1hr, for me maybe 1 week/month)
-    cache-min-ttl: 3600
-    serve-expired: yes
 
 # Enable the usage of the unbound-control command.
 remote-control:
@@ -248,13 +237,15 @@ remote-control:
 
 ## Nameserver
 
-We want router to use its own unbound DNS cache.
+We want the router to use its own unbound DNS cache.
 
 ### /etc/resolv.conf
 
 ```sh
 nameserver 127.0.0.1
-nameserver 192.168.43.79
+# nameserver 192.168.43.79
+
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
 ```
 
 Problem is, this gets overwritten every time dhcp runs, because part of the dhcp protocol is a record of the server which provided the IP address. We have our own such server, and we want to use it instead.
