@@ -161,17 +161,25 @@ When this is done, check to see if there were any errors. This will require that
 umount /dev/md3
 ```
 
-By the way, what kind of partition is on that drive? EXT3? EXT4? You'll need to figure that out if you want to run the right disk checker program. Mine is ext4, but yours might not be.
+By the way, what kind of partition is on that drive? EXT3? EXT4? You'll need to figure that out if you want to run the right disk checker program. Mine is ext4, but yours might not be.  This might help:
 
 ```sh
-# ext4 checker
-fsck.ext4 -f /dev/md3
+# what partitions are associated with the raid array?
+ls /dev/md3*
 
-# ext3 checker (etc...)
+# if that command returned '/dev/md3p3', the following should give the
+# partition type
+df -T /dev/md3p3
+```
+
+You might have to detach from guest VMs, if that's relevant, before you get a proper partition. Choose whichever of the following matches your EXT partition type. (If you're not using EXT_, I'm sorry for you and I have no suggestions. Perhaps a new career?)
+
+```sh
+fsck.ext4 -f /dev/md3
 fsck.ext3 -f /dev/md3
 ```
 
-Fix any issues, and move on to resizing the partition to expand to fill the available space.
+Let it fix any issues, and move on to resizing the partition to expand to fill the available space.
 
 ```sh
 resize2fs /dev/md3
