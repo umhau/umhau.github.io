@@ -46,9 +46,6 @@ mount | grep -q /dev/$new_disk && echo "new disk is already in use" && exit
 
 # check that the new disk is not part of a RAID device
 cat /proc/mdstat | grep $new_disk > /dev/null && echo "disk is part of a RAID device" && exit
-
-# see if there's any other process using the disk
-lsof +D /dev/$new_disk
 ```
 
 ## Prep the new disk
@@ -81,15 +78,12 @@ sudo parted -a optimal /dev/$new_disk mkpart primary 0% 100% & sync
 sudo parted /dev/$new_disk set 1 raid on & sync
 
 # verify the formatting
-parted /dev/$new_disk
-
-# zero the superblock - this is overkill, since they're freshly made
-sudo mdadm --zero-superblock /dev/$new_disk
+parted /dev/$new_disk print
 ```
 
 That last command won't hurt, but it's only really used when the disk is being recycled from use in a previous RAID device. 
 
-The disk is ready for use! 
+The disk is ready to be added to the array! 
 
 ## add the disk to the RAID array as a spare
 
@@ -178,7 +172,9 @@ ls /dev/md3*
 df -T /dev/md3p3
 ```
 
-You might have to detach from guest VMs, if that's relevant, before you get a proper partition. Choose whichever of the following matches your EXT partition type. (If you're not using EXT_, I'm sorry for you and I have no suggestions. Perhaps a new career?)
+You might have to detach from guest VMs, if that's relevant, before you get a proper partition read. Also, it only worked for me after I mounted the drive again on the host. So, uh, good luck.
+
+Choose whichever of the following matches your EXT partition type. (If you're not using EXT_, I'm sorry for you and I have no suggestions. Perhaps a new career?)
 
 ```sh
 fsck.ext4 -f /dev/md3
