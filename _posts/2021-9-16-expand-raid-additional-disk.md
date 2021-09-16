@@ -53,7 +53,13 @@ lsof +D /dev/$new_disk
 
 ## Prep the new disk
 
-If the disk is clean and ready to roll, then go ahead and wipe it. Remember, adding the disk to RAID **will wipe everything**.  This is your final warning. If you ignore it, run any of the following commands, and then run crying back because you lost some data, then this is my best advice: you shouldn't be a sysadmin. Maybe you should stick to Windows. And there's a chance -- just a chance -- that computers are just not your thing.
+If the disk is clean and ready to roll, then go ahead and wipe it. 
+
+Remember, adding the disk to RAID **will wipe everything**.  
+
+This is your final warning. 
+
+If you ignore it, run any of the following commands, and then run crying back because you lost some data, then this is my best advice: you shouldn't be a sysadmin. Maybe you should stick to Windows. And there's a chance -- just a chance -- that computers are just not your thing.
 
 ```sh
 # specify the disk.
