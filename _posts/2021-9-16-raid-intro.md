@@ -8,11 +8,9 @@ tags:
 categories: walkthroughs
 ---
 
-## RAID
-
 No, not the military action. RAID drives are a Redundant Array of Inexpensive Disks, great for when you need more storage in one place than a single drive can provide. It's a way to use software (or hardware) to glue together a bunch of disks into something that looks to a computer like one big disk.
 
-There's a bunch of different ways to do the gluing, and they each have pros and cons. If you're really worried about losing some valuable data, you can get 2 or more identical disks and put the data on all of them. Then you lose one disk and you haven't lost any data. That's "RAID 2".  Or, if you take a more cowboy approach, you can do a "RAID 0", where you just sum the drives together without any redundancy...lose one though, and you lose everything. 
+There's a bunch of different ways to do the gluing, and they each have pros and cons. If you're really worried about losing some valuable data, you can get 2 or more identical disks and put the same data on all of them in parallel (like making multiple backups of your data - RAID just makes it super simple). Then you lose one disk and you haven't lost any data. That's "RAID 2".  Or, if you take a more cowboy approach, you can do a "RAID 0", where you just sum the drives together without any redundancy...lose one though, and you lose everything. 
 
 The rest of the RAID variations are compromises between these two approaches. The table below describes exactly what the tradeoffs of each RAID level are.
 
