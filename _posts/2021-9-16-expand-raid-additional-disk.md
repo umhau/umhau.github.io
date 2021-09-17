@@ -20,6 +20,14 @@ So here goes.
 
 ## Before we start
 
+This works with a variety of RAID levels - and if your raid array is currently missing a disk, follow this walkthrough to prep the drive and add it as a hot spare, and the computer will take care of the rest.
+
+If you ever want to see what's up with all your RAID arrays, use this command: 
+
+```
+cat /proc/mdstat
+```
+
 - You'll need local access to a drive not associated with the RAID array. This is for a small backup file, which (far as I can tell) keeps a second record of how the disks are arranged and how the data is broken up; if the raid alterations fail, this backup file is used to recover everything.
 - Make sure you know what the name of the RAID device is that you're adding to. This will look something like `/dev/md3`, but likely with a different number at the end.
 - Figure out how many disks are currently in the RAID array, you'll need that number later. Below is a quick script that can help. Save it as `count_raid_disks.sh`.
@@ -81,8 +89,6 @@ sudo parted /dev/$new_disk set 1 raid on & sync
 parted /dev/$new_disk print
 ```
 
-That last command won't hurt, but it's only really used when the disk is being recycled from use in a previous RAID device. 
-
 The disk is ready to be added to the array! 
 
 ## add the disk to the RAID array as a spare
@@ -124,6 +130,10 @@ sudo mdadm --detail --brief /dev/$raid_device | sudo tee -a /etc/mdadm/mdadm.con
 
 We now have a hot spare! If that's all we wanted, then we're done: if we were to shutdown and restart the host server, the RAID array would automatically reassemble. If one of the disks were to `fail` on us right now, the array would automatically detect that, and start moving data over onto the hot spare we just added. (Because that's the rub: the array is only designed for so many extras, so there's no way to know what data can be put onto the hot spare until something breaks...and when it does, it's going to take hours, or even days, to collect the needed data from the remaining drives in the RAID array and copy it over to the automatically-added hot spare [which isn't spare any more].)
 
+Now, before you keep going, there's a point here worth mentioning. If you're trying to add multiple disks to the array, you can do that simultaneously - you don't need to add them individually, and wait hours/days for the array to grow over each one-by-one. If you have another disk to add, go back and do what we just did, again, with the other disk. Come back when you've added it to the RAID array just like the first.
+
+When you're done with that, the RAID array should have _two_ hot spares attached. 
+
 ## grow the RAID array onto the spare
 
 Now we tell the RAID array that it's bigger than it thought, and that it should expand itself onto the 'spare' that's now available.  We do this by getting the number of disks in the array; let's say there's 4 in there now.
@@ -133,6 +143,8 @@ bash count_raid_disks.sh 'md3'
 ```
 
 Then, we tell the RAID array that hey, actually, there's (4 preexisting + 1 new hot spare) _5 disks_ in the array.  This is also where we need to know where we can put that backup file. 
+
+By the way, if you're doing that thing where you add multiple hot spares at a time, then here you should tell the RAID array that you have e.g. (4 preexisting disks, and 2 hot spares = ) 6 disks in the array, instead of 5.
 
 ```sh
 # identify the raid device
