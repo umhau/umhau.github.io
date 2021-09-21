@@ -109,22 +109,6 @@ Search for packages by name with
 
 
 
-
-
-
-## network devices
-
-_I don't think this section is needed._
-
-Both ethernet connections should be active.  I think I may have used `ifconfig xnf1 up` to activate the secondary interface, but I'm not sure...too many false starts, too many different things getting built. The below refers to a virtual network device, hosted by xen.  Use `ifconfig` to figure out what network devices are available to you.  If you're missing one that you expected to see, the firmware might not be installed (see above).
-
-    echo dhcp > /etc/hostname.xnf1
-
-To apply changes, use:
-
-	sh /etc/netstart
-
-
 # Router Setup
 
 ## Network Definition
