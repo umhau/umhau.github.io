@@ -37,7 +37,7 @@ Decide if you want the web interface to run as root. If you're pragmatic and on 
 dependencies and configs
 ------------------------
 
-Install packages and configure system. Again, as root, unless specified otherwise.
+Install packages and configure system.
 
 ```Shell
 freebsd-update fetch
@@ -63,9 +63,10 @@ service redis start
 get the code
 ------------
 
-Do this as your non-root user, so it ends up with the correct permissions.  Looks like we aren't totally free and clear when we use freebsd; the optional dependency `fsevents@1.2.13` failed the "compatibility check". Oh, well.  Note, the last couple of commands take a while. Go get yourself a coffee while they run. (`&&` is excellent)
+Looks like we aren't totally free and clear when we use freebsd; the optional dependency `fsevents@1.2.13` failed the "compatibility check". Oh, well.  Note, the last couple of commands take a while. Go get yourself a coffee while they run. (`&&` is excellent)
 
 ```Shell
+cd
 git clone -b master http://github.com/vatesfr/xen-orchestra
 cd xen-orchestra
 yarn
