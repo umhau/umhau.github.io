@@ -23,7 +23,7 @@ This site was transferred from [Google Blogger](https://nixingaround.blogspot.co
 
 I'm totally not responsible for anything.
 
-The opinons given here are irrelevant.  The walkthroughs are going to break your system.  All the links are broken, except the ones that host viruses. If you actually follow my advice, your hat will spontaneously combust and your laptop will sprout malware that starts a civil war in a third world country.
+The opinons given here are irrelevant.  The walkthroughs are going to break your system.  All the links are broken, except the ones that host viruses. The programs have ten-day malware that will start a civil war in a second world country.
 
 ### questions? comments? better ideas? comprehensive refutations? 
 
