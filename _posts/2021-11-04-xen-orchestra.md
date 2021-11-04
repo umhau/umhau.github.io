@@ -1,3 +1,18 @@
+---
+layout: post
+title: Xen Orchestra
+author: umhau
+description: "compile the full version! because we're extra"
+tags: 
+- xen
+- xen orchestra
+- hypervisor
+- virtualization
+- xoa
+- OS
+categories: walkthroughs
+---
+
 So there's this thing about managing hypervisors: they're complicated. 
 
 Not complicated in the sense that they're hard to conceptualize, but complicated in the sense that there's a lot you can do with them. That means you need a lot of buttons and switches available, all organized nicely according to function, and available when you need them. It also means, behind the scenes, that you need to have written the code to do all those things. That's complicated.
