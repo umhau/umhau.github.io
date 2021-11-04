@@ -21,10 +21,7 @@ Therefore, it makes a great moat if you want to start a business. Build a hyperv
 
 That's where we are today. I want the 'pro' version of the hypervisor management system called "Xen Orchestra". The open source nature of the substrate it's built on necessitates that the source code of the pro version be freely available - but it does not require that the build system or the compiled binaries be available. So what we're doing today is compiling XO from source. And then installing it. And then setting it up.
 
-sources
--------
-
-- [Official XOA Walkthrough](https://xen-orchestra.com/docs/installation.html#freebsd)
+source: [official XOA walkthrough](https://xen-orchestra.com/docs/installation.html#freebsd).
 
 operating systems, hypervisors, and the initial preparations
 ------------------------------------------------------------
