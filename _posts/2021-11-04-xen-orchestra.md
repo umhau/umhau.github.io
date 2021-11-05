@@ -15,7 +15,7 @@ categories: walkthroughs
 
 So there's this thing about managing hypervisors: they're complicated. 
 
-Not complicated in the sense that they're hard to conceptualize, but complicated in the sense that there's a lot you can do with them. That means you need a lot of buttons and switches available, all organized nicely according to function, and available when you need them. It also means, behind the scenes, that you need to have written the code to do all those things. That's complicated.
+Not complicated in the sense that they're hard to conceptualize, but complicated in the sense that there's a lot you can do with them. Backups. Pause. Stop. Extra disks. Virtual networks. Incremental RAM backups. Migration between hosts. Host pools. And on, and on, _ad nauseum_. That means you need a lot of buttons and switches available, all organized nicely according to function, and available when you need them. It also means, behind the scenes, that you need to have written the code to do all those things. That's complicated.
 
 Therefore, it makes a great moat if you want to start a business. Build a hypervisor management system, and make people pay for the complicated bits. But you don't call them 'complicated', you call them 'pro'. And you make darn sure they're the most interesting bits to work with. Fortunately, 'interesting' is closely corellated with 'complicated' in the demographic that cares about such things. 
 
