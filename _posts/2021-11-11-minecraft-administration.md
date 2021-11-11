@@ -200,7 +200,7 @@ scp -r -P $portnum /home/`whoami`/minecraft/worlds/magic-and-madness $username@$
 jarfile='/home/`whoami`/minecraft/fabric-server-launch.jar'
 worldfolder='/home/`whoami`/minecraft/worlds/magic-and-madness/'
 
-java -jar $jarfile --nogui --world "$worldfolder"
+java -jar $jarfile --nogui --world "$worldfolder" &
 ```
 
 You can put this in a cronjob so it runs nightly, or weekly. First, install the file somewhere.
