@@ -2,7 +2,7 @@
 layout: post
 title: samba file share
 author: umhau
-description: "make a local cloud that talks nice with windows"
+description: "make a local cloud that talks nice with windows, linux and even android"
 tags: 
 - samba
 - nfs
