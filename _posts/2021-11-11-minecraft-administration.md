@@ -121,6 +121,7 @@ Notice that after you leave the tmux session where you launched the server, you 
 Download and install `mcrcon`. We'll use this to send arbitrary commands to our minecraft server.
 
 ```Shell
+su -c 'apt update ; apt install git make gcc'
 git clone https://github.com/Tiiffi/mcrcon.git
 cd mcrcon
 make
@@ -182,7 +183,7 @@ Simplest way to do it: make a script that stops the server and backs it up. Then
 
 ```Shell
 #!/bin/bash
-# backup.sh
+# backup-minecraft-world.sh
 
 # stop the server & save the latest copy of the world to file
 mcrcon -H localhost -P 55556 -p password123 -w 5 "say WARNING: server is restarting in 10 seconds" "save-all" "stop"
