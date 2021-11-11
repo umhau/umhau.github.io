@@ -30,7 +30,7 @@ Before we get to the code, we have to figure out where it's going. The XO hyperv
 
 Create a new FreeBSD VM, and remember to include ports (I think that's important?). You don't need a whole lot of system resources, and I think it's even more solid than debian - plus, with how it manages updates, you can just update the same system without issue indefinitely, and never have to worry about migrating the system. 
 
-There's anecdotes of people happily upgrading the same FreeBSD system from 2.0 up to present day - probably something around version 12 or so. (Put _that_ in Ubuntu's pipe and smoke it.) Perfect for a network where when I leave, the successors might not have the expertise to manage it. If I can build things that never need to be touched, that's so much better.
+There's anecdotes of people happily upgrading the same FreeBSD system from 2.0 up to present day - probably something around version 12 or so. (Put _that_ in Ubuntu's pipe and smoke it.) Perfect for a network where when I leave, the successors might not have the expertise to manage it -- that's not ideal, but it is pragmatic reality. If I can build things that never need to be touched, that's so much better.
 
 Decide if you want the web interface to run as root. If you're pragmatic and on a homelab network, it's probably fine. In fact, it seems like there's some extra complications inherent to the 'not-root' mode -- the system couldn't delete VMs, even though I'd done all the 'sudo' configs just as specified. Set up the whole thing as root, though, and the VMs delete just fine.  Just make sure that you enable ssh login as root. Otherwise...well, you'll figure it out sooner or later.
 
