@@ -182,7 +182,7 @@ Simplest way to do it: make a script that stops the server and backs it up. Then
 
 ```Shell
 #!/bin/bash
-# stop & backup
+# backup.sh
 
 # stop the server & save the latest copy of the world to file
 mcrcon -H localhost -P 55556 -p password123 -w 5 "say WARNING: server is restarting in 10 seconds" "save-all" "stop"
@@ -203,6 +203,21 @@ worldfolder='/home/`whoami`/minecraft/worlds/magic-and-madness/'
 java -jar $jarfile --nogui --world "$worldfolder"
 ```
 
-You can put this in a cronjob so it runs nightly, or weekly. On the other server, you can make some fancy script to delete some subset of the backups, or you can just do it manually every month or two. Though, some math would be in order: if the world files are 3GB, after a month you'll have used a whopping 90GB...lol.
+You can put this in a cronjob so it runs nightly, or weekly. First, install the file somewhere.
+
+```Shell
+su -c 'install ./backup-minecraft-world.sh /usr/local/bin/'
+crontab -e
+```
+
+Here, we're running the backup every day at 4AM. Hopefully no one's online then. If they are, they probably shouldn't be. Also, this is running as the default (not-root) user. That way it has access to the ssh key you generated. 
+
+```Shell
+0 4 * * * backup-minecraft-world.sh
+```
+
+On the other server, you can make some fancy script to delete some subset of the backups, or you can just do it manually every month or two. Though, some math would be in order: if the world files are 3GB, after a month you'll have used a whopping 90GB...lol.
 
 Have fun!
+
+P.S. I haven't tested this yet, _at all_. Almost everything is based on my bad memory; I'm not standing behind this post until this disclaimer is removed.  In particular, I can't remember if the ssh key needs to be explicitly added as an argument to the scp command, if we're using cron. I think it might need to be.
