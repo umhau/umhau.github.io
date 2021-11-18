@@ -15,7 +15,7 @@ categories: walkthroughs
 
 I'm not proud of it. I'll deny it ever happened. It's my dark little secret and I buried the evidence.
 
-That being said, I run a minecraft server with some friends, and we're going to be modding soon.  That means I need to upgrade my backup game, and make it not-manual.  However, because minecraft likes getting commands in its own special console, doing things like turning-it-off and saving-game-state are more difficult than they ought to be. 
+That being said, I run a minecraft server.  It's shared with some friends, and we're going to be modding soon.  That means I need to upgrade my backup game, and make it not-manual.  However, because minecraft likes getting commands in its own special console, doing things like turning-it-off and saving-game-state are more difficult than they ought to be. 
 
 Not that there's an easy solution. 
 
