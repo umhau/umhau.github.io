@@ -15,7 +15,7 @@ categories: walkthroughs
 
 I'm not proud of it. I'll deny it ever happened. It's my dark little secret and I buried the evidence.
 
-That being said, I run a minecraft server.  It's shared with some friends, and we're going to be modding soon.  That means I need to upgrade my backup game, and make it not-manual.  However, because minecraft likes getting commands in its own special console, doing things like turning-it-off and saving-game-state are more difficult than they ought to be. 
+That being said, I run a minecraft server.  It's shared with some friends, and we'll be modding soon.  That means I need to upgrade my backup game, and make it not-manual.  However, because minecraft likes getting commands in its own special console, doing things like turning-it-off and saving-game-state are more difficult than they ought to be. 
 
 Not that there's an easy solution. 
 
@@ -211,7 +211,7 @@ su -c 'install ./backup-minecraft-world.sh /usr/local/bin/'
 crontab -e
 ```
 
-Here, we're running the backup every day at 4AM. Hopefully no one's online then. If they are, they probably shouldn't be. Notice the `su` weirdness, BTW. 
+Here, we're running the backup every day at 4AM. Hopefully no one's online then. If they are, they probably shouldn't be. Notice the `su` weirdness, BTW. If you set up the cron while a 
 
 Also, this is running as the default (not-root) user. That way it has access to the ssh key you generated. 
 
