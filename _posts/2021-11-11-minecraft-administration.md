@@ -19,7 +19,7 @@ That being said, I run a minecraft server.  It's shared with some friends, and w
 
 Not that there's an easy solution. 
 
-So this is how I run the server. It's previously vanilla, now fabric. I'm self-hosting, though I might move over to digitalocean or something later on. I'm also not going into how I set up the server; that's a headache for a later day. Java is not fun to work with.
+So this is how I run the server. It's previously vanilla, now fabric. I'm self-hosting, though I might move over to digitalocean or something later on, if the performance mods are good enough (my buddies _love_ redstone, one of them went nuts with command blocks, and someone went and loaded most of the blocks in a 6k radius. Perf improvements are kinda necessary at this point). I'm also not going into the details of how I set up the server; that's a headache for a later day. Java is not fun to work with.
 
 server config settings
 ----------------------
@@ -53,7 +53,7 @@ enable-rcon=true
 rcon.port=55556
 rcon.password=password123
 
-# misc
+# other
 query.port=25565
 server-ip=
 enable-query=false
@@ -97,28 +97,28 @@ If you want to use a whitelist, make sure you enable it after you've added yours
 start the server
 ----------------
 
-Note that for some reason, the fabric server doesn't like being given the port number as a command line argument. You gotta put it in the `server.properties` file. 
+Note that for some reason, the fabric server doesn't like being given the port number as a command line argument. You gotta put it in the `server.properties` file (see above).
 
 ```Shell
 #!/bin/bash
 # start-minecraft-fabric.sh
 
-jarfile='/home/`whoami`/minecraft/fabric-server-launch.jar'
-worldfolder='/home/`whoami`/minecraft/worlds/magic-and-madness/'
+jarfile="/home/`whoami`/minecraft/fabric-server-launch.jar"
+worldfolder="/home/`whoami`/minecraft/worlds/magic-and-madness/"
 
 java -jar $jarfile --nogui --world "$worldfolder"
 ```
 
-I often run this command inside a tmux session. Others use screen, or even a systemd service. Since we have a tool to interact directly, it doesn't really matter - so long as you don't use a naked session and then close it. That wouldn't work so well.
+I often run this command inside a tmux session. Others use screen, or even a systemd service. Since we have a tool to interact directly, it doesn't really matter - so long as you don't use a naked session over ssh and then close it. That wouldn't work so well.
 
 Do notice that after starting the server, you can enter commands right there where the log is scrolling past. I like using `/stop`.  It's apparently better than just `CTRL-C`.
 
 stop the server
 ---------------
 
-Notice that after you leave the tmux session where you launched the server, you no longer have any means to safely shut down the server. You have to go back into the tmux session and run `/stop`. That's what we use `rcon` for - did you notice it was enabled in the `server.properties` file above?
+Notice that after you leave the tmux session where you launched the server, you no longer have any means to safely shut down the server. You have to go back into the tmux session and run `/stop` -- and how do you do _that_ from a script?  Enter `rcon`: did you notice it was enabled in the `server.properties` file above?
 
-Download and install `mcrcon`. We'll use this to send arbitrary commands to our minecraft server.
+Download and install `mcrcon`, which is a special version just for minecraft. We'll use this to send arbitrary commands to our minecraft server, without ever having to reenter that tmux session.
 
 ```Shell
 su -c 'apt update ; apt install git make gcc'
@@ -211,7 +211,9 @@ su -c 'install ./backup-minecraft-world.sh /usr/local/bin/'
 crontab -e
 ```
 
-Here, we're running the backup every day at 4AM. Hopefully no one's online then. If they are, they probably shouldn't be. Also, this is running as the default (not-root) user. That way it has access to the ssh key you generated. 
+Here, we're running the backup every day at 4AM. Hopefully no one's online then. If they are, they probably shouldn't be. Notice the `su` weirdness, BTW. 
+
+Also, this is running as the default (not-root) user. That way it has access to the ssh key you generated. 
 
 ```Shell
 0 4 * * * backup-minecraft-world.sh
