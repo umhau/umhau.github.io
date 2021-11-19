@@ -18,7 +18,7 @@ One of the employees at work changed their name, and I was asked to make sure th
 
 Wrong.
 
-We use GSuite and Outlook. No exchange server, sadly. Don't ask me why we went this route - it was before my time, and on behalf of the poor, deluded soul that picked GSuite, I deeply regret their decision. At least, if it was running 365, it would all be compatible together. 
+We use GSuite and Outlook. No exchange server, sadly. Don't ask me why we went this route - it was before my time, and on behalf of the poor, deluded soul that picked GSuite, I deeply regret their decision and fear to imagine the rest of their life choices. At least, if it was running 365, it would all be compatible together. 
 
 But I digress. We use gsuite and outlook, and so I went to the [admin panel](https://admin.google.com/ac/users), found the name-changing user, did the needful, and waited the recommended 10 minutes for the change to take effect. 
 
@@ -58,8 +58,6 @@ Start-Process -FilePath 'C:\Program Files\Microsoft Office\Office16\OUTLOOK.EXE'
 
 Behold! The magic incantation. If this is run, all the remembered display names and email addresses will disappear like smoke, and any new emails that come in will have their display names refreshed.
 
-Is this how you change the display name?
-
 Turns out, it isn't, and they won't. Plain and simple, that's not how it works, you don't get to do that, and it's just. not. possible. Sorry windows admin, no one wanted to create an option for that to be done, so there's no option to do it, so it can't get done. Find another way, or give up.
 
 We're not giving up, so we're finding another way.  Someone mention the local contacts list? Let's make a login script that adds just one user to everybody's contacts list. That _should_ override the cache, and show the proper display name when the emails come through. 
@@ -88,23 +86,27 @@ Word of advice: don't - ever - use [this](https://www.microsoft.com/en-us/p/csha
 csc.exe somefile.cs
 ```
 
-Except that in my-paths-are-screwed-up world, you'll have to do
+Wrong!
+
+In my-paths-are-screwed-up world, you'll actually have to do
 
 ```PowerShell
 & 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe' somefile.cs
 ```
 
-and then it'll work.
+...and then it'll work.
 
 Except it won't. 
 
-Why? Because before we went to all the trouble of figuring out how to write this program, we decided to do a quick sanity-check and add the contact to the address list manually. When we did that, we discovered something: it doesn't change a single thing. The original display name is still the display name.  
+Why?
 
-The original display name is still the display name. 
+Because before we went to all the trouble of figuring out how to write this program, we decided to do a quick sanity-check and add the contact to the address list manually. When we did that, we discovered something: it doesn't change a single blessed thing. The original display name is still the display name.  
+
+_The original display name is still the display name._
 
 Even though we cleared the cache. Even though we set an alternate name in the address book. Even though - 
 
-Maybe the display name is being sent with the email from the sender. Maybe, the sender's outlook config needs to be changed. Maybe, we were so myopic that we forgot there's a whole other side to this - the sender's side. Maybe we've been at work too long.
+Maybe the display name is being sent with the email from the sender. Maybe, the sender's information overrides the local settings. Maybe, the sender's outlook config needs to be changed. Maybe, we were so myopic that we forgot there's a whole other side to this - the sender's side. Maybe we've been at work too long.
 
 ```
 File -> Account Settings
