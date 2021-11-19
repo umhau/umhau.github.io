@@ -12,13 +12,13 @@ tags:
 categories: walkthroughs
 ---
 
-Have I ever mentioned how deeply I detest the interfaces created for the Windows OS?
+Have I ever mentioned how deeply I detest the programming interfaces created for the Windows OS?
 
 One of the employees at work changed their name, and I was asked to make sure that the change would be reflected in the emails they sent to the other employees. No biggie, right? Just pop over into the email server, change the name, bip-bop-boop, and we're done?
 
 Wrong.
 
-We use GSuite and Outlook. No exchange server, sadly. Don't ask me why we went this route - it was before my time, and on behalf of the poor, deluded soul that picked GSuite, I deeply regret their decision and fear to imagine the rest of their life choices. At least, if it was running 365, it would all be compatible together. 
+We use GSuite and Outlook. No exchange server, sadly. Don't ask me why we went this route - it was before my time, and on behalf of the poor, deluded soul that picked GSuite, I deeply regret their decision and fear to imagine the rest of their life choices. At least, if it was running 365 or Exchange, it would all be compatibly broken. 
 
 But I digress. We use gsuite and outlook, and so I went to the [admin panel](https://admin.google.com/ac/users), found the name-changing user, did the needful, and waited the recommended 10 minutes for the change to take effect. 
 
