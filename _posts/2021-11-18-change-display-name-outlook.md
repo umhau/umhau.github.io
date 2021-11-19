@@ -1,6 +1,6 @@
 ---
 layout: post
-title: An Odyssey with Outlook
+title: 'An Odyssey with Outlook: a Tale of Failure'
 author: umhau
 description: "Frustration breeds annoyance breeds contempt"
 tags: 
@@ -58,7 +58,7 @@ Start-Process -FilePath 'C:\Program Files\Microsoft Office\Office16\OUTLOOK.EXE'
 
 Behold! The magic incantation. If this is run, all the remembered display names and email addresses will disappear like smoke, and any new emails that come in will have their display names refreshed.
 
-Turns out, it isn't, and they won't. Plain and simple, that's not how it works, you don't get to do that, and it's just. not. possible. Sorry windows admin, no one wanted to create an option for that to be done, so there's no option to do it, so it can't get done. Find another way, or give up.
+Turns out, it isn't, and they won't. Plain and simple, that's not how it works, you don't get to do that, and it's just. not. possible. Sorry windows admin, no one wanted to create an option to let you do that, so there's no option to do it, so it can't get done. Outlook just won't let you do it. Find another way, or give up.
 
 We're not giving up, so we're finding another way.  Someone mention the local contacts list? Let's make a login script that adds just one user to everybody's contacts list. That _should_ override the cache, and show the proper display name when the emails come through. 
 
