@@ -74,6 +74,92 @@ pkg_add vim htop
 configure wireguard on the server
 ---------------------------------
 
+This is more of a hello-world than part of the final config; just making sure the system works.  Remember, we're looking at a 'roadwarrior' setup, where there's a node at a static, known address (the 'server'), and a bunch of nodes with unpredictable addresses which initiate connection to the static-address-node (the 'clients').
+
+Create the 'wireguard interface' on the server. In network-engineering-world, interfaces are like portals to other networks; those networks are defined by the range of possible addresses that something on the network can have; and so an interface into that network will have a unique address within that range. _(There's a whole class of problems and workarounds for when multiple networks, available via different interfaces to a single machine, are using the address ranges that overlap. So yes - if that problem occured to you, it's definitely a legitimate problem.)_ 
+
+That is:
+
+```
++------------+
+|            |
+|   my       |
+|   random   |
+|   server   |
+|            |
+|         +--+-----------------+             192.168.43.1/24
+|         | if1: 192.168.43.20 +-----------> ---------------
+|         +--+-----------------+             192.168.43.1 <-> 192.168.43.255
+|            |
+|         +--+-----------------+             192.168.1.1/16
+|         | if2: 192.168.213.9 +-----------> ---------------
+|         +--+-----------------+             192.168.1.1 <-> 192.168.255.255
+|            |
+|         +--+-----------------+             10.11.12.1/24
+|         | if3: 10.11.12.132  +-----------> ---------------
+|         +--------------------+             10.11.12.1 <-> 10.11.12.255
++------------+
+```
+
+BTW, did you spot the problem? There's an overlap between the networks accessible through the `if1` and `if2` portals. Notice how _big_ the `if2` network is; it covers the whole range of possible addresses between 192.168.1.1 and 192.168.255.255. Now, what if you want to talk with a machine somewhere at the beginning of that range, say at 192.168.40.220? No problem, packets get through just fine. What about 192.168.43.152? Well, now we have a problem: which network are you trying to reach? Because that address is within the defined range of two networks: the one you can see through the `if2` portal, but also the network you can see through the `if1` portal.
+
+When you first open one of these portals, you have no idea what's on the other side. So you send a sort of 'hello, I'm here, who are you?' signal to anything / everything on the other side. Who responds? Suzie's random laptop hooked into the wifi? How does that laptop know any more about the network than you do? 
+
+It doesn't; not without first learning the network parameters from something else.
+
+That something else is the _DHCP server_. That machine tells the others in the network what addresses are available, and assigns them their own if they ask for it.  
+
+What we're doing here is creating a whole new portal, to a whole new network - even though that new network doesn't exist yet. _(We'll create it later, and do some other freaky magic stuff with it.)_  This particular portal is unusual in that everything that passes through the portal is encrypted, automatically, as it goes through. _(The packets sent through this way pass through that network encrypted, before they leave the network through another portal - and if that portal is attached to the intended recipient machine, it will decrypt the packets automatically as they pass through and out.)
+
+The portal will be called `wg0` instead of `if2` or some such. Remember that bit about encryption? Part of creating the portal is also setting up the private key.
+
+```sh
+random_string=$(openssl rand -base64 32)
+ifconfig wg0 create wgkey $random_string wgport 443
+```
+
+We set the _port_ to be static, and to be 443. 
+
+What's a port, you ask? 
+
+Remember those portals? Well, they aren't just firehoses. The packets travelling through them carry numbers - anything that can be expressed with an unsigned 16-bit integer. If you call that sort of talk greek gibberish, worthy of the βάρβαροι, then let's just say the range is between 1 and 2^16-1. What's 2^16-1? Seriously? 65535. The range is 1-65535. Every packet presents a number between 1-65535, and if it presents the correct, predefined, number, it's let through. What we did above was say that we'll only let packets through the `wg0` portal interface if they present us the port number 443.
+
+Let's see what that command did for us. 
+
+```sh
+> ifconfig wg0
+
+wg0: flags=8082<BROADCAST,NOARP,MULTICAST> mtu 1420
+        index 6 priority 0 llprio 3
+        wgport 443
+        wgpubkey 9kIc7SzIoKXTFhWohYdHfOWhQZHQgxTp0MfFhj0cUUk=
+        groups: wg
+```
+
+**Now do the same thing on the client.** Remember, the two ends aren't actually different from each other in how they behave: it's just that only one end is going to know how to find and initiate contact with the other.
+
+```sh
+random_string=$(openssl rand -base64 32)
+ifconfig wg0 create wgkey $random_string wgport 443
+```
+
+And check the results. Note the public key is different, because it's the other machine.
+
+```sh
+> ifconfig wg0
+
+wg0: flags=8082<BROADCAST,NOARP,MULTICAST> mtu 1420
+        index 6 priority 0 llprio 3
+        wgport 443
+        wgpubkey 1RJHBWzt3sH4GQzljwY+VTNGcPS0PHwaGR6knefhNMw=
+        groups: wg
+```
+
+Public key...
+
+Right. More gibberish. There's this cool thing called public-key cryptography, where you can _encrypt_ anything you like with a _public key_, and only the person with the _private key_ can _decrypt_ it. It's like someone who has a bunch of padlocks and a single key that unlocks all of them. They pass out the padlocks to anyone who asks, and scatter them on the roadside; someone comes, grabs a padlock, goes home, and uses it to lock a chest. They can't open the chest anymore; but if they send that locked chest to the person with the key, it'll get there safely and it'll be unlocked easily.
+
+What we're doing here is creating key/padlock pairs, one for each of the two machines in our test setup. The random string is that padlock - useful to lock things with.  The key that can unlock things is also a similar-looking random string, but that's kept hidden. We don't even need to see it, since the machines keep a copy for themselves automatically.
 
 
 
