@@ -106,7 +106,7 @@ _The original display name is still the display name._
 
 Even though we cleared the cache. Even though we set an alternate name in the address book. Even though - 
 
-Maybe the display name is being sent with the email from the sender. Maybe, the display name provided by the email header overrides the local settings. Maybe, the _sender's_ outlook config needs to be changed. Maybe, we were so myopic that we forgot there's a whole other side to this - the sender's side. Maybe I need a vacation.
+Maybe the display name is being sent with the email from the sender. Maybe, the display name provided by the email header overrides the local settings. Maybe, the _sender's_ outlook config needs to be changed. Maybe, we were so myopic that we forgot there's a whole other side to this - the sender's side. Maybe, I need a vacation.
 
 Open the employee's outlook program.
 
