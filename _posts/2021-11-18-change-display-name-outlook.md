@@ -111,7 +111,7 @@ Maybe the display name is being sent with the email from the sender. Maybe, the 
 Open the employee's outlook program.
 
 ```
-File -> Account Settings -> _double click the email account_
+File -> Account Settings -> (double click the email account)
 Change 'Your Name' to the new display name
 Next -> Finish
 ```
