@@ -92,10 +92,12 @@ Address = 10.191.232.1/16
 
 The address and subnet of the VPN server. The VPN server will be assigned the specified address, and all clients must be given IPs within this subnet.
 
-client configuration (still on the server)
-------------------------------------------
+client configuration generation (still on the server)
+-----------------------------------------------------
 
-We can add a peer ("client") like this. Note that because we set `SaveConfig = true`, this will be added directly to the `wg0.conf` that we opened above.  This tells the server what it needs to know to be able to talk to specific, configured clients.  The wgpeer argument, below, is the public key of the _server_.
+We want to be able to generate all the components of a client's config in a separate script. That means we create a keypair associated with an IP address, and have a matching entry in the wg0.conf file on the server. Last step should be that it's wrapped up into a .zip file.
+
+We can add a peer ("client") like this. Note that because we set `SaveConfig = true` above, this will be added directly to the `wg0.conf` that we opened above.  This tells the server what it needs to know to be able to talk to specific, configured clients.  The wgpeer argument, below, is the public key of the _server_.
 
 ```sh
 ifconfig wg0 \
@@ -106,7 +108,30 @@ wgaip      10.191.232.1/24
 
 AllowedIPs – The IP address(es) that will be routed through the VPN. In this case, we only want to talk to the server itself, so only the server’s IP address, 172.16.0.1 with the /32 subnet, is specified. Routing entire subnets, or all IPs is also possible by using the proper IP and subnet. For example, if Address is set to 172.16.0.0/16, then all IPs in the range 172.16.0.0 to 172.16.255.255 will be routed through the VPN, useful if you want multiple devices on the same VPN to be able to talk to each other.
 
-A variation of this command will be used when (re)generating client config zip files.
+```sh
+#!/bin/sh
+# client config generation script
+# in:  client static IP within VPN
+# out: zip file
+
+serverpubkey='RF8qxBg7HwWoeGvKzkSh3oV42TG32HT5gVV75k1UWiI='
+clientip="$1"
+packagename=$clientip.$(date +"%Y.%m.%d.%H.%M.%S") # or: %s seconds since 1970-01-01 00:00:00 UTC
+
+# place to put the new client config
+mkdir -p /etc/wireguard/"$packagename"
+chmod 700 /etc/wireguard/"$packagename"
+cd /etc/wireguard/"$packagename"
+
+# generate the client's private and public keypair
+wg genkey > "secret.$clientip.key"
+wg pubkey < "secret.$clientip.key" > "public.$clientip.key"
+
+
+
+```
+
+
 
 networking and packet routing (on the server)
 ---------------------------------------------
