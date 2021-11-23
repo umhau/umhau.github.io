@@ -71,7 +71,7 @@ chmod 600 secret.key
 wg pubkey < secret.key > public.key
 ```
 
-That's it for telling the OpenBSD machine what we expect from it. Now let's tell it how we want it to run this VPN. This config file is going to hold both the server configs, and the info it keeps on each client - which means, we'll be modifying it regularly and programmatically.
+This config file is going to hold both the server configs, and the info it keeps on each client - which means, we'll be modifying it regularly and programmatically.
 
 ```sh
 # check what the private key is
