@@ -139,6 +139,7 @@ wg0: flags=8082<BROADCAST,NOARP,MULTICAST> mtu 1420
 **Now do the same thing on the client.** Remember, the two ends aren't actually different from each other in how they behave: it's just that only one end is going to know how to find and initiate contact with the other.
 
 ```sh
+# [on the client]
 random_string=$(openssl rand -base64 32)
 ifconfig wg0 create wgkey $random_string wgport 443
 ```
@@ -160,6 +161,36 @@ Public key...
 Right. More gibberish. There's this cool thing called public-key cryptography, where you can _encrypt_ anything you like with a _public key_, and only the person with the _private key_ can _decrypt_ it. It's like someone who has a bunch of padlocks and a single key that unlocks all of them. They pass out the padlocks to anyone who asks, and scatter them on the roadside; someone comes, grabs a padlock, goes home, and uses it to lock a chest. They can't open the chest anymore; but if they send that locked chest to the person with the key, it'll get there safely and it'll be unlocked easily.
 
 What we're doing here is creating key/padlock pairs, one for each of the two machines in our test setup. The random string is that padlock - useful to lock things with.  The key that can unlock things is also a similar-looking random string, but that's kept hidden. We don't even need to see it, since the machines keep a copy for themselves automatically.
+
+Moving on rapidly, we tell the server what IP address ranges it should accept packages from. That is; there must already be some network which both the client machine and the server machine are connected to - that both machines have portals into. What is that network? That's what you need to tell the server machine. We're going to pretend that the badly-made set of networks I used in the example farther up is the environment we're working with, and use it as an example.
+
+Also tell the server the _public key_ of the client - it needs to know what padlocks to use on the stuff it sends.  
+
+```sh
+# [on the server]
+#                   [the client's public key]                    [the network]
+ifconfig wg0 wgpeer 1RJHBWzt3sH4GQzljwY+VTNGcPS0PHwaGR6knefhNMw= 10.11.12.1/24
+```
+
+Notice - if we specified a wider range of possible addresses for the network, but still included the network above within that range, it would be legit: the network `10.11.12.1/24` is _within_ the network `10.0.0.0/8`, and therefore using the latter instead of the former would _only broaden_ the permitted ip addresses.
+
+Check the results.
+
+```sh
+ifconfig wg0
+```
+
+Now, do the same thing - again - on the client side. Client needs to know the proper network, too, and what padlocks to use that the server has the key to open.  However, note that in this case, it's not just the network you need to specify - it's the specific address to send info to. We're specifying that only on this side, because we're setting up what's called a 'roadwarrior' setup - the client moves from place to place, the server stays still; this means the server has no idea how to contact the client, but the client always knows where to find the server. Therefore, the client always initiates the connection. Once initiated, however, the client tells the server where it's currently located - like a kid calling their mom at home.  
+
+```sh
+# [on the client]
+#                   [the server's public key]                    [the server's location & port]      [send to any ip]
+ifconfig wg0 wgpeer 9kIc7SzIoKXTFhWohYdHfOWhQZHQgxTp0MfFhj0cUUk= wgendpoint wgserver.example.com 443 wgaip 0.0.0.0/0
+```
+
+Note that we can use an ip address instead of the URL.
+
+Finally, speaking of IP addresses, we have to 
 
 
 
