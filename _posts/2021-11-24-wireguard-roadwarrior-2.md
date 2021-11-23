@@ -30,20 +30,20 @@ sources
 VPN parameters
 --------------
 
-Bits of these are scattered over the systems, so this is where I'm just putting all the choices I've made into a single place.
-
 ```sh
 VPN subnet range:         10.191.232.1/24
 VPN public IP address:    250.123.234.78
 VPN external port number: 55667
 ```
 
-build a VPN server on OpenBSD
------------------------------
+server configuration
+--------------------
 
-We're using wireguard. Do this section all on the OpenBSD server, which should have at least two ethernet ports, one connected to your ISP's router, and the other to your main network. _(It would be possible to use one machine for the VPN and as the network gatway / firewall / DHCP server / etc, but I'm using OPNSense for that; for the VPN, which hopefully won't have to be touched frequently - or ever - I want OpenBSD. It has an in-kernel wireguard implementation, and its networking configurations are far cleaner, and it should last much longer on its own, if some future sysadmin gets negligent.)_
+Do this section all on the OpenBSD server, which should have at least two ethernet ports, one connected to your ISP's router, and the other to your main network.
 
-Wireguard is already installed, in the kernel no less; there's a set of extra tools we can install, so let's do that. And while we're at it, lets get some desprately needed utilities on there.  
+_(It would be possible to use one machine for the VPN and as the network gatway / firewall / DHCP server / etc, but I'm using OPNSense for that; for the VPN, which hopefully won't have to be touched frequently - or ever - I want OpenBSD. It has an in-kernel wireguard implementation, and its networking configurations are far cleaner, and it should last much longer on its own, if some future sysadmin gets negligent.)_
+
+Wireguard is already installed; there's a set of extra tools we can install so let's do that. And while we're at it let's get some desprately needed utilities on there.
 
 ```sh
 su
@@ -53,7 +53,7 @@ pkg_add -u
 pkg_add vim htop nano wireguard-tools
 ```
 
-The VPN server is going to have its own keypair, and it'll be routing packets, so lets do some preliminaries. I only plan to implement IPV4 routing, so if you need IPV6, you'll have to look elsewhere. 
+The VPN server is going to have its own keypair, and it'll be routing packets, so lets do some preliminaries. I only plan to implement IPV4 routing, so if you need IPV6, you'll have to look elsewhere.
 
 ```sh
 # enable packet forwarding (server can shuffle packets between ethernet ports)
