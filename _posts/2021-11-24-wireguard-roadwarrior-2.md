@@ -23,23 +23,20 @@ Tall order, but we got this.
 sources
 -------
 
-https://philipdeljanov.com/posts/2019/03/21/setting-up-a-wireguard-vpn/
-https://ianix.com/wireguard/openbsd-howto.html
-https://xosc.org/wireguard.html
+- https://philipdeljanov.com/posts/2019/03/21/setting-up-a-wireguard-vpn/
+- https://ianix.com/wireguard/openbsd-howto.html
+- https://xosc.org/wireguard.html
 
 VPN parameters
 --------------
 
 Bits of these are scattered over the systems, so this is where I'm just putting all the choices I've made into a single place.
 
-#### VPN subnet range
-    10.191.232.1/24
-
-#### VPN public IP address
-    250.123.234.78
-
-#### VPN external port number
-    55667
+```sh
+VPN subnet range:         10.191.232.1/24
+VPN public IP address:    250.123.234.78
+VPN external port number: 55667
+```
 
 build a VPN server on OpenBSD
 -----------------------------
