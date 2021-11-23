@@ -12,6 +12,8 @@ tags:
 categories: walkthroughs
 ---
 
+**work in progress. easier to read on the blog than in VS code.**
+
 We're going to create a VPN system from pieces. 
 
 We're going to build a VPN server on OpenBSD and give it its own public IP address; write a program to generate keypairs and config files, and zip them up; create a local website that tracks the status of each VPN client's IP address; create a standardized client config, and automate it. 
