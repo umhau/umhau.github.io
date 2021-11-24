@@ -19,7 +19,7 @@ That being said, I run a minecraft server.  It's shared with some friends, and w
 
 Not that there's an easy solution. 
 
-So this is how I run the server. It's previously vanilla, now fabric. I'm self-hosting, though I might move over to digitalocean or something later on, if the performance mods are good enough (my buddies _love_ redstone, one of them went nuts with command blocks, and someone went and loaded most of the blocks in a 6k radius. Perf improvements are kinda necessary at this point). I'm also not going into the details of how I set up the server; that's a headache for a later day. Java is not fun to work with.
+So this is how I run the server. It's previously vanilla, now fabric. I'm self-hosting, though I might move over to digitalocean or something later on, if the performance mods are good enough (my buddies _love_ redstone, one of them went nuts with command blocks, there's a chicken farm at the origin chunk, and some idiot went and loaded most of the blocks in a 6k radius. Perf improvements are kinda necessary at this point). I'm also not going into the details of how I set up the server; that's a headache for a later day. Java is not fun to work with.
 
 server config settings
 ----------------------
