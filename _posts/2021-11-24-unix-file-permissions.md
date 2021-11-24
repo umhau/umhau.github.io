@@ -14,27 +14,17 @@ categories: memos
 
 File permissions. Can't live with em, can't live without em.  Personally, I never got the hang of them. Just memorized a couple quick tricks and moved on.
 
-- Use `sudo` to make a script executable, and put it somewhere on the `$PATH`:
-
 ```sh
+# use `sudo` to make a script executable, and put it somewhere on the `$PATH`:
 sudo install script.sh /usr/local/bin/
-```
 
-- The permission code '777' lets anyone do anything.
-
-```sh
+# The permission code '777' lets anyone do anything.
 sudo chmod 777 file.txt
-```
 
-- Use `root` for everything! The world is your oyster.
-
-```sh
+# Use `root` for everything! The world is your oyster.
 su root
-```
 
-- Change the owner to yourself:
-
-```sh
+# Change the owner to yourself:
 sudo chmod `whoami`:`whoami` file.txt
 ```
 
