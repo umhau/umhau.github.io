@@ -43,7 +43,7 @@ The folks who built what we know as UNIX (or, maybe, we don't know it as UNIX. I
 | *write*   | 2             | 2                  | 2           |
 | *execute* | 1             | 1                  | 1           |
 
-Probably wondering what the cryptic numbers are. If you're clever with numbers, you might notice that if you sum some combination of 4, 2 and 1, you'll always be able to tell which ones you combined - if the sum is 7, it's all three; if 6, 4 and 2; if 5, 4 and 1, and so on. This means we can use one digit to represent the read, write, and execute permissions simultaneously, for either the file owner, file owner's group, or anyone else. 
+Probably wondering what the cryptic numbers are. If you're clever with numbers, you might notice that if you sum some combination of 4, 2 and 1, you'll always be able to tell which ones you combined - if the sum is 7, it's all three; if 6, then 4 and 2; if 5, then 4 and 1, and so on. This means we can use one digit to represent the read, write, and execute permissions simultaneously, for either the file owner, file owner's group, or anyone else. 
 
 Thus, if a file has permissions 777, that means it has `4+2+1=7` permissions for all three sets of possible people. If it has permissions 600, we can translate that, too: 
 
