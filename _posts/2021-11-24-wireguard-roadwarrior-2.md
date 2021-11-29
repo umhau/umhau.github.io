@@ -1,6 +1,6 @@
 ---
 layout: post
-title: VPN Server
+title: An ergonomic, yet simple, roadwarrior VPN server for a small group
 author: umhau
 description: "roadwarrior"
 tags: 
@@ -9,14 +9,13 @@ tags:
 - roadwarrior
 - networking
 - VPN
+- lighttpd
 categories: walkthroughs
 ---
 
-**work in progress. easier to read on the blog than in VS code.**
+**work in progress. easier to read on the blog than in VS code while I'm building it.**
 
-We're going to create a VPN system from pieces. 
-
-We're going to build a VPN server on OpenBSD and give it its own public IP address; write a program to generate keypairs and config files, and zip them up; create a local website that tracks the status of each VPN client's IP address; create a standardized client config, and automate it. 
+We're going to build a VPN server on OpenBSD and give it its own public IP address; write a program to generate keypairs and config files, and zip them up; create a local website that tracks the use/disuse status of each VPN client's IP address; create a standardized client config; and automate the whole thing so it's autonomous for years at a stretch. 
 
 Tall order, but we got this.
 
@@ -30,10 +29,21 @@ sources
 VPN parameters
 --------------
 
+We're using this example config everywhere. I won't bother to use variables or mention it again; just pay attention and swap these numbers out when you see them.
+
 ```sh
 VPN subnet range:         10.191.232.1/24
 VPN public IP address:    250.123.234.78
 VPN external port number: 55667
+```
+
+architecture components
+-----------------------
+
+```
+[clients.csv]  list of all current client configs - ip address and private key
+[genclient.sh] given an ip address, creates and inserts a complete client config
+[pf.conf]      OpenBSD firewall config; must modify to allow VPN traffic through
 ```
 
 server configuration
@@ -60,15 +70,16 @@ The VPN server is going to have its own keypair, and it'll be routing packets, s
 sysctl net.inet.ip.forwarding=1
 echo "net.inet.ip.forwarding=1" >> /etc/sysctl.conf
 
-# set up a folder for wireguard configs
+# set up a folder for wireguard configs (we want the webserver to have access to this)
 mkdir -p /etc/wireguard
-chmod 700 /etc/wireguard
+chmod 744 /etc/wireguard
 cd /etc/wireguard
 
 # generate the server's private and public keypair
 wg genkey > secret.key
-chmod 600 secret.key
 wg pubkey < secret.key > public.key
+chmod 600 secret.key
+chmod 644 public.key
 ```
 
 This config file is going to hold both the server configs, and the info it keeps on each client - which means, we'll be modifying it regularly and programmatically.
@@ -81,7 +92,8 @@ cat /etc/wireguard/secret.key
 vim /etc/wireguard/wg0.conf
 ```
 
-This is the first section of what will be a very long file. 
+The address and subnet of the VPN server. The VPN server will be assigned the specified address, and all clients must be given IPs within this subnet. This is the first section of what will be a very long file, though the rest won't be modified manually. 
+
 ```sh
 [Interface]
 PrivateKey = <Contents of the server privatekey file>
@@ -90,10 +102,19 @@ SaveConfig = true    # this lets us permanently add peers to the file via comman
 Address = 10.191.232.1/16 
 ```
 
-The address and subnet of the VPN server. The VPN server will be assigned the specified address, and all clients must be given IPs within this subnet.
+Open a hole in the firewall to let the VPN through. Add the following lines to the Packet Filter config file
 
-client configuration generation (still on the server)
------------------------------------------------------
+```sh
+# vim /etc/pf.conf
+pass in on wg0
+pass in inet proto udp from any to any port 55667
+pass out on egress inet from (wg0:network) nat-to (vio0:0)
+```
+
+
+
+client config generation (still on the server)
+----------------------------------------------
 
 We want to be able to generate all the components of a client's config in a separate script. That means we create a keypair associated with an IP address, and have a matching entry in the wg0.conf file on the server. Last step should be that it's wrapped up into a .zip file.
 
@@ -108,28 +129,68 @@ wgaip      10.191.232.1/24
 
 AllowedIPs – The IP address(es) that will be routed through the VPN. In this case, we only want to talk to the server itself, so only the server’s IP address, 172.16.0.1 with the /32 subnet, is specified. Routing entire subnets, or all IPs is also possible by using the proper IP and subnet. For example, if Address is set to 172.16.0.0/16, then all IPs in the range 172.16.0.0 to 172.16.255.255 will be routed through the VPN, useful if you want multiple devices on the same VPN to be able to talk to each other.
 
+What is the AllowedIPs config line? It specifies that packets destined for these IP addresses go over WireGuard. IPs not in the list don't get sent over WireGuard. Here, 0.0.0.0/0 and ::/0 mean all IP addresses in IPv4 and IPv6, respectively.
+
 ```sh
 #!/bin/sh
 # client config generation script
-# in:  client static IP within VPN
-# out: zip file
+# in:  1) client static IP within VPN, 2) server public key
+# out: 1) zip file, 2) server wireguard config alteration
 
-serverpubkey='RF8qxBg7HwWoeGvKzkSh3oV42TG32HT5gVV75k1UWiI='
-clientip="$1"
-packagename=$clientip.$(date +"%Y.%m.%d.%H.%M.%S") # or: %s seconds since 1970-01-01 00:00:00 UTC
+serverpubkey="$2"
+clientip="$1"  # e.g. 10.191.232.123
+# packagename=$clientip.$(date +"%Y.%m.%d.%H.%M.%S") # year.month.day.hour.minute.second
+packagename=$clientip.$(date +"%s")                # seconds since 1970-01-01 00:00:00 UTC
 
-# place to put the new client config
+serverendpointip='250.123.234.78'
+serverportnum='55667'
+peernetworkspread='24'
+serverip='10.191.232.1'
+
+# place to put the new client config (the webserver needs to have access here)
 mkdir -p /etc/wireguard/"$packagename"
-chmod 700 /etc/wireguard/"$packagename"
+chmod 744 /etc/wireguard/"$packagename"
 cd /etc/wireguard/"$packagename"
 
 # generate the client's private and public keypair
 wg genkey > "secret.$clientip.key"
 wg pubkey < "secret.$clientip.key" > "public.$clientip.key"
+chmod 600   "secret.$clientip.key"
+chmod 644   "public.$clientip.key"
+privatekey=$(cat "secret.$clientip.key")
+publickey=$(cat "public.$clientip.key")
 
+# generate a config file for the *client*; the interface is local, and the peer
+# is the server. Persistentkeepalive is useful for clients that need to not 
+# lose connection after long periods of inactivity.
+# is anything else even needed beyond this config file?
+configfile="wireguard.$clientip.conf"
 
+echo "[Interface]"                                             >> "$configfile"
+echo "Address    = $clientip"                                  >> "$configfile"
+echo "PrivateKey = $privatekey"                                >> "$configfile"
+echo "ListenPort = $serverportnum"                             >> "$configfile"
+echo ""                                                        >> "$configfile"
+echo "[Peer]"                                                  >> "$configfile"
+echo "PublicKey  = $serverpubkey"                              >> "$configfile"
+echo "Endpoint   = $serverendpointip:$serverportnum"           >> "$configfile"
+echo "AllowedIPs = $serverip/$peernetworkspread"               >> "$configfile"
+echo "PersistentKeepalive = 25"                                >> "$configfile"
+
+# if there's already a configuration for the given IP address in the server 
+# config file, remove the config and put it in a backup file.
+wg set wg0 peer 
+
+# add the client configuration to the *server* wireguard config file. Note that
+# this *does not set* an IP address for the associated client - the client sets
+# it's own IP address.
+ifconfig     wg0 \
+  wgpeer     "$serverpubkey" \
+  wgendpoint $serverendpointip $serverportnum \
+  wgaip      $serverip/$peernetworkspread
 
 ```
+
 
 
 
@@ -162,8 +223,10 @@ pfctl -f /etc/pf.conf -n
 pfctl -f /etc/pf.conf
 ```
 
-
-
-
+Only a single line is strictly necessary in pf.conf, but of course feel free to keep your other pf rules:
+```sh
+pass out on egress inet from (wg0:network) nat-to (vio0:0)
+```
+https://ianix.com/wireguard/openbsd-howto.html
 
 

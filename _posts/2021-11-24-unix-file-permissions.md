@@ -35,7 +35,7 @@ UNIX file permissions
 
 Something before we start. "Groups" are this secondary concept associated with "users". It's like a tag: if your user is part of a certain _group_, then you get extra permissions to do certain things.  For instance, if you're in the _wheel_ group, then you're allowed to use `su` to login as root. There's also a 'printers' group, at least in some systems: presumably, being part of that group lets you print things.  Okay? Ok.
 
-The folks who built what we know as UNIX (or, maybe, we don't know it as UNIX. IDK.) were thrifty in their bit budgets.  They found a way to compress 9 separate, related configs into 3 digits associated with each file and folder. How and why? There's three categories of users who might have some kind of permission, and three categories of permission types. Together, there's 9 different possible combinations (or is it permutations?) of those two groups of three. See below:
+The folks who built what we know as UNIX (or, maybe, we don't know it as UNIX. IDK.) were thrifty in their bit budgets.  They found a way to compress 9 separate, related configs into 3 digits associated with each file and folder. How and why? There's three categories of users who might have some kind of permission, and three categories of permission types, and each permission type applies to each kind of user. Together, there's 9 different possible combinations (or is it permutations?) of those two groups of three. See below:
 
 |           | File Owner    | File Owner's Group | Anyone Else |
 | ----------|:-------------:|:------------------:|------------:|
@@ -49,6 +49,7 @@ Thus, if a file has permissions 777, that means it has `4+2+1=7` permissions for
 
 ```
 600
+
 6          , 0    , 0
 4+2        , 0    , 0
 read+write , none , none
