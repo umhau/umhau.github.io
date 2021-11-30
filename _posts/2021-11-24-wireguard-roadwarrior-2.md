@@ -43,10 +43,15 @@ architecture components
 -----------------------
 
 ```
-[clients.csv]  list of all current client configs - ip address and private key
 [genclient.sh] given an ip address, creates and inserts a complete client config
 [pf.conf]      OpenBSD firewall config; must modify to allow VPN traffic through
 [wg0.conf]     Tells wireguard what settings to use for the VPN
+```
+
+I don't think I need this one - pretty sure parsing `wg0.conf` is just as effective.
+
+```
+[clients.csv]  list of all current client configs - ip address and private key
 ```
 
 server configuration
@@ -105,7 +110,9 @@ This is the first section of what will be a very long file; the rest will simila
 
 _(By the way, I'm fully aware that the following method for putting text in a file is...inelegant, to put it mildly. However, I'm writing this post as a prelude to a fully-scripted system, and I want to be able to just copy-paste from this post; and, once inside a very large script, this format is the most-readable method for dumping a lot of text into config files I've been able to come up with. Ironically, the consistent repetition and lack of preamble means it's easy to just ignore the bits of each line that aren't the script contents._
 
-_Tell me it's not awesomely easy to read. Oh, wait. There's no comment section. You can't.)_
+_Tell me it's not awesomely easy to read._
+
+_Oh, wait. There's no comment section. You can't.)_
 
 ```sh
 echo "[Interface]"                             >> /etc/wireguard/wg0.conf
