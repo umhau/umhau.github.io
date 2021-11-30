@@ -256,3 +256,40 @@ echo "new client config generation complete"
 echo "file saved to: /etc/wireguard/clientconfigs/wireguard.$clientip.conf"
 ```
 
+This script doesn't check for old configs for the given IP address, and it only does a single address. But that's ok - we're going to do this on a loop for all desired IP addresses, and we don't really want to keep old configs. Mostly, we want to delete old entries in the server config. But we can make that a separate 'cleanup' script, that runs periodically and compares the current crop of client configs to the `[peers]` in the server config. 
+
+```sh
+#!/bin/bash
+# cleanup_peers.sh
+# run as a root cronjob
+
+while IFS= read -r line; do
+
+  if [[ 'PublicKey' == *"$line"* ]] ; then
+
+    currentconfigversion=False
+
+    pubkey=${line##*=}
+
+    for file in /etc/wireguard/clientconfigs/wireguard.*.conf ; do
+
+      if grep -q -wi "$pubkey" "$file"; then
+
+        currentconfigversion=True
+        break
+
+      fi
+
+    done
+
+    if ! [[ "$currentconfigversion" == 'True' ]] ; then
+
+      echo "removing old peer entry! pubkey = $pubkey"
+      wg set wg0 peer "$pubkey" remove
+
+    fi
+
+  fi
+
+done < /etc/wireguard/wg0.conf
+```
