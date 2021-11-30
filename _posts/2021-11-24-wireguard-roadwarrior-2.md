@@ -263,7 +263,10 @@ This script doesn't check for old configs for the given IP address, and it only 
 # cleanup_peers.sh
 # run as a root cronjob
 
+# we need a place to put backups of the server config
 mkdir -p /etc/wireguard/backups
+
+# initialize the list of old-public-keys-that-need-to-be-removed
 badpeers=''
 
 # for each line in the server config file
