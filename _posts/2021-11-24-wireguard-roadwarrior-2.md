@@ -256,40 +256,71 @@ echo "new client config generation complete"
 echo "file saved to: /etc/wireguard/clientconfigs/wireguard.$clientip.conf"
 ```
 
-This script doesn't check for old configs for the given IP address, and it only does a single address. But that's ok - we're going to do this on a loop for all desired IP addresses, and we don't really want to keep old configs. Mostly, we want to delete old entries in the server config. But we can make that a separate 'cleanup' script, that runs periodically and compares the current crop of client configs to the `[peers]` in the server config. 
+This script doesn't check for old configs for the given IP address, and it only does a single address. But that's ok - we're going to do this on a loop for all desired IP addresses, and we don't really want to keep old configs. Mostly, we want to delete old entries in the server config. Otherwise you could steal an old config and still get into the server. But we can make that a separate 'cleanup' script, that runs periodically and compares the current crop of client configs to the `[peers]` in the server config. 
 
 ```sh
-#!/bin/bash
+#!/bin/ksh
 # cleanup_peers.sh
 # run as a root cronjob
 
+mkdir -p /etc/wireguard/backups
+badpeers=''
+
+# for each line in the server config file
 while IFS= read -r line; do
 
+  # see if it contains a public key that we want to check
   if [[ 'PublicKey' == *"$line"* ]] ; then
 
+    # at the moment, that public key is NOT considered the current key for that IP address
     currentconfigversion=False
 
-    pubkey=${line##*=}
+    # extract the key, by itself, from the rest of that line and clean it up
+    pubkey=${line##*=} ; pubkey=$(echo $pubkey | xargs)
 
+    # holding that pubkey in mind, search through each possible client conf that's in current use
     for file in /etc/wireguard/clientconfigs/wireguard.*.conf ; do
 
+      # if we found the client config file that contains our public key
       if grep -q -wi "$pubkey" "$file"; then
 
+        # then the public key we have is, indeed, the up-to-date current key
         currentconfigversion=True
+
+        # stop searching, because we found a match
         break
 
       fi
 
     done
 
+    # if we never found a config file with the public key
     if ! [[ "$currentconfigversion" == 'True' ]] ; then
 
-      echo "removing old peer entry! pubkey = $pubkey"
-      wg set wg0 peer "$pubkey" remove
+      # then this is an out-of-date key, and should be added to the list for removal
+      badpeers="${badpeers} $pubkey"
 
     fi
 
   fi
 
 done < /etc/wireguard/wg0.conf
+
+# if our list of keys-to-remove has anything in it
+if [ ! -z $badpeers ] ; then
+
+  # first backup the server config - this helps recover from butterfingers
+  cp /etc/wireguard/wg0.conf /etc/wireguard/backups/wg0.$(date +"%s").conf
+
+  # go key-by-key through our list of keys-to-remove
+  for badpeer in $badpeers ; do
+
+    # and remove the entire peer entry corresponding to that key
+    wg set wg0 peer "$badpeer" remove
+  
+  done
+
+fi
+  
 ```
+
