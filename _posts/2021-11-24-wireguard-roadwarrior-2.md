@@ -1,6 +1,6 @@
 ---
 layout: post
-title: An ergonomic, yet simple, roadwarrior VPN server for a small group
+title: A roadwarrior VPN server setup for a small group
 author: umhau
 description: "roadwarrior"
 tags: 
@@ -10,12 +10,14 @@ tags:
 - networking
 - VPN
 - lighttpd
+- simple
+- ergonomic
 categories: walkthroughs
 ---
 
 **work in progress. easier to read on the blog than in VS code while I'm building it.**
 
-We're going to build a VPN server on OpenBSD and give it its own public IP address; write a program to generate keypairs and config files, and zip them up; create a local website that tracks the use/disuse status of each VPN client's IP address; create a standardized client config; and automate the whole thing so it's autonomous for years at a stretch. 
+We're going to build a VPN server on OpenBSD and give it its own public IP address; write a program to generate VPN client config files; create a local website that tracks the use/disuse status of each VPN client's IP address; and automate the whole thing so it's autonomous for years at a stretch. 
 
 Tall order, but we got this.
 
@@ -100,6 +102,8 @@ vim /etc/wireguard/wg0.conf
 ```
 
 This is the first section of what will be a very long file; the rest will similarly describe each connected (or potentially connected) `[peer]`. 
+
+(By the way, I'm fully aware that the following method for putting text in a file is...inelegant, to put it mildly. However, I'm writing this post as a prelude to a fully-scripted system, and this is easy to paste in; once inside a very large script, this format is the most-readable I've been able to come up with. Ironically, the consistent repetition and lack of preamble means it's easy to just ignore the bits of each line that aren't the script contents.)
 
 ```sh
 echo "[Interface]"                             >> /etc/wireguard/wg0.conf
@@ -194,16 +198,16 @@ wg pubkey < "secret.$clientip.key" > "public.$clientip.key"
 Now the fun part: create a config file for the client. This is the same sort of file as the server's, but pointed the other way: it initiates the connection, and always knows where to get in contact with the single peer it has a record of. Contrast to the server, which knows about a lot of different peers, but has no idea where to contact them, and so just waits for incoming connections.
 
 ```sh
-echo "[Interface]"                                             >> "wireguard.$clientip.conf"
-echo "Address    = $clientip"                                  >> "wireguard.$clientip.conf"
-echo "PrivateKey = $privatekey"                                >> "wireguard.$clientip.conf"
-echo "ListenPort = $serverportnum"                             >> "wireguard.$clientip.conf"
-echo ""                                                        >> "wireguard.$clientip.conf"
-echo "[Peer]"                                                  >> "wireguard.$clientip.conf"
-echo "PublicKey  = $serverpubkey"                              >> "wireguard.$clientip.conf"
-echo "Endpoint   = $serverendpointip:$serverportnum"           >> "wireguard.$clientip.conf"
-echo "AllowedIPs = $serverip/$subnetrange"                     >> "wireguard.$clientip.conf"
-echo "PersistentKeepalive = 25"                                >> "wireguard.$clientip.conf"
+echo "[Interface]"                                    >> "wireguard.$clientip.conf"
+echo "Address    = $clientip"                         >> "wireguard.$clientip.conf"
+echo "PrivateKey = $privatekey"                       >> "wireguard.$clientip.conf"
+echo "ListenPort = $serverportnum"                    >> "wireguard.$clientip.conf"
+echo ""                                               >> "wireguard.$clientip.conf"
+echo "[Peer]"                                         >> "wireguard.$clientip.conf"
+echo "PublicKey  = $serverpubkey"                     >> "wireguard.$clientip.conf"
+echo "Endpoint   = $serverendpointip:$serverportnum"  >> "wireguard.$clientip.conf"
+echo "AllowedIPs = $serverip/$subnetrange"            >> "wireguard.$clientip.conf"
+echo "PersistentKeepalive = 25"                       >> "wireguard.$clientip.conf"
 ```
 
 And that's it! Notice that all the critical information has been added to that config file: the IP address, the private key and the public key. Give that file to the wireguard installation on the roadwarrior VPN client, and it'll know what to do.
@@ -269,19 +273,19 @@ mkdir -p /etc/wireguard/backups
 # initialize the list of old-public-keys-that-need-to-be-removed
 badpeers=''
 
-# for each line in the server config file
+# read the server config file line-by-line
 while IFS= read -r line; do
 
-  # see if it contains a public key that we want to check
+  # see if the current line contains a public key that we want to check
   if [[ 'PublicKey' == *"$line"* ]] ; then
 
-    # at the moment, that public key is NOT considered the current key for that IP address
+    # that public key is NOT considered up-to-date for that IP address, *until proven otherwise*
     currentconfigversion=False
 
     # extract the key, by itself, from the rest of that line and clean it up
     pubkey=${line##*=} ; pubkey=$(echo $pubkey | xargs)
 
-    # holding that pubkey in mind, search through each possible client conf that's in current use
+    # holding that pubkey in mind, search through each possible client conf that currently exists
     for file in /etc/wireguard/clientconfigs/wireguard.*.conf ; do
 
       # if we found the client config file that contains our public key
@@ -324,6 +328,6 @@ if [ ! -z $badpeers ] ; then
   done
 
 fi
-  
 ```
+
 
