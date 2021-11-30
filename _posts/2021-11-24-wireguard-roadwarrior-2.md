@@ -44,10 +44,11 @@ architecture components
 [clients.csv]  list of all current client configs - ip address and private key
 [genclient.sh] given an ip address, creates and inserts a complete client config
 [pf.conf]      OpenBSD firewall config; must modify to allow VPN traffic through
+[wg0.conf]     Tells wireguard what settings to use for the VPN
 ```
 
 server configuration
---------------------
+====================
 
 Do this section all on the OpenBSD server, which should have at least two ethernet ports, one connected to your ISP's router, and the other to your main network.
 
@@ -62,6 +63,9 @@ export PKG_PATH=http://mirrors.mit.edu/pub/OpenBSD/$(uname -r)/packages/$(uname 
 pkg_add -u
 pkg_add vim htop nano wireguard-tools
 ```
+
+install and prepare wireguard
+-----------------------------
 
 The VPN server is going to have its own keypair, and it'll be routing packets, so lets do some preliminaries. I only plan to implement IPV4 routing, so if you need IPV6, you'll have to look elsewhere.
 
@@ -82,27 +86,45 @@ chmod 600 secret.key
 chmod 644 public.key
 ```
 
-This config file is going to hold both the server configs, and the info it keeps on each client - which means, we'll be modifying it regularly and programmatically.
+create the server-side wireguard configuration file
+---------------------------------------------------
+
+This config file is going to hold both the server configs, and the info it keeps on each client - which means, we'll be modifying it regularly and programmatically.  It's funny, though, because there's nothing inherently different about the server config than the client configs - in both cases, we're just describing the network from the perspective of the owner of the config file.
 
 ```sh
 # check what the private key is
 cat /etc/wireguard/secret.key
 
-# edit the config file. you'll need the private key
+# edit the config file (you'll need the private key)
 vim /etc/wireguard/wg0.conf
 ```
 
-The address and subnet of the VPN server. The VPN server will be assigned the specified address, and all clients must be given IPs within this subnet. This is the first section of what will be a very long file, though the rest won't be modified manually. 
+This is the first section of what will be a very long file; the rest will similarly describe each connected (or potentially connected) `[peer]`. 
 
 ```sh
-[Interface]
-PrivateKey = <Contents of the server privatekey file>
-ListenPort = 55667   
-SaveConfig = true    # this lets us permanently add peers to the file via command line
-Address = 10.191.232.1/16 
+echo "[Interface]"                             >> /etc/wireguard/wg0.conf
+echo "PrivateKey = $serverprivatekey"          >> /etc/wireguard/wg0.conf
+echo "ListenPort = $serverportnum"             >> /etc/wireguard/wg0.conf
+echo "SaveConfig = true"                       >> /etc/wireguard/wg0.conf
+echo "Address    = $serverVPNip/$subnetrange"  >> /etc/wireguard/wg0.conf
 ```
 
-Open a hole in the firewall to let the VPN through. Add the following lines to the Packet Filter config file
+We can add a peer ("client") to the server like this.  This tells the server what it needs to know to be able to talk to specific, configured clients.  
+
+```sh
+echo "[Peer]"                                  >> /etc/wireguard/wg0.conf
+echo "PublicKey  = $clientpubkey"              >> /etc/wireguard/wg0.conf
+echo "AllowedIPs = $serverip/$subnetrange"     >> /etc/wireguard/wg0.conf
+```
+
+> AllowedIPs – The IP address(es) that will be routed through the VPN. In this case, we only want to talk to the server itself, so only the server’s IP address, 172.16.0.1 with the /32 subnet, is specified. Routing entire subnets, or all IPs is also possible by using the proper IP and subnet. For example, if Address is set to 172.16.0.0/16, then all IPs in the range 172.16.0.0 to 172.16.255.255 will be routed through the VPN, useful if you want multiple devices on the same VPN to be able to talk to each other.
+
+> What is the AllowedIPs config line? It specifies that packets destined for these IP addresses go over WireGuard. IPs not in the list don't get sent over WireGuard. Here, 0.0.0.0/0 and ::/0 mean all IP addresses in IPv4 and IPv6, respectively.
+
+open the firewall
+-----------------
+
+Gotta open a hole in the firewall to let the VPN through. Add the following lines to the Packet Filter config file
 
 ```sh
 # vim /etc/pf.conf
@@ -111,91 +133,6 @@ pass in inet proto udp from any to any port 55667
 pass out on egress inet from (wg0:network) nat-to (vio0:0)
 ```
 
-
-
-client config generation (still on the server)
-----------------------------------------------
-
-We want to be able to generate all the components of a client's config in a separate script. That means we create a keypair associated with an IP address, and have a matching entry in the wg0.conf file on the server. Last step should be that it's wrapped up into a .zip file.
-
-We can add a peer ("client") like this. Note that because we set `SaveConfig = true` above, this will be added directly to the `wg0.conf` that we opened above.  This tells the server what it needs to know to be able to talk to specific, configured clients.  The wgpeer argument, below, is the public key of the _server_.
-
-```sh
-ifconfig wg0 \
-wgpeer     RF8qxBg7HwWoeGvKzkSh3oV42TG32HT5gVV75k1UWiI= \
-wgendpoint 250.123.234.78 55667 \
-wgaip      10.191.232.1/24
-```
-
-AllowedIPs – The IP address(es) that will be routed through the VPN. In this case, we only want to talk to the server itself, so only the server’s IP address, 172.16.0.1 with the /32 subnet, is specified. Routing entire subnets, or all IPs is also possible by using the proper IP and subnet. For example, if Address is set to 172.16.0.0/16, then all IPs in the range 172.16.0.0 to 172.16.255.255 will be routed through the VPN, useful if you want multiple devices on the same VPN to be able to talk to each other.
-
-What is the AllowedIPs config line? It specifies that packets destined for these IP addresses go over WireGuard. IPs not in the list don't get sent over WireGuard. Here, 0.0.0.0/0 and ::/0 mean all IP addresses in IPv4 and IPv6, respectively.
-
-```sh
-#!/bin/sh
-# client config generation script
-# in:  1) client static IP within VPN, 2) server public key
-# out: 1) zip file, 2) server wireguard config alteration
-
-serverpubkey="$2"
-clientip="$1"  # e.g. 10.191.232.123
-# packagename=$clientip.$(date +"%Y.%m.%d.%H.%M.%S") # year.month.day.hour.minute.second
-packagename=$clientip.$(date +"%s")                # seconds since 1970-01-01 00:00:00 UTC
-
-serverendpointip='250.123.234.78'
-serverportnum='55667'
-peernetworkspread='24'
-serverip='10.191.232.1'
-
-# place to put the new client config (the webserver needs to have access here)
-mkdir -p /etc/wireguard/"$packagename"
-chmod 744 /etc/wireguard/"$packagename"
-cd /etc/wireguard/"$packagename"
-
-# generate the client's private and public keypair
-wg genkey > "secret.$clientip.key"
-wg pubkey < "secret.$clientip.key" > "public.$clientip.key"
-chmod 600   "secret.$clientip.key"
-chmod 644   "public.$clientip.key"
-privatekey=$(cat "secret.$clientip.key")
-publickey=$(cat "public.$clientip.key")
-
-# generate a config file for the *client*; the interface is local, and the peer
-# is the server. Persistentkeepalive is useful for clients that need to not 
-# lose connection after long periods of inactivity.
-# is anything else even needed beyond this config file?
-configfile="wireguard.$clientip.conf"
-
-echo "[Interface]"                                             >> "$configfile"
-echo "Address    = $clientip"                                  >> "$configfile"
-echo "PrivateKey = $privatekey"                                >> "$configfile"
-echo "ListenPort = $serverportnum"                             >> "$configfile"
-echo ""                                                        >> "$configfile"
-echo "[Peer]"                                                  >> "$configfile"
-echo "PublicKey  = $serverpubkey"                              >> "$configfile"
-echo "Endpoint   = $serverendpointip:$serverportnum"           >> "$configfile"
-echo "AllowedIPs = $serverip/$peernetworkspread"               >> "$configfile"
-echo "PersistentKeepalive = 25"                                >> "$configfile"
-
-# if there's already a configuration for the given IP address in the server 
-# config file, remove the config and put it in a backup file.
-wg set wg0 peer 
-
-# add the client configuration to the *server* wireguard config file. Note that
-# this *does not set* an IP address for the associated client - the client sets
-# it's own IP address.
-ifconfig     wg0 \
-  wgpeer     "$serverpubkey" \
-  wgendpoint $serverendpointip $serverportnum \
-  wgaip      $serverip/$peernetworkspread
-
-```
-
-
-
-
-networking and packet routing (on the server)
----------------------------------------------
 
 If the port on the firewall isn't opened, OpenBSD's `pf` will just block everything and the VPN will do exactly zip.
 
@@ -229,4 +166,93 @@ pass out on egress inet from (wg0:network) nat-to (vio0:0)
 ```
 https://ianix.com/wireguard/openbsd-howto.html
 
+
+
+client configuration
+====================
+
+We want to be able to generate all the components of a client's config and put it in a separate script. That means, if we want to generate it programmatically, it has to be done on the server where the primary configs are - the 'source of truth'.  Also note that we're doing this before we actually know what client the config will be used in - might be a linux box, will probably be a windows machine - so the only identifying characteristics are the private keys (keep those safe!) and the assigned / recorded IP addresses.
+
+Grab some variables.
+
+```sh
+serverpubkey="$2"
+clientip="$1"
+serverendpointip='250.123.234.78'
+serverportnum='55667'
+subnetrange='24'
+serverip='10.191.232.1'
+```
+
+Generate a new private key for the client config, and derive from that a public key. 
+
+```sh
+wg genkey > "secret.$clientip.key"
+wg pubkey < "secret.$clientip.key" > "public.$clientip.key"
+```
+
+Now the fun part: create a config file for the client. This is the same sort of file as the server's, but pointed the other way: it initiates the connection, and always knows where to get in contact with the single peer it has a record of. Contrast to the server, which knows about a lot of different peers, but has no idea where to contact them, and so just waits for incoming connections.
+
+```sh
+echo "[Interface]"                                             >> "wireguard.$clientip.conf"
+echo "Address    = $clientip"                                  >> "wireguard.$clientip.conf"
+echo "PrivateKey = $privatekey"                                >> "wireguard.$clientip.conf"
+echo "ListenPort = $serverportnum"                             >> "wireguard.$clientip.conf"
+echo ""                                                        >> "wireguard.$clientip.conf"
+echo "[Peer]"                                                  >> "wireguard.$clientip.conf"
+echo "PublicKey  = $serverpubkey"                              >> "wireguard.$clientip.conf"
+echo "Endpoint   = $serverendpointip:$serverportnum"           >> "wireguard.$clientip.conf"
+echo "AllowedIPs = $serverip/$subnetrange"                     >> "wireguard.$clientip.conf"
+echo "PersistentKeepalive = 25"                                >> "wireguard.$clientip.conf"
+```
+
+And that's it! Notice that all the critical information has been added to that config file: the IP address, the private key and the public key. Give that file to the wireguard installation on the roadwarrior VPN client, and it'll know what to do.
+
+client config file autogeneration script
+========================================
+
+We can make a single script that runs on the server, which generates the client config files for us. Easiest way to control it is to give as input a potential client ip address (and maybe some other server info); the output is tricky, because the client public key has to be added to the server's config. But we can do that - and with the server config modification, output a fresh client config file.
+
+```sh
+#!/bin/sh
+# client config generation script
+# in:  1) client static IP within VPN, 2) server public key
+# out: 1) client config file, 2) server wireguard config alteration
+
+clientip="$1"
+
+serverpubkey="asdf9jp2389apfadfasdfasdfa09sf8y23r87h"
+serverendpointip='250.123.234.78'
+serverportnum='55667'
+subnetrange='24'
+serverip='10.191.232.1'
+
+# place to put the new client config (the webserver needs to have access here)
+mkdir -p     /etc/wireguard/clientconfigs
+chmod -R 744 /etc/wireguard/clientconfigs
+cd           /etc/wireguard/clientconfigs
+
+# generate the client's private and public keypair, put in variable, delete
+wg genkey > "secret.$clientip.key"
+wg pubkey < "secret.$clientip.key" > "public.$clientip.key"
+privatekey=$(cat "secret.$clientip.key")
+publickey=$(cat  "public.$clientip.key")
+rm "secret.$clientip.key" "public.$clientip.key"
+
+# create the config file
+echo "[Interface]"                                     > "wireguard.$clientip.conf"
+echo "Address    = $clientip"                         >> "wireguard.$clientip.conf"
+echo "PrivateKey = $privatekey"                       >> "wireguard.$clientip.conf"
+echo "ListenPort = $serverportnum"                    >> "wireguard.$clientip.conf"
+echo ""                                               >> "wireguard.$clientip.conf"
+echo "[Peer]"                                         >> "wireguard.$clientip.conf"
+echo "PublicKey  = $serverpubkey"                     >> "wireguard.$clientip.conf"
+echo "Endpoint   = $serverendpointip:$serverportnum"  >> "wireguard.$clientip.conf"
+echo "AllowedIPs = $serverip/$subnetrange"            >> "wireguard.$clientip.conf"
+echo "PersistentKeepalive = 25"                       >> "wireguard.$clientip.conf"
+
+# conclude
+echo "new client config generation complete"
+echo "file saved to: /etc/wireguard/clientconfigs/wireguard.$clientip.conf"
+```
 
