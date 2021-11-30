@@ -103,7 +103,9 @@ vim /etc/wireguard/wg0.conf
 
 This is the first section of what will be a very long file; the rest will similarly describe each connected (or potentially connected) `[peer]`. 
 
-(By the way, I'm fully aware that the following method for putting text in a file is...inelegant, to put it mildly. However, I'm writing this post as a prelude to a fully-scripted system, and this is easy to paste in; once inside a very large script, this format is the most-readable I've been able to come up with. Ironically, the consistent repetition and lack of preamble means it's easy to just ignore the bits of each line that aren't the script contents.)
+_(By the way, I'm fully aware that the following method for putting text in a file is...inelegant, to put it mildly. However, I'm writing this post as a prelude to a fully-scripted system, and I want to be able to just copy-paste from this post; and, once inside a very large script, this format is the most-readable method for dumping a lot of text into config files I've been able to come up with. Ironically, the consistent repetition and lack of preamble means it's easy to just ignore the bits of each line that aren't the script contents._
+
+_Tell me it's not awesomely easy to read. Oh, wait. There's no comment section. You can't.)_
 
 ```sh
 echo "[Interface]"                             >> /etc/wireguard/wg0.conf
