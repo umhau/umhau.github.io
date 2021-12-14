@@ -32,8 +32,9 @@ Also make a folder for the live version of the website to live in. It will need 
 
 ```sh
 su -m root -c 'mkdir -p /var/www/servers/documentation/pages/'
-chown -R `whoami`:`whoami` /var/www/servers/documentation
-chmod -R 755 /var/www/servers/documentation
+self=`whoami`
+su -m root -c "chown -R $self:$self /var/www/servers/documentation"
+su -m root -c 'chmod -R 755 /var/www/servers/documentation'
 ```
 
 Create a config file for lighttpd, then put the following lines in it.
