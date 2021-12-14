@@ -11,5 +11,15 @@ And that's why we're here. Because it's not just 'something else' -- it's a stan
 
 Which is annoying, because it would be really nice to avoid using Windows servers in the backend of professional environments, but there's no other way I've found to run a KMS host that isn't Windows. We could just buy the keys and not use them, but that still seems...sketchy.
 
+KMS host - Microsoft-approved version
+-------------------------------------
+
     Install-WindowsFeature -Name VolumeActivation -IncludeManagementTools
     Set-NetFirewallRule -Name SPPSVC-In-TCP -Profile Domain,Private -Enabled True
+    
+    https://gist.github.com/jerodg/502bd80a715347662e79af526c98f187
+
+KMS host - good engineering version
+-----------------------------------
+
+Download and install. https://github.com/Wind4/vlmcsd
