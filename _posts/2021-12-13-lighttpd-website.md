@@ -11,6 +11,12 @@ tags:
 categories: walkthroughs
 ---
 
+It's super useful to be able to make simple, local websites. This is just a quick and dirty thing that gets an `index.html` on the local net ASAP.  I'll make a longer version of this post for when I need something that's safe to put on the internet.
+
+[Source](https://redmine.lighttpd.net/projects/lighttpd/wiki/TutorialConfiguration). [Additional info](https://redmine.lighttpd.net/projects/lighttpd/repository/14/revisions/master/entry/doc/config/lighttpd.conf).
+
+Get those deps.
+
 ```sh
 su -c 'pkg install lighttpd vim'
 ```
