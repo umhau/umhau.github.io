@@ -61,10 +61,12 @@ static-file.exclude-extensions = ( ".fcgi", ".php", ".rb", "~", ".inc" )
 index-file.names = ( "index.html" )
 ```
 
-Make sure the config doesn't have errors.
+Make sure the config doesn't have errors, then copy it to the system location.
 
 ```sh
-lighttpd -tt -f ~/website/lighttpd.conf
+cd ~/website
+lighttpd -tt -f lighttpd.conf
+su -m root -c 'mkdir -p /etc/lighttpd/ ; cp lighttpd.conf /usr/local/etc/lighttpd/'
 ```
 
 Make a simple website:
@@ -73,11 +75,12 @@ Make a simple website:
 echo 'hello' > /var/www/servers/documentation/pages/index.html
 ```
 
-You can start the server by hand.
+You can start the server by hand. 
 
 ```sh
+cd ~/website/
 su
-lighttpd -D -f ~/website/lighttpd.conf
+lighttpd -D -f lighttpd.conf
 exit
 ```
 
@@ -94,12 +97,7 @@ Then reboot, and the server is running. If you don't want to reboot, start it ma
 ```sh
 su
 /usr/local/etc/rc.d/lighttpd start
+exit
 ```
 
-Verify that it's running.
-
-```sh
-netstat -nat
-```
-
-The firewall will prevent the server from being accessed outside the local machine.
+Notice that we didn't need to alter the firewal; this is because we made the site available at port 80, which is the default for websites. The only downside is that we have to invoke `root` to use port 80, and there's a bit of extra complexity in that config file to change the user back from `root` to `www`. 
