@@ -48,7 +48,7 @@ architecture components
 [wg0.conf]     Tells wireguard what settings to use for the VPN
 ```
 
-I don't think I need this one - pretty sure parsing `wg0.conf` is just as effective.
+I don't think I need this one - pretty sure parsing `wg0.conf` is just as effective, and removes synchronization errors.
 
 ```
 [clients.csv]  list of all current client configs - ip address and private key
@@ -271,6 +271,16 @@ echo "file saved to: /etc/wireguard/clientconfigs/wireguard.$clientip.conf"
 
 This script doesn't check for old configs for the given IP address, and it only does a single address. But that's ok - we're going to do this on a loop for all desired IP addresses, and we don't really want to keep old configs. Mostly, we want to delete old entries in the server config. Otherwise you could steal an old config and still get into the server. But we can make that a separate 'cleanup' script, that runs periodically and compares the current crop of client configs to the `[peers]` in the server config. 
 
+In terms of security, this setup means that if someone steals an old config file, they have exactly `N` minutes to use it before the cleanup script nukes the keys it uses - where `N` is the period at which you run your cronjob. Just how paranoid are you? Would you give an attacker a whole 24 hours to use that key, or would you rather give them a max of just 10 minutes?
+
+```sh
+chmod +x /etc/wireguard/cleanup_peers.sh
+crontab -e
+30 * * * * /etc/wireguard/cleanup_peers.sh
+```
+
+_(Just make sure you don't make `N` shorter than the time it takes for the script to run. Maybe do it a few times on your system to time it, then double or triple that time and consider that the minumum `N` your system can handle. The script below definitely isn't fast - if you have 255 IP addresses in the range, then it's going to do something like 32640 file reads at best, more if there's keys to remove.)_
+
 ```sh
 #!/bin/ksh
 # cleanup_peers.sh
@@ -292,23 +302,15 @@ while IFS= read -r line; do
     currentconfigversion=False
 
     # extract the key, by itself, from the rest of that line and clean it up
-    pubkey=${line##*=} ; pubkey=$(echo $pubkey | xargs)
+    pubkey=$(echo ${line##*PublicKey = } | xargs)
 
-    # holding that pubkey in mind, search through each possible client conf that currently exists
-    for file in /etc/wireguard/clientconfigs/wireguard.*.conf ; do
+    # search the client config directory for any available match
+    if grep -qr "$pubkey" /etc/wireguard/clientconfigs/wireguard.*.conf ; then
 
-      # if we found the client config file that contains our public key
-      if grep -q -wi "$pubkey" "$file"; then
+      # then the public key we have is, indeed, the up-to-date current key
+      currentconfigversion=True
 
-        # then the public key we have is, indeed, the up-to-date current key
-        currentconfigversion=True
-
-        # stop searching, because we found a match
-        break
-
-      fi
-
-    done
+    fi
 
     # if we never found a config file with the public key
     if ! [[ "$currentconfigversion" == 'True' ]] ; then
@@ -337,6 +339,99 @@ if [ ! -z $badpeers ] ; then
   done
 
 fi
+
+# remove the old client configs
+
+# # iterate over each client config file
+# for file in /etc/wireguard/clientconfigs/wireguard.*.conf ; do
+
+#   # extract the line containing the public key
+#   pubkey=$(grep 'PublicKey' $file | cut -f 3 -d '==' | xargs)
+#   echo ${pubkey##*PublicKey = }
+
+#   # see if the server config DOESN'T contain the public key of this client config
+#   if ! grep -q -wi "$pubkey" "/etc/wireguard/wg0.conf"; then
+
+#     # if it doesn't, the client config is out of date and should be removed
+#     cp $file /etc/wireguard/backups/$(basename $file).$(date +"%s")
+
+```
+
+
+track the use of each IP address / pubkey set
+=============================================
+
+This is going to be used by the website, but we can write it as a script to get the benefit on the command line, too.  We just want to know if a specific client config file, uniquely identifiable by either its public key or IP address, has been added to someone's machine. Actually, we can't know _that_ specifically, but we can figure out if it's been added to someone's machine _and the machine has connected the VPN to the network_.
+
+_(we can also track if the config's been downloaded, and even reset that counter each time we reset that config file, but that's a different script for a later time.)_ 
+
+Should be able to simply parse the pf log after enabling logging; however, I don't know how much that slows the system down.
+
+https://www.openbsd.org/faq/pf/logging.html
+
+
+autogenerate an html file describing the state of each client
+=============================================================
+
+Since the IP addresses for the VPN clients have to be static, that introduces a host of complications - I can't just hand out keys and keep the range big enough for the current set of users, because old users won't give up their assigned IP addresses, and I'll run out. So I need an easy way to see which addresses are free, and which are used, and which haven't been used in a long time, and to generate new keys for old addresses when I want to revoke someone's access.  That's what this little site is for, and the fun thing is, it can be totally static.
+
+<!-- Security by obscurity at its finest. And if that doesn't work, we can keep the first 10 or so ip addresses reserved so that the interface can't mess with them. That way some kid who wanders in and finds the site won't knock the admins off the VPN, and it'll at least be recoverable.  Or I could make the site password-protected.  -->
+
+We want an HTML table with one row per ip address, and a column dedicated to each available piece of information about that ip address - public key, date last seen, download button, reset button, etc. 
+
+To generate this table, we'll iterate over the client config files, pull the info, and write the html file line-by-line. First, let's make sure we can grab the info we need.
+
+```sh
+#!/bin/sh
+
+sitefile='/etc/wireguard/index.html'
+
+echo '<html><head></head><body><table>' > "$sitefile"
+
+for file in /etc/wireguard/clientconfigs/wireguard.*.conf ; do
+
+  ipaddr=$(grep 'Address' $file)   ; ipaddr=$( echo ${pubkey##*Address = }   | xargs)
+  pubkey=$(grep 'PublicKey' $file) ; pubkey=$( echo ${pubkey##*PublicKey = } | xargs)
+
+  downloadbutton="<a href=\"$file\" download=\"$(basename $file)\">$(basename $file)</a>"
+  resetbutton="<form action=\"\" method=\"post\"> <input type=\"submit\" name=\"$ipaddr\" value=\"$(echo $ipaddr | sed 's/\.//g')\" /> </form>"
+
+  # force download of a file (HTML5)
+  # <a href="./directory/yourfile.pdf" download="newfilename">Download the pdf</a>
+
+  # reset button general format
+  # <form action="" method="post">
+  #     <input type="submit" name="upvote" value="Upvote" />
+  # </form>
+
+  # generate the html!
+
+  echo "<tr> <td> $ipaddr </td> <td> $downloadbutton </td> <td> $pubkey  </td> <td> $resetbutton </td> </tr>" >> "$sitefile"
+
+# <table>
+#   <tr> <td>Cell 1</td> <td>Cell 2</td> <td>Cell 3</td> <td>Cell 3</td> </tr>
+
+#   <tr> <td>Cell 4</td> <td>Cell 5</td> <td>Cell 6</td> </tr>
+# </table>
+
+done
+
+echo '</table></body></html>' >> "$sitefile"
+
+```
+
+install a webserver to host the internal website
+================================================
+
+Can't have a website without a webserver.  Install it. OpenBSD will ask you which version to install; pretty sure we don't need a database for this (that's what ldap and mysql are), so just go with option 1.
+
+```sh
+pkg_add lighttpd
+```
+
+The lighttpd config file is located at 
+```
+/etc/lighttpd.conf
 ```
 
 
