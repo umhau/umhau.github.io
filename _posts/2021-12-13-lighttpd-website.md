@@ -18,22 +18,22 @@ It's super useful to be able to make simple, local websites. This is just a quic
 Get those deps.
 
 ```sh
-su -c 'pkg install lighttpd vim'
+su -m root -c 'pkg install lighttpd vim'
 ```
 
 Let's make a folder in the home directory with our installation stuff, configs, and master copy of our website data.
 
 ```sh
-mkdir -p ~/my-website
-cd ~/my-website
+mkdir -p ~/website
+cd ~/website
 ```
 
 Also make a folder for the live version of the website to live in. It will need to be globally readable and executable, but no one needs write permission but the owner.
 
 ```sh
-su -c 'mkdir -p /var/www/servers/my-website/pages/'
-chown -R `whoami`:`whoami` /var/www/servers/my-website
-chmod -R 755 /var/www/servers/my-website
+su -m root -c 'mkdir -p /var/www/servers/documentation/pages/'
+chown -R `whoami`:`whoami` /var/www/servers/documentation
+chmod -R 755 /var/www/servers/documentation
 ```
 
 Create a config file for lighttpd, then put the following lines in it.
@@ -42,7 +42,7 @@ Create a config file for lighttpd, then put the following lines in it.
 vim ~/website/lighttpd.conf
 ```
 ```sh
-server.document-root = "/var/www/servers/my-website/pages/" 
+server.document-root = "/var/www/servers/documentation/pages/" 
 
 server.port = 80
 
@@ -69,7 +69,7 @@ lighttpd -tt -f ~/website/lighttpd.conf
 Make a simple website:
 
 ```sh
-echo 'hello' > /var/www/servers/my-website/pages/index.html
+echo 'hello' > /var/www/servers/documentation/pages/index.html
 ```
 
 You can start the server by hand.
