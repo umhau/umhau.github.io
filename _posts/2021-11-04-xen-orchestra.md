@@ -10,6 +10,7 @@ tags:
 - virtualization
 - xoa
 - OS
+- FreeBSD
 categories: walkthroughs
 ---
 
