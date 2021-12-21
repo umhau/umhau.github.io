@@ -67,7 +67,7 @@ Make sure the config doesn't have errors, then copy it to the system location.
 cd ~/website
 lighttpd -tt -f lighttpd.conf
 su -m root -c 'mkdir -p /etc/lighttpd/ ; cp lighttpd.conf /usr/local/etc/lighttpd/'
-```
+```  
 
 Make a simple website:
 
