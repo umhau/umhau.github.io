@@ -28,7 +28,7 @@ mkdir -p ~/website
 cd ~/website
 ```
 
-Also make a folder for the live version of the website to live in. It will need to be globally readable and executable, but no one needs write permission but the owner.
+Also make a folder for the live version of the website to live in. It will need to be globally readable and executable, but no one needs write permission but the owner. _(Question: can the owner be `www`, as in the config file?)_
 
 ```sh
 su -m root -c 'mkdir -p /var/www/servers/documentation/pages/'
