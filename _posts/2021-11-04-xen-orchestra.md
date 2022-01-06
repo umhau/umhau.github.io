@@ -61,14 +61,24 @@ echo 'redis_enable="YES"' >> /etc/rc.conf
 service redis start
 ```
 
-get the code
-------------
+get the code, modify and build
+------------------------------
 
-Looks like we aren't totally free and clear when we use freebsd; the optional dependency `fsevents@1.2.13` failed the "compatibility check". Oh, well.  Note, the last couple of commands take a while. Go get yourself a coffee while they run. (`&&` is excellent)
+Looks like we aren't totally free and clear when we use freebsd; the optional dependency `fsevents@1.2.13` failed the "compatibility check". Oh, well.  
 
 ```Shell
 cd
 git clone -b master http://github.com/vatesfr/xen-orchestra
+cd xen-orchestra
+```
+
+There's a nag screen whenever you log into a built-from-source version of Xen Orchestra. It's very...nagging.  There's a [whole big discussion](https://xcp-ng.org/forum/topic/1815/nag-screens/30) about keeping it vs removing it, and both the developer and the (free-tier) user are reasonably civil throughout.  The upshot is, the devs need money and the user doesn't like being nagged, and getting sufficient income without the nag is uncertain.  However, we can still remove the nag if we feel like it. 
+
+Go [here](https://github.com/vatesfr/xen-orchestra/issues/4175#issuecomment-488320434), [here](https://github.com/FoxieHazmat/xenorchestraSourceBannerFix/issues/1) and [here](https://github.com/megabert/xenorchestraSourceBannerFix) to see how. I haven't tested it yet.
+
+When you're done, make sure you're in the xen-orchestra directory and then build with yarn. Note, the last couple of commands take a while. Go get yourself a coffee while they run. (`&&` is excellent)
+
+```Shell
 cd xen-orchestra
 yarn
 yarn build
