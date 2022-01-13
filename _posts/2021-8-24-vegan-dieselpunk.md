@@ -19,7 +19,7 @@ The previous post described various alternatives to generate cheap power. I like
 
 ![](/images/diesel/engine.jpg)
 
-In general, the question is what kind of electricity the rotational energy of the motor is converted into, and how the potential for aberrations in the RPMs is handled. 
+In general, the question is what kind of electricity the rotational energy of the motor is converted into, and how the potential for aberrations in the RPMs is handled.
 
 Some definitions before we get started: 
 
@@ -41,7 +41,7 @@ This is the best version for constant, high load. The engine is connected direct
 
 The downside is obvious: if you can't run your generator at a consistent 1800 rpm, then you'll fry the electronics hooked into the electricity it's producing. Not great. Plus, what if you don't need a whole lot of power right now? Tough luck - you can't idle the engine, or the power won't be at the right frequency and you won't be able to use it for anything.
 
-However, you can always use a pulley system to alter the ratios between the generator head and the motor - that way, if you just want to run the motor at a minimim fuel consumption, you can still get the generator head at the correct RPM. 
+However, you can always use a pulley system to alter the ratios between the generator head and the motor - that way, if you just want to run the motor at a minimim fuel consumption, you can still get the generator head at the correct RPM...assuming the motor can still get going, given the disadvantageous gearing ratio. (Compare to riding a bike, and starting in 3rd or even 6th gear.)
 
 The AC Generator is called a '[generator head](https://www.alibaba.com/products/generator_head/CID410402.html)' in this context. Find one and hook it onto the motor. It's pretty much that simple, I think. In fact, the image below is what the result looks like: on the left is the generator head, on the right is the generator, they're connected with a belt in a specific ratio, and there's a tensioner in the middle to keep them connected. As the description says, _"built on a brand new Hatz 1B30 engine and brand new Mecc Alte generator head. Vibration isolating base with carry handles."_  It really is that simple.
 
@@ -55,13 +55,13 @@ To build one, do what you would have done in the previous section - get a motor,
 
 ### Car/Truck Alternators
 
-An alternator from a car or truck combines the functions of the AC Generator and the DC Rectifier; however, it does not operate at a particularly high efficiency. If I were to use one, however, it seems like a [truck alternator](http://www.delcoremy.com/alternators/find-by-model-family/36si) provides a higher amperage than one pulled from a consumer car.  Some quick numebers: 
+An alternator from a car or truck combines the functions of the (AC) Generator and the (DC) Rectifier; however, it does not operate at a particularly high efficiency. If I were to use one, however, it seems like a [truck alternator](http://www.delcoremy.com/alternators/find-by-model-family/36si) provides a higher amperage than one pulled from a consumer car.  Some quick numbers: 
 
     170 Amps x 12 Volts         = 2040 Watts
     2040 Watts x 72% Efficiency = 1468 Watts
     1468 Watts / 120 Volts      = 12.24 Amps
 
-...and that, ladies and gents, is why we don't use vehicle alternators in our DIY inverter-generators.  12 Amps is not even close to enough - we should be getting closer to 9500 Watts output, which would give us (if that's a post-efficiency-loss number):
+...and that, ladies and gents, is why we don't use vehicle alternators in our DIY inverter-generators.  12 Amps is not even close to enough - we should be getting closer to 9500 Watts output (example pulled from a random harbor freight generator), which would give us (if that's a post-efficiency-loss number):
 
     9500 Watts / 120 Volts = 79.16 Amps
 

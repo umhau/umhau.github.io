@@ -2,7 +2,7 @@
 layout: post
 title: samba file share
 author: umhau
-description: "make a local cloud that talks nice with windows"
+description: "make a local cloud that talks nice with windows, linux and even android"
 tags: 
 - samba
 - nfs
@@ -21,7 +21,7 @@ su
 apt-get install samba smbclient samba-common
 ```
 
-Choose a folder to share. It's simpler, sometimes, to create a new folder somewhere out-of-the-way, that you can toss shared files into.  You could even share a mounted external drive this way.  
+Choose a folder to share. It's simpler, sometimes, to create a new folder somewhere out-of-the-way, that you can toss shared files into.  You could even share a mounted external drive this way.
 
 ```
 su
@@ -50,3 +50,4 @@ Inside smb.conf, put this new entry at the end of the file:
   directory mode = 0777
 ```
 
+That's a totally unrestricted share; anyone on the network can find it and delete everything on it - or just copy everything off. This is a good config if you trust the local network and there's nothing critical on there.  Anything more restricted gets...interesting, and is a good topic for a later post. Security on SAMBA is its own special kind of mess.
