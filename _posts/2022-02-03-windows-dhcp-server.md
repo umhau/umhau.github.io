@@ -16,16 +16,16 @@ I used to wonder why "Micro$oft" was so disliked in the opensource community. Na
 
 > Even in our sleep, pain which we cannot forget falls drop by drop upon the heart until, in our own despair, against our will, comes wisdom through the awful grace of God.
 
-I need to change the netmask on the dhcp server. My organization has outgrown the /24 allocation it was born with. Easy, right? Just change a number in a `dhcp.conf`-style textfile and do whatever the windows equivalent of `sh /etc/netstart` is. _Oh, my sweet summer child._
+I need to change the netmask on the dhcp server. My organization has outgrown the /24 allocation it was born with. Easy, right? Just backup a few config files, change a number in a `dhcp.conf`-style textfile and do whatever the windows equivalent of `sh /etc/netstart` is. _Oh, my sweet summer child._
 
-We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as an executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  _(You want to backup config files? Hah. Did you think this stuff was stored as text? What kind of OS do you think we're running here?)_
+We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as a semi-executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  _(You want to backup config files? Hah. Did you think this stuff was stored as text? What kind of OS do you think we're running here?)_
 
 alternatives
 ------------
 
 Since I'm just trying to change the netmask, it's also possible to create a superscope and add the current scope. However, this will create two distinct subnets that can't talk to each other, and the gateway will have to have separate ip addresses for each scope. Then you create firewall rules to let the scopes talk to each other. 
 
-It could work, but the communication between the subnets seems like too much complexity and I'd be concerned about problems later on. I'd rather just redo the main subnet.
+It could work, but the communication between the subnets seems like too much complexity and I need to make sure whoever comes after me can understand what's going on. I'd rather just redo the main subnet and keep it dead simple.
 
 doit
 ----
@@ -36,9 +36,9 @@ Export the current scope. We're using `netsh` instead of `Export-DhcpServer`, be
 netsh.exe dhcp server \\DOMAIN_NAME scope 192.168.1.0 dump > C:\scope.txt
 ```
 
-This gets you a more-or-less executible script that you can modify and then reinsert. To start with, however, you have to modify it.  In general, you have to change two things: the scope and the netmask. You'll have to do this many times, so just use Ctrl-F and be done with it.
+This gets you a more-or-less executible script that you can modify and then reinsert. Broadly speaking you have to change two things: the scope and the netmask. Just use Ctrl-F and be done with it.
 
-For this example, I'm changing the subnet from 192.168.1.1/24 to 192.168.1.1/20.  
+In this example, I'm changing the subnet from 192.168.1.1/24 to 192.168.1.1/20.  
 
 ```md
 # any octet that varies (determined by the netmask) is set to 0
@@ -60,4 +60,4 @@ cd C:\Users\admin\Documents\
 netsh.exe exec scope-modified.txt
 ```
 
-And activate the scope.
+And activate the scope. 

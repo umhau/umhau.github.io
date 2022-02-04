@@ -81,11 +81,11 @@ blockquote {
   font-style:italic;
 }
 
-code, pre {
+/* code, pre {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
-}
+} */
 
 pre {
   padding:8px 15px;

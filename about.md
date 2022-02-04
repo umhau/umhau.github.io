@@ -21,9 +21,7 @@ This site was transferred from [Google Blogger](https://nixingaround.blogspot.co
 
 ### Disclaimer
 
-I'm totally not responsible for anything.
-
-The opinons given here are irrelevant.  The walkthroughs are going to break your system.  All the links are broken, except the ones that host viruses. The programs will start uprisings in third-world countries.
+I'm totally not responsible for anything. The opinons given here are irrelevant.  The walkthroughs are going to break your system, and all the links are broken, except the ones that host viruses. If you quote me on something, I'll probably change my mind.
 
 ### questions? comments? better ideas? comprehensive refutations? 
 
