@@ -13,11 +13,11 @@ categories: walkthroughs
 
 I used to wonder why Micro$oft was so disliked in the opensource community. Naively, I supposed it had to do with the great evil of demanding money in return for services; or possibly the greater horror of refusing access to source code. But I have learned wisdom before my time, for I have met Active Directory.  What was it Aeschylus said? 
 
-> Even in our sleep, pain which cannot forget falls drop by drop upon the heart until, in our own despair, against our will, comes wisdom through the awful grace of God.
+> Even in our sleep, pain which we cannot forget falls drop by drop upon the heart until, in our own despair, against our will, comes wisdom through the awful grace of God.
 
 I need to change the netmask on the dhcp server. My organization has outgrown the /24 allocation it was born with. Easy, right? Just change a number in a `dhcp.conf`-style textfile and do whatever the windows equivalent of `sh /etc/netstart` is. _Oh, my sweet summer child._
 
-We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as an executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  _(You want to backup config files? Hah. Did you think this stuff was stored as text? What kind of OS do you think we're running here? Use our weird binary programs or GTFO.)_
+We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as an executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  _(You want to backup config files? Hah. Did you think this stuff was stored as text? What kind of OS do you think we're running here?)_
 
 alternatives
 ------------
