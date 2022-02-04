@@ -15,9 +15,9 @@ I used to wonder why Micro$oft was so disliked in the opensource community. Naiv
 
 > Even in our sleep, pain which cannot forget falls drop by drop upon the heart until, in our own despair, against our will, comes wisdom through the awful grace of God.
 
-I need to change the netmask on the dhcp server. My organization has outgrown the /24 allocation it was born with. Easy, right? Just change a number in a `/etc/dhcp.conf` textfile and do whatever the windows equivalent of `sh /etc/netstart` is. _Oh, my sweet summer child._
+I need to change the netmask on the dhcp server. My organization has outgrown the /24 allocation it was born with. Easy, right? Just change a number in a `dhcp.conf`-style textfile and do whatever the windows equivalent of `sh /etc/netstart` is. _Oh, my sweet summer child._
 
-We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as an executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  (You want to backup the config files? Hah. Did you think this stuff was kept in _text files_?)
+We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as an executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  (You want to backup _config files_? Hah. Did you think this stuff was kept in _text files_? What kind of OS do you think we're running here?)
 
 alternatives
 ------------
