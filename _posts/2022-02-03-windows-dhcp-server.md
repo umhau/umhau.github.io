@@ -17,14 +17,14 @@ I used to wonder why Micro$oft was so disliked in the opensource community. Naiv
 
 I need to change the netmask on the dhcp server. My organization has outgrown the /24 allocation it was born with. Easy, right? Just change a number in a `dhcp.conf`-style textfile and do whatever the windows equivalent of `sh /etc/netstart` is. _Oh, my sweet summer child._
 
-We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as an executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  (You want to backup _config files_? Hah. Did you think this stuff was kept in _text files_? What kind of OS do you think we're running here?)
+We're dealing with scopes and superscopes: not subnets. We have to export the scope configuration, including DNS and WINS servers, as an executable script. Then we modify the script to use the new netmask. Then we delete the old scope, along with all our DHCP leases and reservations. Then we create a new scope using our exported script.  _(You want to backup config files? Hah. Did you think this stuff was stored as text? What kind of OS do you think we're running here? Use our weird binary programs or GTFO.)_
 
 alternatives
 ------------
 
 Since I'm just trying to change the netmask, it's also possible to create a superscope and add the current scope. However, this will create two distinct subnets that can't talk to each other, and the gateway will have to have separate ip addresses for each scope. Then you create firewall rules to let the scopes talk to each other. 
 
-It could work, but the communication between the subnets seems difficult. I'd rather just redo the main subnet.
+It could work, but the communication between the subnets seems like too much complexity and I'd be concerned about problems later on. I'd rather just redo the main subnet.
 
 doit
 ----
