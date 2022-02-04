@@ -12,7 +12,7 @@ tags:
 categories: walkthroughs
 ---
 
-I used to wonder why Micro$oft was so disliked in the opensource community. Naively, I supposed it had to do with the great evil of demanding money in return for services; or possibly the greater horror of refusing access to source code. But I have learned wisdom before my time, for I have met Active Directory.  What was it Aeschylus said? 
+I used to wonder why "Micro$oft" was so disliked in the opensource community. Naively, I supposed it had to do with the great evil of demanding money in return for services; or possibly the greater horror of refusing access to source code. But I have learned wisdom before my time, for I have met Active Directory.  What was it Aeschylus said? 
 
 > Even in our sleep, pain which we cannot forget falls drop by drop upon the heart until, in our own despair, against our will, comes wisdom through the awful grace of God.
 
