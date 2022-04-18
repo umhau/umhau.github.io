@@ -18,7 +18,7 @@ So there's this thing about managing hypervisors: they're complicated.
 
 Not complicated in the sense that they're hard to conceptualize, but complicated in the sense that there's a lot you can do with them. Backups. Pause. Stop. Extra disks. Virtual networks. Incremental RAM backups. Migration between hosts. Host pools. And on, and on, _ad nauseum_. That means you need a lot of buttons and switches available, all organized nicely according to function, and available when you need them. It also means, behind the scenes, that you need to have written the code to do all those things. That's complicated.
 
-Therefore, it makes a great moat if you want to start a business. Build a hypervisor management system, and make people pay for the complicated bits. But you don't call them 'complicated', you call them 'pro'. And you make darn sure they're the most interesting bits to work with. Fortunately, 'interesting' is closely corellated with 'complicated' in the demographic that cares about such things. 
+Therefore, it makes a great moat if you want to start a business. Build a hypervisor management system, and make people pay for the complicated bits. But you don't call them 'complicated', you call them 'pro'. And you make darn sure they're the most interesting bits to work with. Fortunately, 'interesting' is closely related to 'complicated' in the demographic that cares about such things. 
 
 That's where we are today. I want the 'pro' version of the hypervisor management system called "Xen Orchestra". The open source nature of the substrate it's built on necessitates that the source code of the pro version be freely available - but it does not require that the build system or the compiled binaries be available. So what we're doing today is compiling XO from source. And then installing it. And then setting it up.
 
@@ -33,14 +33,15 @@ Create a new FreeBSD VM, and remember to include ports (I think that's important
 
 There's anecdotes of people happily upgrading the same FreeBSD system from 2.0 up to present day - probably something around version 12 or so. (Put _that_ in Ubuntu's pipe and smoke it.) Perfect for a network where when I leave, the successors might not have the expertise to manage it -- that's not ideal, but it is pragmatic reality. If I can build things that never need to be touched, that's so much better.
 
-Decide if you want the web interface to run as root. If you're pragmatic and on a homelab network, it's probably fine. In fact, it seems like there's some extra complications inherent to the 'not-root' mode -- the system couldn't delete VMs, even though I'd done all the 'sudo' configs just as specified. Set up the whole thing as root, though, and the VMs delete just fine.  Just make sure that you enable ssh login as root. Otherwise...well, you'll figure it out sooner or later.
+Speaking of doing things the right way, decide if you want the web interface to run as root. If you're pragmatic and on a homelab network, it's probably fine. In fact, it seems like there's some extra complications inherent to the 'not-root' mode -- the system couldn't delete VMs, even though I'd done all the 'sudo' configs just as specified. Set up the whole thing as root, though, and the VMs delete just fine.  Just make sure that you enable ssh login as root. Otherwise...well, you'll figure it out sooner or later.
 
 dependencies and configs
 ------------------------
 
-Install packages and configure system.
+As root, install packages and configure system. Note that 5GB is not enough for FreeBSD and XO.
 
 ```Shell
+su
 freebsd-update fetch
 freebsd-update install
 pkg install vim tmux nano
@@ -67,14 +68,39 @@ get the code, modify and build
 Looks like we aren't totally free and clear when we use freebsd; the optional dependency `fsevents@1.2.13` failed the "compatibility check". Oh, well.  
 
 ```Shell
-cd
 git clone -b master http://github.com/vatesfr/xen-orchestra
-cd xen-orchestra
 ```
 
 There's a nag screen whenever you log into a built-from-source version of Xen Orchestra. It's very...nagging.  There's a [whole big discussion](https://xcp-ng.org/forum/topic/1815/nag-screens/30) about keeping it vs removing it, and both the developer and the (free-tier) user are reasonably civil throughout.  The upshot is, the devs need money and the user doesn't like being nagged, and getting sufficient income without the nag is uncertain.  However, we can still remove the nag if we feel like it. 
 
-Go [here](https://github.com/vatesfr/xen-orchestra/issues/4175#issuecomment-488320434), [here](https://github.com/FoxieHazmat/xenorchestraSourceBannerFix/issues/1) and [here](https://github.com/megabert/xenorchestraSourceBannerFix) to see how. I haven't tested it yet.
+Go [here](https://github.com/vatesfr/xen-orchestra/issues/4175#issuecomment-488320434), [here](https://github.com/FoxieHazmat/xenorchestraSourceBannerFix/issues/1) and [here](https://github.com/megabert/xenorchestraSourceBannerFix) for sources. Open the `xen-orchestra/packages/xo-web/src/xo-app/index.js` file, and find the following two code fragments and delete them:
+
+```Shell
+nano xen-orchestra/packages/xo-web/src/xo-app/index.js
+```
+
+```JavaScript
+if (+process.env.XOA_PLAN === 5) {
+    this.displayOpenSourceDisclaimer()
+}
+```
+
+```JavaScript
+{plan === 'Community' && !this.state.dismissedSourceBanner && (
+    <div className='alert alert-danger mb-0'>
+        <a
+        href='https://xen-orchestra.com/#!/xoa?pk_campaign=xo_source_banner'
+        rel='noopener noreferrer'
+        target='_blank'
+        >
+        {_('disclaimerText3')}
+        </a>
+        <button className='close' onClick={this.dismissSourceBanner}>
+        &times;
+        </button>
+    </div>
+    )}
+```
 
 When you're done, make sure you're in the xen-orchestra directory and then build with yarn. Note, the last couple of commands take a while. Go get yourself a coffee while they run. (`&&` is excellent)
 

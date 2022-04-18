@@ -1,0 +1,1 @@
+Installation size, netinstall: 3.5 GB
