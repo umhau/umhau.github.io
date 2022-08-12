@@ -48,3 +48,7 @@ Colors are in HEX format, including alpha channel which is represented by c0. Go
 Note that the format includes transparency, so you have to modify the format a little bit, by sticking a `c0` to the front. In other words, the color `cd0404` you got from the color picker site becomes `c0cd0404`. Paste that into the registry entry, hit `Ok`, and you're all set. 
 
 If you're using a remote desktop session, just quit and come back. If you're local, I think you can just log out and in again.
+
+Behold the insanity:
+
+![Horribleness](/images/windows/uglification.png)
