@@ -43,7 +43,7 @@ ColorizationColor
 
 ![Registry modification](/images/windows/server_2012_colorizationcolor_registry.png)
 
-Colors are in HEX format, including alpha channel which is represented by c0. Go (here)[http://hslpicker.com/#cd0404] to find a new color.
+Colors are in HEX format, including alpha channel which is represented by c0. Go [here](http://hslpicker.com/#cd0404) to find a new color.
 
 Note that the format includes transparency, so you have to modify the format a little bit, by sticking a `c0` to the front. In other words, the color `cd0404` you got from the color picker site becomes `c0cd0404`. Paste that into the registry entry, hit `Ok`, and you're all set. 
 

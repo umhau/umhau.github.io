@@ -71,7 +71,7 @@ Looks like we aren't totally free and clear when we use freebsd; the optional de
 git clone -b master http://github.com/vatesfr/xen-orchestra
 ```
 
-There's a nag screen whenever you log into a built-from-source version of Xen Orchestra. It's very...nagging.  There's a [whole big discussion](https://xcp-ng.org/forum/topic/1815/nag-screens/30) about keeping it vs removing it, and both the developer and the (free-tier) user are reasonably civil throughout.  The upshot is, the devs need money and the user doesn't like being nagged, and getting sufficient income without the nag is uncertain.  However, we can still remove the nag if we feel like it. 
+There's a nag screen whenever you log into a built-from-source version of Xen Orchestra. It's very...nagging.  There's a [whole big discussion](https://xcp-ng.org/forum/topic/1815/nag-screens/30) about keeping it vs removing it, and both the developer and the (free-tier) user are reasonably civil throughout.  The upshot is, the devs need money and the user doesn't like being nagged, and getting sufficient income without the nag is uncertain.  However, we can still remove the nag if we feel like it. I rather do feel like it, because it does get in the way.
 
 Go [here](https://github.com/vatesfr/xen-orchestra/issues/4175#issuecomment-488320434), [here](https://github.com/FoxieHazmat/xenorchestraSourceBannerFix/issues/1) and [here](https://github.com/megabert/xenorchestraSourceBannerFix) for sources. Open the `xen-orchestra/packages/xo-web/src/xo-app/index.js` file, and find the following two code fragments and delete them:
 
@@ -123,6 +123,12 @@ Modify the config file to use a non-default port. Or not; it doesn't really matt
 ```Shell
 vim /etc/xo-server/config.toml
 ```
+
+<!-- The line you're looking for is super simple. But the default is fine.
+
+```Shell
+port = 80
+``` -->
 
 runit
 -----
