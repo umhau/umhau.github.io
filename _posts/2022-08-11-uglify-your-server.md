@@ -35,7 +35,7 @@ Go to the subsection here:
 HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM
 ```
 
-Then `modify` the entry called 
+Then `modify` the entry redundantly titled 
 
 ```
 ColorizationColor
