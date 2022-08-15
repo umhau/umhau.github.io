@@ -18,5 +18,7 @@ permalink: /:title/
 
 # ('category' or 'categories'?)
 
+highlighter: rouge
+
 gems:
   - jekyll-feed
