@@ -18,7 +18,7 @@ Syncthing is this cool program that is basically Dropbox Unlimited (tm): everyth
 
 I want to set up a syncthing NAS. But, I want to make it available to two separate people, each with their own accounts. And I want to do it on FreeBSD.  And I want to manage it remotely.
 
-That means, we're also using a program called zerotier. You know how it's easier to talk to machines that are connected to the local network? This is a tiny program you install on machines around the world, you share a key with each, and then they can all see each other as if they're on the same local network. 
+That means we're also using a program called zerotier. You know how it's easier to talk to machines that are connected to the local network? This is a tiny program you install on machines around the world, you share a key with each, and then they can all see each other as if they're on the same local network. 
 
 I need to put that on the FreeBSD machine as well, so that I can access the management GUI without fragile port forwarding. The goal is that this machine can be plugged in anywhere, turned on, attached to an ethernet cable, and get right down to business. 
 
@@ -51,7 +51,7 @@ configurations
 
 ### cron
 
-Use cron to start two separate instances of syncthing on boot: one owned by user `usr1`, and the other owned by user `usr2`. 
+Use cron to start two separate instances of syncthing on boot: one owned by user `usr1`, and the other owned by user `usr2`. Also start zerotier as the root user (which is default, since we're using the root cron account).
 
     su
     crontab -e
