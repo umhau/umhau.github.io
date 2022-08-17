@@ -33,16 +33,22 @@ I did that during the install process, so I won't document the manual user creat
 
 Become root, if you aren't already.
 
-    su
+```shell
+su
+```
 
 Perform the initial system updates. This will take a while.
 
-    freebsd-update fetch
-    freebsd-update install
+```shell
+freebsd-update fetch
+freebsd-update install
+```
 
 Install the packages we need. 
 
-    pkg install syncthing zerotier nano tmux vim htop 
+```shell
+pkg install syncthing zerotier nano tmux vim htop 
+```
 
 Do you have a zerotier account? Because you'll need one. Unless you want to selfhost the sync servers; but that's a project for another day. [Go get one](https://www.zerotier.com/download/), and set up a network. Then come back.
 
@@ -53,12 +59,14 @@ configurations
 
 Use cron to start two separate instances of syncthing on boot: one owned by user `usr1`, and the other owned by user `usr2`. Also start zerotier as the root user (which is default, since we're using the root cron account).
 
-    su
-    crontab -e
+```cron
+su
+crontab -e
 
-    @reboot su - usr1 -c /usr/local/bin/syncthing
-    @reboot su - usr2 -c /usr/local/bin/syncthing
-    @reboot zerotier-one -d
+@reboot su - usr1 -c /usr/local/bin/syncthing
+@reboot su - usr2 -c /usr/local/bin/syncthing
+@reboot zerotier-one -d
+```
 
 After we (eventually) reboot, we can use `top` (or `htop`) to see the two syncthing instances running.
 
@@ -66,7 +74,9 @@ After we (eventually) reboot, we can use `top` (or `htop`) to see the two syncth
 
 Start zerotier.
 
-    zerotier-one -d
+```shell
+zerotier-one -d
+```
 
 Go get the id for the network you want to join this machine to. If you got yourself a zerotier account, you'll know what I'm talking about.
 
@@ -76,14 +86,17 @@ Go get the id for the network you want to join this machine to. If you got yours
 
 Enable the pf firewall: we need to manually adjust what we're allowing through the system.
 
-    sysrc pf_enable=yes
-    sysrc pflog_enable=yes
+```shell
+sysrc pf_enable=yes
+sysrc pflog_enable=yes
 
 Then create a new firewall config file. 
 
-    nano /etc/pf.conf
+```shell
+nano /etc/pf.conf
+```
 
-```pf
+```shell
 ex_if = "em0"
 zt_if = "zta098fdas123ij"
 
@@ -137,8 +150,10 @@ Start syncthing, let it initialize, and then kill it with `CTRL-C`.
 
 Open the syncthing config file. 
 
-    cd
-    nano .config/syncthing/config.xml
+```shell
+cd
+nano .config/syncthing/config.xml
+```
 
 Now you'll have to modify several points in this (rather long) file. They will look similar to the sections below. Since we are `usr1`, the following are the changes we must make.
 
@@ -199,7 +214,9 @@ cleanup
 
 Get the ip address of the syncthing host. 
 
-    ifconfig
+```shell
+ifconfig
+```
 
 And reboot. If you did everything correctly, syncthing will automatically startup with the machine.  You can access the GUI for each of the syncthing users with the IP address you just obtained, and the GUI port appended:
 
