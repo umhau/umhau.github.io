@@ -1,0 +1,93 @@
+managing the wifi connections
+=============================
+
+You may have noticed I added wavemon and wicd-cli to the list of things to install. wicd-cli provides a command line interface for wicd in case wicd-curses fails. wavemon offers an ncurses interface of the wifi connection, sort of like htop does for processes. Eventually, it would be nice to write up a little widget script to use with tmux.
+https://github.com/jrcharney/hacktop/wiki/wicd-curses 
+
+wicd-curses is an ncurses textual interface for managing networks. It is my preferred network manager. The default backend program for network managment on the Raspberry Pi 2 is dhcpcd which when startx is run, can be manipulated with the dhcpcdui widget that is in the upper right corner. A lot of people like using the Gnome Network Manager. I hate it! If you must tinker with the Wi-Fi settings, use dhcpcdui or wicd-curses.
+Installation
+
+I recommend getting the package from the Raspbian repository. But install Python first. Much of the Wicd stuff uses Python.
+
+sudo apt-get install wavemon wicd-cli wicd-curses
+
+You may have noticed I added wavemon and wicd-cli to the list of things to install. wicd-cli provides a command line interface for wicd in case wicd-curses fails. wavemon offers an ncurses interface of the wifi connection, sort of like htop does for processes. Eventually, it would be nice to write up a little widget script to use with tmux.
+
+Once it is installed, restart the computer in the text console. If startx is launched at the beginning, this will be a problem.
+
+In some cases after restart, you may need to unplug and replug the Wi-Fi dongle to get it to pick up stuff.
+Setting up Wi-Fi for a PSK network.
+
+For best security, your router (which is not your Raspberry Pi 2) should have a password set up that you know about enabled. This feature is sometimes called the PSK (Password Security Key). We will explain that set up here.
+
+    sudo wicd-curses (The sudo part may be important.)
+    If you don't see a list of networks, type SHIFT+P and make sure that on the General Settings tab, in the Network Interfaces, the Wireless Interface is set to wlan0. Also worth making sure is making sure that on the External Programs tab, in the DHCP Client section, that dhcpcd is an available option and next to the selected option which should be Automatic (recommended). Press F10 to submit those settings.
+    SHIFT+R to refresh the list of networks. As I stated previously, if you don't see anything, you may want to unplug and replug in your Wi-Fi dongle, but close wicd-curses before you do this then reopen wicd-curses.
+    Browse through the list of available networks using the up and down arrow keys and select the network you usually connect to using the right arrow key. We need to configure this network to be used by default when we're around it.
+    Scroll down the list of fields to select [ ] Automatically connect to this network, hit the spacebar to check the field so that it looks like this: [X] Automatically connect to this network
+    Scroll down the type of encryption that is used. It might not look like a field, but that row with the vvv in it is a drop down menu. Press the space bar to select the encryption type. In most cases, it might be WPA 1/2 (Passphrase). Scroll down to the option you need and press Enter.
+    Scroll down the the Key: or Preshared key: field and enter your PSK.
+    Press F10 to submit these settings.
+    Press Shift+C to connect to the selected network.
+
+    ERROR! wicd-curses crashes and won't reopen to let me fix the problem! The solution: Reboot. I rebooted it and it seem to accept the options when I started it up the second time around.
+
+wicd-cli
+
+If wicd-curses isn't playing nicely, try wicd-cli. wicd-cli is a scriptable command-line only "client" for wicd.
+
+While most of the properties I would still recommend using wicd-curses to use for setting, if wicd-curses is being cantankerous, you can try using these commands.
+
+# Scan for wireless networks
+$ sudo wicd-cli -y -S
+# See the list of wireless networks that -y -S found.  Their position will remain static unless you run -y -S again.
+$ sudo wicd-cli -y -l
+# Do both a -y -S and -y -l at the same time.
+$ sudo wicd-cli -y -S -l
+# From the list of networks found, use the index from that list (in the # column) see details about a network connection.
+# Assume 3 is the third item on the list.
+$ sudo wicd-cli -y -n 3 -d
+# Connect to the third network on the list.
+$ sudo wicd-cli -y -n 3 -c
+# Do a combination of those last two commands.
+$ sudo wicd-cli -y -n 3 -d -c
+
+If none of that still works, edit /etc/wpa_supplicant/wpa_supplicant.conf.
+
+sudo vim /etc/wpa_supplicant/wpa_supplicant.conf
+
+Add this to the end and make sure you don't make any spelling errors.
+
+network={
+        ssid="yournetwork"
+        psk="yournetworkpassword"
+        key_mgmt=WPA-PSK
+        }
+
+Then reboot using sudo reboot.
+
+Still no luck? Try running startx. dhcpcd might do something to make it run, like add a file I don't know about. I'm not sure, but something happened after that to make it all work. Regardless, when you leave startx and start in the console next time, everything works, even in wicd-curses.
+
+    OH COME ON! Still having trouble with this issue. Help me out.
+
+OK, how about this, after start up if things are running, reboot again and see if it works. (Use sudo wavemon). Yeah, this seems to be effective. For some reason, it doesn't want to play nice the first time around. You got to give it another reboot to make things happen apparently.
+wavemon
+
+As I stated before, wavemon is a useful tool for checking the status of network signals. Generally, you'll want to run this program as root to scan for networks when you press F3.
+
+sudo wavemon
+
+If you hit F2 by default, you may notice nothing happening at all. Where's the fun hackery graph everybody talks about? For that, go to Preferences (F7) and on the Level Scales, toggle Random signals to the On setting, then select Save configuration. After this the Info screen (F1) and Level histogram (F2) will start to look more exciting.
+horst
+
+    TODO: Write something about horst
+
+External Links
+
+    https://launchpad.net/wicd
+    http://blog.ubidots.com/setup-wifi-on-raspberry-pi-using-wicd
+    https://inconsolation.wordpress.com/tag/wireless/
+    https://github.com/uoaerg/wavemon
+    http://br1.einfach.org/tech/horst/
+
+
