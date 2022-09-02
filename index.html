@@ -3,29 +3,30 @@ layout: default
 title: Weird.
 ---
 
-<main class="post-list">	
-        {% for post in site.posts limit: 3 %}
-          <div class="post">
-        
-            <header class="post-header">
-                
-            <h1 class="post-title">{{ post.title }}</h1>
-            <p 
-                class="post-meta">{{ post.date | date: "%b %-d, %Y" }} • <a  href="{{ post.url }}">permalink</a>
-                <i> {% for tag in post.tags %}{% capture tag_name %}{{ tag }}{% endcapture %} • {{ tag_name }}{% endfor %}</i> 
-            </p>
-            </header>
-        
-            <article class="post-content">
-            {{ post.content }}
-            </article>
-            </div>
+<main class="post-list">
+  
+  {% for post in site.posts limit: 3 %}
+    <div class="post">
+  
+      <header class="post-header">
+          
+      <h1 class="post-title">{{ post.title }}</h1>
+      <p 
+          class="post-meta">{{ post.date | date: "%b %-d, %Y" }} • <a  href="{{ post.url }}">permalink</a>
+          <i> {% for tag in post.tags %}{% capture tag_name %}{{ tag }}{% endcapture %} • {{ tag_name }}{% endfor %}</i> 
+      </p>
+      </header>
+  
+      <article class="post-content">
+      {{ post.content }}
+      </article>
+      </div>
 
-            <p class="extra-space"></p>
-            <hr>
-            <p class="extra-space"></p>
+      <p class="extra-space"></p>
+      <hr>
+      <p class="extra-space"></p>
 
-        {% endfor %}
-        </main>
+  {% endfor %}
+  </main>
 
-        <div class="infinite-spinner"></div>
+  <div class="infinite-spinner"></div>
