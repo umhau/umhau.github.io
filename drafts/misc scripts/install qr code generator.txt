@@ -1,0 +1,17 @@
+# install qr code generator
+# cd ~/Downloads
+# rm -rf ./libqrencode
+# git clone https://github.com/fukuchi/libqrencode.git
+# cd libqrencode
+# ./configure
+# make
+# sudo make install
+# sudo ldconfig
+sudo apt install libqrencode-dev
+
+# install qr code reader
+cd ~/Downloads
+git clone https://github.com/josephholsten/libdecodeqr.git
+cd libdecodeqr
+aclocal
+autoconf

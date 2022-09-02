@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Intro to Lisp
+title: "Intro to Lisp: Session 1"
 author: umhau
 description: "getting started with femtolisp"
 tags: 
@@ -33,11 +33,7 @@ To run the program while in the `./femtolisp` directory, just do
 
     ./flisp
 
-# intro
-
-Keep these in mind. 
-
-## the ten commandments
+# the ten commandments
 
 1. When recurring on a list of atoms, lat, ask two questions about it: (null? lat) and else. When recurring on a number, n, ask two questions about it: (zero? n) and else.  When recurring on a list of S-expressions, l, ask three question about it: (null? l), (atom? (car l)), and else.
 
@@ -52,9 +48,8 @@ Keep these in mind.
 6. Simplify only after the function is correct.
 
 7. Recur on the subparts that are of the same nature:
-
-    On the sublists of a list.
-    On the subexpressions of an arithmetic expression.
+-  On the sublists of a list.
+- On the subexpressions of an arithmetic expression.
 
 8. Use help functions to abstract from representations.
 
@@ -62,7 +57,7 @@ Keep these in mind.
 
 10. Build functions to collect more than one value at a time.
 
-## The Five Rules
+# The Five Rules
 
 - **The Law of Car** The primitive car is defined only for non-empty lists.
 

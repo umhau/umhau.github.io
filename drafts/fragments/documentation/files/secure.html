@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>passwords</title>
+</head>
+
+
+<body>
+
+  <script src="crypto-js.js"></script>
+  <script src="docs.js"></script>
+
+  <input type="text" placeholder="decryption key" class="search" onkeydown="search(this)" />
+
+  <h3></h3>
+
+  Perform decryption to see the passwords below.
+
+  <pre>
+
+  </pre>
+
+  <script>
+
+    let secretsurl = 'passwords.encrypted';
+
+    const textDisplay = document.querySelector('pre');
+
+    function updateDisplay(decryptionkey) {
+
+      fetch(secretsurl).then(function (response) {
+        response.text().then(function (text) {
+          decrypted = decrypt(text, decryptionkey);
+          var plaintext = hex2a(decrypted.toString());
+          textDisplay.textContent = 'given key: ' + decryptionkey + '\n\n' + plaintext;
+        });
+      });
+    }
+
+    function search(ele) {
+      if (event.key === 'Enter') {
+        decryptionkey = ele.value;
+        updateDisplay(decryptionkey);
+      }
+    }
+
+    updateDisplay('notapassword');
+
+  </script>
+
+</body>
+
+</html>

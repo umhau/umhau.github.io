@@ -1,0 +1,19 @@
+The fix for Ubuntu Server is pretty simple: Change the line in /etc/network/interfaces that reads, "auto {Your ethernet adapter's name here}" to "allow-hotplug {Your ethernet adapter's name here}". 
+It's waiting for a DHCP reply, if my Wireshark-Fu is correct.
+
+In my case, that looks like:
+Code:
+#Original Line
+auto ens34
+iface ens34 inet dhcp
+
+#New line
+allow-hotplug ens34
+iface ens34 inet dhcp
+It's reasonable to suggest that setting a static IP would do it too.
+
+I don't know the equivalent in the GUI stuff. 
+
+If you are indeed rolling with a PC that is hotplugging ethernet (like a laptop), this is the most correct fix, as it informs the system that this network shouldn't be required on startup, and, if you wanted, you could still configure another network that is auto that *is* required on startup.
+
+https://ubuntuforums.org/showthread.php?t=2323253

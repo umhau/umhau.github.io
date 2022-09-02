@@ -5,7 +5,7 @@ title: Weird.
 
 ### Welcome
 
-This blog attempts to be the sort of resource I find most helpful: intended for people who are way out of their depth, know very little about the subject matter and will probably break things, but still want to forge ahead with their cool project.
+This blog attempts to be the sort of resource I find most helpful: intended for people who are way out of their depth, know very little about the subject matter and will probably break things, but still want to forge ahead with their cool project.  I consider this an evolving whole, and reserve the right to edit and improve old posts whenever I feel like it.
 
 ### General Philosophy, To Be Inflicted Wherever Possible
 
@@ -21,10 +21,8 @@ This site was transferred from [Google Blogger](https://nixingaround.blogspot.co
 
 ### Disclaimer
 
-I'm totally not responsible for anything.
-
-The opinons given here are irrelevant.  The walkthroughs are going to break your system.  All the links are broken, except the ones that host viruses. If you do anything I describe here, your hat will combust and your laptop will start a civil war in a third world country.
+I'm totally not responsible for anything. The opinons given here are irrelevant.  The walkthroughs are going to break your system, and all the links are broken, except the ones that host viruses. If you quote me on something, I'll probably change my mind.
 
 ### questions? comments? better ideas? comprehensive refutations? 
 
-Shoot me an [email](mailto:um.hau@outlook.com)! Especially if there's something interesting on your mind. 
+Shoot me an [email](mailto:um.hau@outlook.com)! 

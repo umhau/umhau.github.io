@@ -1,0 +1,1 @@
+moc gnome-chess stockfish hplip-gui simple-scan sane-utils openssh openssh-server zbar-tools python-zbar python-qrtools python-qrcode qrencode r-base r-base-dev gdebi libjpeg62 dpkg-dev evince xpdf imagemagick gnome-screenshot xournal rlwrap lib32z1 lib32ncurses5 gcc-multilib tofrodos gnuplot python3-dev 
