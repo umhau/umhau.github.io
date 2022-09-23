@@ -2,6 +2,12 @@
 
 This is the source for my personal programming website.  There's a guide stashed on the site for using basic markdown [here](/markdown_guide.md). 
 
+Note: if git thinks tons of files have changed, you probably opened the folder in a windows machine. Use the following command to tell git it's all right. 
+
+```Shell
+git config --global core.autocrlf input
+```
+
 ## how to build locally
 
 Do this on ubuntu, unless you want to mess with updating Ruby past version 2.3. clone the source, then install dependencies, then start the site.
