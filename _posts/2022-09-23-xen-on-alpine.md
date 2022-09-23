@@ -13,7 +13,7 @@ categories: walkthroughs
 
 So I'm starting out on this new project. The first iteration is just VMs on a box - but they're Xen VMs, and they're on an Alpine box.  Later iterations shall be revealed, all in good time. Much work has been done behind the scenes, and much work is yet to be done.
 
-Anyway, Xen vms on Alpine. Start with a clean alpine installation, then enable the community repository.
+Anyway, Xen vms on Alpine. Start with a clean alpine installation, then enable the community repository. Note that I used [this](https://wiki.alpinelinux.org/wiki/Xen_Dom0#Existing_installation) source for most of the content here, **but** as written, that source has a couple bugs. i.e., my walkthrough works, and theirs doesn't - quite.
 
 First become root. You should remain root for the duration of this walkthrough.
 
