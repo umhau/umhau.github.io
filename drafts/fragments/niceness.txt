@@ -1,0 +1,30 @@
+To view the priority level of a process, get the process ID (PID) and then use the nice command.
+
+```Shell
+# search the process id by program name
+ps -ef | grep '[j]ava'
+
+# get the niceness of the process ID
+ps -l PID
+```
+
+To get the priority levels that a user is running scripts at, just use the ps command. Note that this will list out each process owned by that user, and the associated niceness of the process. If the user hasn't modified the niceness of any processes, these will all be the same.
+
+```Shell
+ps -lu USERNAME
+```
+
+To decrease the default priority of a user (and make their processes 'nicer' to the other processes - by being less demanding), use the renice command.
+
+```shell
+niceness=4
+renice -r $niceness -u USER
+```
+
+If you want to _increase_ the default priority of a user, however, you have to be root. 
+
+```shell
+niceness='-5'
+sudo renice -r $niceness -u USER
+```
+
