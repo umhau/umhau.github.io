@@ -113,7 +113,6 @@ while true; do case "$1" in
 
     -i|--ifacetype) 
 
-        # ifacetype="$2"
         allowed_iface_types="${allowed_iface_types:+$allowed_iface_types } $2"
         shift 2
         ;;
@@ -121,19 +120,9 @@ while true; do case "$1" in
     -t|--timelimit) timelimit="$2"  ; shift 2 ;;
 
     --) shift ; break ;;
-    *)  exit 1 ;;
+    *)  help ; exit 1 ;;
 
 esac done
-
-# viable_ifaces="${viable_ifaces:+$viable_ifaces } $interface"
-
-# allowed_iface_types=(
-#     eth
-#     ib
-#     tun
-#     tap
-#     wlan
-# )
 
 [ -z "$allowed_iface_types" ] && help && exit 1
 
