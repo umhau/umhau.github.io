@@ -2,7 +2,7 @@
 layout: post
 title: Network Interface Madness
 author: umhau
-description: "Don't do this at home kids...really...please don't. For your own sake."
+description: "Insanity awaits. This hurt my brain."
 tags: 
 - tcpdump
 - networking
