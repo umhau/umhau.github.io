@@ -16,13 +16,13 @@ Anyway, that's what I had to deal with.
 
 To solve the problem, I wrote a very ugly script. If you don't like it....well, constructive analysis always welcome. To use it, specify the _types_ of interfaces you want to analyze and about how much time it should take.
 
-```Shell
+```shell
 iface-groups -i eth -i ib -t 3
 ```
 
 The output is a little strange. The problem with the data involved is that it's inherently 2-dimensional; I want to know which interfaces are grouped together. That doesn't lend itself well to a linear output. So, on every sent to STDOUT, I'm printing a space-separated list of all interfaces that are connected on the same L2 network. For example:
 
-```Shell
+```shell
 $ iface-groups -i eth -t 3
 
 eth0 eth2
@@ -30,7 +30,7 @@ eth1 eth3 eth4
 ```
 You can parse this pretty well in a `while read` loop, like so:
 
-```Shell
+```shell
 iface-groups -i eth -t 3 | while read group
 do
 
@@ -41,7 +41,7 @@ done
 
 Finally, you may be wondering about the available interface types. Well, you can read the script, or I'll just list them out below. You can guess which is which, because I really don't feel like specifying them right now. I just wrote this whole thing, gosh darn it!
 
-```Shell
+```shell
 echo -e "Available interface types:"
 echo -e "\teth, wlan, bridge, vlan, bond, tap, dummy, ib, ibchild, ppp,"
 echo -e "\tipip, ip6tnl, lo, sit, gre, irda, wlan_aux, tun, isdn, mip6mnha"
@@ -49,7 +49,7 @@ echo -e "\tipip, ip6tnl, lo, sit, gre, irda, wlan_aux, tun, isdn, mip6mnha"
 
 Anyway, that's all a nice little prelude to actually dumping the script here. I got no idea what the license is; the type identification was pulled from stack overflow and the original source link is dead. So whatever.  If you want an updated version, you'll have to hunt through my github repos: I probably won't update this post, and the project it's for is still under wraps. You'll have to check back in a few years when it's finally presentable.
 
-```Shell
+```shell
 #!/bin/bash
 # written by me on October 1, 2022. Do what you will, for I have already won.
 
