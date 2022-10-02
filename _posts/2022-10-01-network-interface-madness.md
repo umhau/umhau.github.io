@@ -233,6 +233,8 @@ do
 
 done
 
+[ -z "${viable_ifaces[@]}" ] && echo "no viable interfaces discovered" && exit 1
+
 ip_iterator=0
 
 declare -A iface_ip
