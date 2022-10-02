@@ -109,7 +109,7 @@ pre *:not(code) {
 }
 */
 
-code, pre {
+pre, code {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
