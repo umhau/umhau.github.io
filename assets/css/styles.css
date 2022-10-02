@@ -90,8 +90,8 @@ code {
   font-size:12px;
   
   padding:2px 4px 2px 4px;
-  background: #f8f8f8;
-  border:1px solid #e5e5e5;
+  background: #eeeeee; /* prev: #f8f8f8 */
+  border:1px solid #dddddd; /* prev: #e5e5e5 */
   border-radius:3px;
 }
 
@@ -110,10 +110,10 @@ pre code {
 pre {
 
   padding:8px 15px;
-  background: #f8f8f8;
+  background: #eeeeee;
   
   border-radius:5px;
-  border:1px solid #e5e5e5;
+  border:1px solid #dddddd;
   
   overflow-x: auto;
 }
