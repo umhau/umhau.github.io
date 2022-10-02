@@ -43,10 +43,10 @@ done
 
 Finally, you may be wondering about the available interface types. Well, you can read the script, or I'll just list them out below. You can guess which is which, because I really don't feel like specifying them right now. I just wrote this whole thing, gosh darn it!
 
-```shell
-echo -e "Available interface types:"
-echo -e "\teth, wlan, bridge, vlan, bond, tap, dummy, ib, ibchild, ppp,"
-echo -e "\tipip, ip6tnl, lo, sit, gre, irda, wlan_aux, tun, isdn, mip6mnha"
+```
+Available interface types:
+  eth, wlan, bridge, vlan, bond, tap, dummy, ib, ibchild, ppp
+  tipip, ip6tnl, lo, sit, gre, irda, wlan_aux, tun, isdn, mip6mnha
 ```
 
 Anyway, that's all a nice little prelude to actually dumping the script here. I got no idea what the license is; the type identification was pulled from stack overflow and the original source link is dead. So whatever.  If you want an updated version, you'll have to hunt through my github repos: I probably won't update this post, and the project it's for is still under wraps. You'll have to check back in a few years when it's finally presentable.
