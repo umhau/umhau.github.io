@@ -87,6 +87,13 @@ blockquote {
 pre *:not(code) { color: red; }
 only matches when code is NOT a direct child of pre
 https://stackoverflow.com/q/20869061
+
+This lets us specify code formatting independently. In the generated html,
+inline snippets have the 'code' tag, while displayed snippets have a 'pre'
+wrapper around 'code'. 
+
+Code is apparently per-line. I want a nice border around the whole displayed
+thing.
 */
 
 /* this is an inline code snippet */
@@ -98,6 +105,12 @@ pre *:not(code) {
   padding:4px 8px;
   background: #f8f8f8;
   border-radius:3px;
+}
+
+code, pre {
+  font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
+  color:#333;
+  font-size:12px;
 }
 
 /* this is a displayed code snippet */
