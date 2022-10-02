@@ -1,6 +1,6 @@
 To view the priority level of a process, get the process ID (PID) and then use the nice command.
 
-```Shell
+```shell
 # search the process id by program name
 ps -ef | grep '[j]ava'
 
@@ -10,7 +10,7 @@ ps -l PID
 
 To get the priority levels that a user is running scripts at, just use the ps command. Note that this will list out each process owned by that user, and the associated niceness of the process. If the user hasn't modified the niceness of any processes, these will all be the same.
 
-```Shell
+```shell
 ps -lu USERNAME
 ```
 

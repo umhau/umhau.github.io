@@ -26,7 +26,7 @@ server config settings
 
 This is the `server.properties` file.
 
-```Shell
+```shell
 #Minecraft server properties
 
 # user-facing configs
@@ -99,7 +99,7 @@ start the server
 
 Note that for some reason, the fabric server doesn't like being given the port number as a command line argument. You gotta put it in the `server.properties` file (see above).
 
-```Shell
+```shell
 #!/bin/bash
 # start-minecraft-fabric.sh
 
@@ -120,7 +120,7 @@ Notice that after you leave the tmux session where you launched the server, you 
 
 Download and install `mcrcon`, which is a special version just for minecraft. We'll use this to send arbitrary commands to our minecraft server, without ever having to reenter that tmux session.
 
-```Shell
+```shell
 su -c 'apt update ; apt install git make gcc'
 git clone https://github.com/Tiiffi/mcrcon.git
 cd mcrcon
@@ -146,7 +146,7 @@ Option:
 
 Thus, given the settings given above; send three commands ("say", "save-all", "stop") and wait five seconds between the commands.
 
-```Shell
+```shell
 mcrcon -H localhost -P 55556 -p password123 -w 5 "say Server is restarting!" "save-all" "stop"
 ```
 
@@ -155,14 +155,14 @@ backup the world files
 
 This is pretty straightforward. Everything we need to save is in the worldfile path, which we set as a variable in the start script. Just copy it somewhere, and you're good. If you have a problem and need to restore a backup, either copy it back or change that variable to point to the new location.
 
-```Shell
+```shell
 mkdir -pv /home/`whoami`/backups/
 cp -rv /home/`whoami`/minecraft/worlds/magic-and-madness/ /home/`whoami`/backups/worldfile.`date +"%m_%d_%Y"`.bak
 ```
 
 If we want to store the backups elsewhere, we can use `scp` to push them to some other server. First, though, we have to make sure we can log into that server without a password prompt.  Then we can do a direct copy to the other server.
 
-```Shell
+```shell
 # remote server login info
 ipaddress='200.200.200.200'
 portnum='12345'
@@ -181,7 +181,7 @@ automatic backups (a.k.a. putting it all together)
 
 Simplest way to do it: make a script that stops the server and backs it up. Then either have the same script restart it, or just wait N minutes and have another script turn it back on.
 
-```Shell
+```shell
 #!/bin/bash
 # backup-minecraft-world.sh
 
@@ -206,7 +206,7 @@ java -jar $jarfile --nogui --world "$worldfolder" &
 
 You can put this in a cronjob so it runs nightly, or weekly. First, install the file somewhere.
 
-```Shell
+```shell
 su -c 'install ./backup-minecraft-world.sh /usr/local/bin/'
 crontab -e
 ```
@@ -215,7 +215,7 @@ Here, we're running the backup every day at 4AM. Hopefully no one's online then.
 
 Also, this is running as the default (not-root) user. That way it has access to the ssh key you generated. 
 
-```Shell
+```shell
 0 4 * * * backup-minecraft-world.sh
 ```
 

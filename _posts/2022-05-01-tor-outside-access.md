@@ -14,7 +14,7 @@ categories: walkthroughs
 
 This is cool for testing external access to a network: 
 
-```Shell
+```shell
 torsocks ssh example.net
 ```
 

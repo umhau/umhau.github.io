@@ -63,7 +63,7 @@ set up the openbsd server
 
 I'm assuming it's already been installed. If not, go install it. If you can't figure that out, you're not ready for the rest (sorry).
 
-```Shell
+```shell
 su
 fw_update
 export PKG_PATH=http://mirrors.mit.edu/pub/OpenBSD/$(uname -r)/packages/$(uname -m)/

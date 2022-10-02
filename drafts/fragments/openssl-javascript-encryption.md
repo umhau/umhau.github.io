@@ -3,7 +3,7 @@ I wanted to pass encrypted files between a webserver and javascript running in t
 So this is something that worked. [Source.](https://stackoverflow.com/questions/32654749/decrypt-openssl-aes-with-cryptojs)
 
 
-```Shell
+```shell
 encryptfile() {
 
   inputfile="$1"

@@ -2,13 +2,13 @@ So the trick is to write rules using regex, so that any file matching the regex 
 
 If you want to know what rules are already in place, run the below command. If you're trying to get a sense for a new system, this should be your go-to; it has a section at the very end for locally set equivalences. _This is crucial:_ equivalences can change a whole class of rules, automatically, and you won't see the pattern of the changes unless you see what equivalences were set.
 
-```Shell
+```shell
 semanage fcontext -l
 ```
 
 If you want to delete a rule, you have to know the exact string defining which files/folders that rule applies to (see above).
 
-```Shell
+```shell
 semanage fcontext -d /path/to/dir(./*)?
 ```
 
@@ -17,13 +17,13 @@ If you want to create a new rule, setting a specific tag or user (or object), yo
 
 If you want to set one directory's SELinux permisions rules equivalent to another (say, you want to set up a new location for the home directory and you don't want to manually adjust the hundreds of specific rules that apply to various files inside that dir), note that the second file is made dependent on the first file.
 
-```Shell
+```shell
 semanage fcontext -a -e /foo/xxx /bar/xxx
 ```
 
 After running any of these `semanage fcontext` commands, you'll want to use `restorecon` to apply the changes.  If the changes are widespread (or maybe follow some other similar criteria), you'll want to apply them to the whole system - which requires a reboot and an automatic process on the next startup. This just requires a file to be dropped in `/`; the startup process will check for it, and if found, will do a `restorecon` on the entire disk.
 
-```Shell
+```shell
 restorecon -v /directory/to/update
 
 touch /.autorelabel

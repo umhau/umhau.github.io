@@ -40,7 +40,7 @@ dependencies and configs
 
 As root, install packages and configure system. Note that 5GB is not enough for FreeBSD and XO.
 
-```Shell
+```shell
 su
 freebsd-update fetch
 freebsd-update install
@@ -52,12 +52,12 @@ pkg install jpeg-turbo optipng gifsicle
 
 We want to use GCC instead of CLANG.
 
-```Shell
+```shell
 ln -s /usr/bin/clang++ /usr/local/bin/g++
 ```
 
 Enable redis on boot, and start immediately.
-```Shell
+```shell
 echo 'redis_enable="YES"' >> /etc/rc.conf
 service redis start
 ```
@@ -67,7 +67,7 @@ get the code, modify and build
 
 Looks like we aren't totally free and clear when we use freebsd; the optional dependency `fsevents@1.2.13` failed the "compatibility check". Oh, well.  
 
-```Shell
+```shell
 git clone -b master http://github.com/vatesfr/xen-orchestra
 ```
 
@@ -75,7 +75,7 @@ There's a nag screen whenever you log into a built-from-source version of Xen Or
 
 Go [here](https://github.com/vatesfr/xen-orchestra/issues/4175#issuecomment-488320434), [here](https://github.com/FoxieHazmat/xenorchestraSourceBannerFix/issues/1) and [here](https://github.com/megabert/xenorchestraSourceBannerFix) for sources. Open the `xen-orchestra/packages/xo-web/src/xo-app/index.js` file, and find the following two code fragments and delete them:
 
-```Shell
+```shell
 nano xen-orchestra/packages/xo-web/src/xo-app/index.js
 ```
 
@@ -104,7 +104,7 @@ if (+process.env.XOA_PLAN === 5) {
 
 When you're done, make sure you're in the xen-orchestra directory and then build with yarn. Note, the last couple of commands take a while. Go get yourself a coffee while they run. (`&&` is excellent)
 
-```Shell
+```shell
 cd xen-orchestra
 yarn
 yarn build
@@ -112,7 +112,7 @@ yarn build
 
 Create and edit the configuration file for `xo-server`. There's the option to run the `xo-server` as a global service; since we're looking at running the whole thing as root, we might as well. 
 
-```Shell
+```shell
 cd packages/xo-server
 mkdir -p /etc/xo-server
 cp sample.config.toml /etc/xo-server/config.toml
@@ -120,13 +120,13 @@ cp sample.config.toml /etc/xo-server/config.toml
 
 Modify the config file to use a non-default port. Or not; it doesn't really matter. Default is 80, if you're feeling lazy.
 
-```Shell
+```shell
 vim /etc/xo-server/config.toml
 ```
 
 <!-- The line you're looking for is super simple. But the default is fine.
 
-```Shell
+```shell
 port = 80
 ``` -->
 
@@ -135,14 +135,14 @@ runit
 
 If you've made it this far without major errors, you should be able to just start it. Go back to the directory where you got the config file, and from there you can launch.  After launch, go to the ip address of the machine, at the port you specified in the config file - if you did it right, the website should be there: right at `192.168.1.xxx:80`, or whatever. Login defaults are username: `admin@admin.net`, password: `admin`. 
 
-```Shell
+```shell
 cd ~/xen-orchestra/packages/xo-server
 yarn start
 ```
 
 Make sure the website starts when the VM boots. So much easier that way. We can just do it the old-fashioned way with cron.
 
-```Shell
+```shell
 crontab -e
 # new entry: 
 @reboot cd /root/xen-orchestra/packages/xo-server && yarn start &

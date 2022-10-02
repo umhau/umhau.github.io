@@ -4,7 +4,7 @@ This is the source for my personal programming website.  There's a guide stashed
 
 Note: if git thinks tons of files have changed, you probably opened the folder in a windows machine. Use the following command to tell git it's all right. 
 
-```Shell
+```shell
 git config --global core.autocrlf input
 ```
 

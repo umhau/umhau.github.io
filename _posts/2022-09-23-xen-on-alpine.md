@@ -20,11 +20,11 @@ Anyway, Xen vms on Alpine. Start with a clean alpine installation, then enable t
 
 First become root. You should remain root for the duration of this walkthrough.
 
-```Shell
+```shell
 su
 ```
 
-```Shell
+```shell
 cat /etc/os-release
 
 repository_server="dl-cdn.alpinelinux.org"
@@ -35,14 +35,14 @@ echo "https://$repository_server/alpine/$alpine_version/main" > /etc/apk/reposit
 
 Install the hypervisor, and related packages.
 
-```Shell
+```shell
 apk add xen xen-hypervisor seabios xen-qemu # ovmf
 apk add grub grub-bios
 ```
 
 Load the necessary kernel modules.
 
-```Shell
+```shell
 echo "xen-netback" >> /etc/modules
 echo "xen-blkback" >> /etc/modules
 echo "tun" >> /etc/modules
@@ -50,7 +50,7 @@ echo "tun" >> /etc/modules
 
 And add the xen daemons.
 
-```Shell
+```shell
 rc-update add xenconsoled
 rc-update add xendomains
 rc-update add xenqemu
@@ -59,7 +59,7 @@ rc-update add xenstored
 
 Then reboot; because kernel mods don't immediately take effect, and those daemons haven't autostarted yet.
 
-```Shell
+```shell
 reboot
 ```
 
@@ -67,7 +67,7 @@ Now we get to do the tricky stuff: GRUB modifications. If you recall your Xen, y
 
 Add the following to the bottom of the grub config. Note that you may want to increase the size of the dom0 RAM; just change `1024M` to some larger number.
 
-```Shell
+```shell
 vim /etc/default/grub
 
 # You need to set the amount of RAM to allocate to the Dom0 Alpine install so that
@@ -80,7 +80,7 @@ GRUB_SAVEDEFAULT="true"
 
 Then apply the new config.
 
-```Shell
+```shell
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-set-default "$(grep ^menuentry /boot/grub/grub.cfg | grep Xen | cut -d \' -f 2 | head -1)"
 ```
@@ -91,21 +91,21 @@ One last thing. Do you plan to use more than 8 VMs? Probably. If so, be sure to 
 
 > In Alpine Linux, you will need to add the max_loop option to the loop module, then add the loop module to your initramfs. 
 
-```Shell
+```shell
 touch /etc/modprobe.d/loop.conf
 echo "options loop max_loop=32" > /etc/modprobe.d/loop.conf
 ```
 
 Then update the modules list and reboot.
 
-```Shell
+```shell
 mkinitfs
 reboot
 ```
 
 If you want to confirm that the dom0 management vm is running, execute this:
 
-```Shell
+```shell
 xl list
 ```
 

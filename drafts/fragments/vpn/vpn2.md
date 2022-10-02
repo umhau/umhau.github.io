@@ -25,7 +25,7 @@ install OpenBSD on the standalone machine
 
 After the initial installation, make sure you can install packages.
 
-```Shell
+```shell
 su
 fw_update
 export PKG_PATH=http://mirrors.mit.edu/pub/OpenBSD/$(uname -r)/packages/$(uname -m)/
