@@ -83,7 +83,14 @@ blockquote {
   font-style:italic;
 }
 
-code {
+/* 
+pre *:not(code) { color: red; }
+only matches when code is NOT a direct child of pre
+https://stackoverflow.com/q/20869061
+*/
+
+/* this is an inline code snippet */
+pre *:not(code) {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
@@ -93,7 +100,8 @@ code {
   border-radius:3px;
 }
 
-.highlight {
+/* this is a displayed code snippet */
+pre {
 
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
