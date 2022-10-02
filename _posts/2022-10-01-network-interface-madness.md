@@ -22,7 +22,7 @@ To solve the problem, I wrote a very ugly script. If you don't like it....well, 
 iface-groups -i eth -t 3
 ```
 
-The output is a little strange. The problem with the data involved is that it's inherently 2-dimensional; I want to know which interfaces are grouped together. That doesn't lend itself well to a linear output. So, on every sent to STDOUT, I'm printing a space-separated list of all interfaces that are connected on the same L2 network. For example:
+The output is a little strange. The problem with the data involved is that it's inherently 2-dimensional; I want to know which interfaces are grouped together. That doesn't lend itself well to a linear output. So, on every line sent to STDOUT, I'm printing a space-separated list of all interfaces that are connected on the same L2 network. For example:
 
 ```shell
 $ iface-groups -i eth -t 3
