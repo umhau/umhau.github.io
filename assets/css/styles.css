@@ -99,6 +99,9 @@ thing.
 /* this is an inline code snippet */
 /*
 pre *:not(code) {
+*/
+
+code {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
@@ -107,12 +110,15 @@ pre *:not(code) {
   background: #f8f8f8;
   border-radius:3px;
 }
-*/
 
-pre, code {
+
+pre code {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
+  
+  padding:none;
+  border-radius:none;
 }
 
 /* this is a displayed code snippet */
