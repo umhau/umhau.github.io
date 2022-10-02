@@ -69,7 +69,7 @@ openssl encryption -> cryptojs decryption
 openssl enc -aes-256-cbc -in file.txt -out file.enc -k password
 ```
 
-```Javascript
+```javascript
 fs.readFile('file.enc', function(err, data) {
   var salt          = data.toString("hex", 8, 16),
       enc           = data.toString("hex", 16, data.length),

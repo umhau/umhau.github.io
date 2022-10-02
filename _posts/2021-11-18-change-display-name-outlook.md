@@ -32,19 +32,19 @@ Update each user individually, of course, and tell each installation of outlook 
 
 Guess what: there's no central contacts list, and nobody uses a local contacts list - it's all just whatever is in the outlook cache. So how do we modify email account display names in the outlook cache?
 
-```PowerShell
+```powershell
 Start-Process -FilePath 'C:\Program Files (x86)\Microsoft Office\Office15\Outlook.exe' -ArgumentList '/cleanautocompletecache','/recycle'
 ```
 
 Not like that!
 
-```PowerShell
+```powershell
 Outlook.exe /CleanAutoCompleteCache
 ```
 
 Not like that, either.
 
-```PowerShell
+```powershell
 Start-Process -FilePath 'C:\Program Files\Microsoft Office\Office16\OUTLOOK.EXE' -ArgumentList '/cleanautocompletecache','/recycle'
 ```
 
@@ -52,7 +52,7 @@ Nope.
 
 ...3 hours later. 
 
-```PowerShell
+```powershell
 Start-Process -FilePath 'C:\Program Files\Microsoft Office\Office16\OUTLOOK.EXE' -ArgumentList '/cleanautocompletecache'
 ```
 
@@ -82,7 +82,7 @@ How does this compile?
 
 Word of advice: don't - ever - use [this](https://www.microsoft.com/en-us/p/csharp/9n4w6bhc0hml) abomination of a compiler. If you ever need to compile C# on Windows 10, then if you have `.NET` available (probably do), there's a compiler already installed at `C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe` (or somewhere similar: probably a different version number). Then it's just
 
-```PowerShell
+```powershell
 csc.exe somefile.cs
 ```
 
@@ -90,7 +90,7 @@ Wrong!
 
 In my-paths-are-screwed-up world, you'll actually have to do
 
-```PowerShell
+```powershell
 & 'C:\Windows\Microsoft.NET\Framework\v4.0.30319\csc.exe' somefile.cs
 ```
 

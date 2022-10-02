@@ -2,7 +2,7 @@ So if you know enough to recognize what a subnet mask is, I'd expect you to know
 
 First thing, export the current scope configuration. Windows is so well built, that you can't change the subnet mask without also rebuilding the scope from scratch! We shortcut (or just hack around) that process by doing some manual edits and then rebuilding the scope from this backup.
 
-```Powershell
+```powershell
 Export-DhcpServer -ComputerName HOSTNAME_OF_DHCP_SERVER -Leases -File C:\dhcp_export.xml -Verbose -ScopeId X.X.X.X
 ```
 
@@ -33,7 +33,7 @@ Personally, I'd be more comfortable knowing it's reversible. If you want to, try
 
 Then, reinstate the backup.
 
-```Powershell
+```powershell
 Import-DhcpServer -ComputerName HOSTNAME_OF_DHCP_SERVER -File C:\dhcp_export.xml -Verbose -ScopeId X.X.X.X -Lease -BackupPath C:\BkDHCP
 ```
 

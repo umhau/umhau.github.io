@@ -47,7 +47,7 @@ sudo arping -I wlp3s0 -f -c 1 192.168.1.14
 
 Note, though, that this will only get you the mac address for machines that are currently online. For the rest, go back to the windows server and run this command to dump the ARP table to a text file:
 
-```PowerShell
+```powershell
 ARP.EXE -a > mac_addresses
 ```
 

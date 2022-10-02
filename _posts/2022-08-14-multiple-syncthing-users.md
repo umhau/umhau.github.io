@@ -162,7 +162,7 @@ Now you'll have to modify several points in this (rather long) file. They will l
     port 8385
     port 21028
 
-```XML
+```xml
 <gui enabled="true" tls="true" debugging="false">
     <address>127.0.0.1:8384</address>
     <user>usr1</user>
@@ -170,7 +170,7 @@ Now you'll have to modify several points in this (rather long) file. They will l
 </gui>
 ```
 
-```XML
+```xml
 <options>
     <listenAddress>default</listenAddress>
     ⋮
@@ -182,7 +182,7 @@ Now you'll have to modify several points in this (rather long) file. They will l
 
 Alter the above to match the below. 
 
-```XML
+```xml
 <gui enabled="true" tls="true" debugging="false">
     <address>0.0.0.0:8385</address>
     <user>usr1</user>
@@ -192,7 +192,7 @@ Alter the above to match the below.
 
 The `0.0.0.0` indicates that we want to access the GUI from the rest of the local network; otherwise, we'd have to physically log into that machine running syncthing in order to get to the GUI.
 
-```XML
+```xml
 <options>
     <listenAddress>22001</listenAddress>
     ⋮

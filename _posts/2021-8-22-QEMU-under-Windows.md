@@ -23,7 +23,7 @@ Go to the [QEMU site](https://www.qemu.org/download/#windows) and [download](htt
 
 Once installed, add the QEMU installation location to the system path (this is temporary). (powershell only)
 
-```Powershell
+```powershell
 $env:Path += ";C:\Program Files\qemu"
 ```
 
@@ -31,7 +31,7 @@ $env:Path += ";C:\Program Files\qemu"
 
 This is the 'hard drive' you're installing the OS on. First you have to make it, then you can use it. I'm putting this drive in a subfolder of `My Documents` called `virtual_machines`.
 
-```Batch
+```batch
 cd Documents
 mkdir virtual_machines
 cd virtual_machines
@@ -47,7 +47,7 @@ I'm using Void Linux for the guest OS, so the file is downloaded from [here](htt
 
 Note the hardcoded values in the command below: 2G of RAM; the VM's name is `void_musl`; the name of the virtual disk file is `void.musl.img`. The values have been made consistent throughout this post, so copy-paste (shameful as that is) shouldn't break.
 
-```Batch
+```batch
 start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64.exe" -drive file=void.musl.img,index=0,media=disk,format=raw -cdrom void-live-x86_64-musl-20210218.iso -m 2G -L Bios -usbdevice mouse -usbdevice keyboard -boot menu=on -rtc base=localtime,clock=host -parallel none -serial none -name void_musl -no-acpi -no-hpet -no-reboot 
 ```
 
@@ -57,7 +57,7 @@ This will run the VM with a console (virtual monitor screen). To run it without 
 
 Once the VM has been set up, the day-to-day execution of the VM will use a slightly different command from that last one: specifically, the VM virtual HDD will be the boot disk, rather than the optical installation disk.
 
-```Batch
+```batch
 start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64w.exe" -drive file=void.musl.img,index=0,media=disk,format=raw -m 2G -L Bios -usbdevice mouse -usbdevice keyboard -boot menu=on -rtc base=localtime,clock=host -parallel none -serial none -name void_musl -no-acpi -no-hpet -no-reboot -device e1000,netdev=user.0 -netdev user,id=user.0,hostfwd=tcp::2222-:22
 ```
 
@@ -67,7 +67,7 @@ There's also an accelleration option. https://dev.to/whaleshark271/using-qemu-on
 
 When you're ready to streamline it, create a file named `void.bat` and put it in the same `virtual_machines` folder as everything else. Inside, put the following:
 
-```Batch
+```batch
 start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64w.exe" -drive file=void.musl.img,index=0,media=disk,format=raw -m 2G -L Bios -usbdevice mouse -usbdevice keyboard -boot menu=on -rtc base=localtime,clock=host -nographic -parallel none -serial none -name void_musl -no-acpi -no-hpet -no-reboot -device e1000,netdev=user.0 -netdev user,id=user.0,hostfwd=tcp::2222-:22
 ```
 
@@ -83,7 +83,7 @@ There's a special 'virtual' [version](https://alpinelinux.org/downloads/) of thi
 
 We don't need a lot of space here, so don't waste it. 1 GB should be enough.
 
-```Batch
+```batch
 cd Documents
 cd virtual_machines
 "C:\Program Files\qemu\qemu-img.exe" create alpine.img 1G
@@ -91,7 +91,7 @@ cd virtual_machines
 
 We're also going easy on the RAM allocation: 128M instead of 2G.
 
-```Batch
+```batch
 start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64.exe" ^
 -drive file=alpine.img,index=0,media=disk,format=raw ^
 -cdrom alpine-virt-3.14.2-x86_64.iso -m 128 -L Bios ^
@@ -102,7 +102,7 @@ start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64.exe" ^
 
 Alpine has a thing where by default, it won't let you ssh in as root with a mere password. Boot the newly installed OS once with graphics attached, then add another account that will let you ssh with a password.
 
-```Batch
+```batch
 start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64.exe" ^
 -drive file=alpine.img,index=0,media=disk,format=raw -m 128 -L Bios ^
 -usbdevice mouse -usbdevice keyboard -boot menu=on ^
@@ -116,7 +116,7 @@ start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64.exe" ^
 
 Once that's done, we don't need the graphic output anymore. Put the following into an `alpine.headless.bat` file, just as with the void linux example above.  After that, you can create a shortcut that gets shoved anywhere you like. 
 
-```Batch
+```batch
 start "QEMU" "C:\Program Files\qemu\qemu-system-x86_64w.exe" ^
 -drive file=alpine.img,index=0,media=disk,format=raw -m 128 -L Bios ^
 -usbdevice mouse -usbdevice keyboard -boot menu=on -nographic ^

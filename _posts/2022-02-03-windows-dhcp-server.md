@@ -34,7 +34,7 @@ doit
 
 Export the current scope. We're using `netsh` instead of `Export-DhcpServer`, because I've had situations in the past where I exported to both, but the import failed on the latter and succeeded on the former. Open powershell as an administrator.
 
-```PowerShell
+```powershell
 netsh.exe dhcp server \\DOMAIN_NAME scope 192.168.1.0 dump > C:\scope.txt
 ```
 
@@ -57,7 +57,7 @@ Once those changes are made, delete the scope from the DHCP manager. _(Yes, I kn
 
 Then add the new scope by inserting the modified backup. The fun thing is, we can just execute it as a series of `netsh` commands. _(and BTW, that is a weird rabbithole of a program)_  You probably had to save the modified script somewhere else, so change directories inside the cmd prompt first and then execute.
 
-```PowerShell
+```powershell
 cd C:\Users\admin\Documents\
 netsh.exe exec scope-modified.txt
 ```
