@@ -83,24 +83,6 @@ blockquote {
   font-style:italic;
 }
 
-/* 
-pre *:not(code) { color: red; }
-only matches when code is NOT a direct child of pre
-https://stackoverflow.com/q/20869061
-
-This lets us specify code formatting independently. In the generated html,
-inline snippets have the 'code' tag, while displayed snippets have a 'pre'
-wrapper around 'code'. 
-
-Code is apparently per-line. I want a nice border around the whole displayed
-thing.
-*/
-
-/* this is an inline code snippet */
-/*
-pre *:not(code) {
-*/
-
 code {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
@@ -129,10 +111,8 @@ pre {
   padding:8px 15px;
   background: #f8f8f8;
   
-  /* */
   border-radius:5px;
   border:1px solid #e5e5e5;
-  /* */
   
   overflow-x: auto;
 }
