@@ -10,14 +10,16 @@ tags:
 categories: walkthroughs
 ---
 
-Well, this was fun to write. I'm trying to do some server automation, and part of the process is automatically figuring out which network interfaces to bring up. You might say, _"that's easy! just run ifconfig and parse the results. Bing, bang, boom, done."_  But there's a few problems with that approach, and first among them is that we aren't assuming the existence of any kind of L3 network. In that case, how do you know which of your interfaces are on the same switch? What if the machine is on multiple L2 networks? What if you only care about infiniband interfaces, or want to ignore wifi? _What if there's no DHCP server?_
+Well, this was fun to write. I'm trying to do some server automation; part of the process is automatically figuring out which network interfaces are available, and on which networks. I have a machine with 4+ ports: I really don't want to go plugging and unplugging each one just to figure out which one is connected where.
+
+You might say, _"that's easy! just run ifconfig, get the subnet associated with each interface, and parse the results. Bing, bang, boom, done."_  But there's a few problems with that approach. First among them is that we aren't assuming the existence of any kind of L3 network. In that case, how do you know which of your interfaces are on the same switch? What if the machine is on multiple L2 networks? What if you only care about VPN interfaces, or want to ignore wifi? _What if there's no subnet?_
 
 Anyway, that's what I had to deal with.
 
-To solve the problem, I wrote a very ugly script. If you don't like it....well, constructive analysis always welcome. To use it, specify the _types_ of interfaces you want to analyze and about how much time it should take.
+To solve the problem, I wrote a very ugly script. If you don't like it....well, constructive analysis always welcome. Pull requests better still. To use it, specify the "types" of interfaces you want to analyze and about how much time it should take.
 
 ```shell
-iface-groups -i eth -i ib -t 3
+iface-groups -i eth -t 3
 ```
 
 The output is a little strange. The problem with the data involved is that it's inherently 2-dimensional; I want to know which interfaces are grouped together. That doesn't lend itself well to a linear output. So, on every sent to STDOUT, I'm printing a space-separated list of all interfaces that are connected on the same L2 network. For example:
