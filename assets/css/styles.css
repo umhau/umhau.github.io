@@ -83,7 +83,7 @@ blockquote {
   font-style:italic;
 }
 
-code, pre {
+code {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
@@ -96,6 +96,12 @@ code, pre {
 }
 
 pre {
+  all: unset;
+  
+  font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
+  color:#333;
+  font-size:12px;
+  
   padding:8px 15px;
   background: #f8f8f8;
   border-radius:5px;
