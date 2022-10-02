@@ -83,24 +83,25 @@ blockquote {
   font-style:italic;
 }
 
+/* this is an inline code snippet */
 code {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
   
-  padding:4px 8px;
+  padding:2px 4px 2px 4px;
   background: #f8f8f8;
   border:1px solid #e5e5e5;
   border-radius:3px;
 }
 
-
+/* this removes annoying things like borders from code that is going in a display */
 pre code {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
   font-size:12px;
   
-  padding:0px 0px;
+  padding:0px 0px 0px 0px;
   border-radius:none;
   border:none;
 }
