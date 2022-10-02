@@ -22,7 +22,7 @@ Download driver file here: https://github.com/virtio-win/virtio-win-pkg-scripts/
 create virtual hdd
     qemu-img create -f qcow2 WindowsVM.img 25G
 
-```Bash
+```bash
 #!/bin/sh
 exec qemu-system-x86_64 -enable-kvm \
         -cpu host \

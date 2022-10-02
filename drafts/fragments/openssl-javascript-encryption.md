@@ -18,7 +18,7 @@ encryptfile() {
 }
 ```
 
-```JavaScript
+```javascript
 <!DOCTYPE html>
 <html>
 
@@ -95,7 +95,7 @@ fs.readFile('file.enc', function(err, data) {
 cryptojs decryption -> openssl encryption
 -----------------------------------------
 
-```JavaScript
+```javascript
 fs.readFile('file.txt', function(err, data) {
   var encrypted = CryptoJS.AES.encrypt(data.toString(), password);
       buff      = new Buffer(encrypted.toString(), "base64");

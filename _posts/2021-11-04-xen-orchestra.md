@@ -79,13 +79,13 @@ Go [here](https://github.com/vatesfr/xen-orchestra/issues/4175#issuecomment-4883
 nano xen-orchestra/packages/xo-web/src/xo-app/index.js
 ```
 
-```JavaScript
+```javascript
 if (+process.env.XOA_PLAN === 5) {
     this.displayOpenSourceDisclaimer()
 }
 ```
 
-```JavaScript
+```javascript
 {plan === 'Community' && !this.state.dismissedSourceBanner && (
     <div className='alert alert-danger mb-0'>
         <a
