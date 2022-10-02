@@ -93,7 +93,7 @@ code {
   border-radius:3px;
 }
 
-pre code {
+.highlight {
 
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
