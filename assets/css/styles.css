@@ -97,6 +97,7 @@ thing.
 */
 
 /* this is an inline code snippet */
+/*
 pre *:not(code) {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
   color:#333;
@@ -106,6 +107,7 @@ pre *:not(code) {
   background: #f8f8f8;
   border-radius:3px;
 }
+*/
 
 code, pre {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
@@ -116,10 +118,6 @@ code, pre {
 /* this is a displayed code snippet */
 pre {
 
-  font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
-  color:#333;
-  font-size:12px;
-  
   padding:8px 15px;
   background: #f8f8f8;
   
