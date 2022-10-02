@@ -22,25 +22,25 @@ Figure out where the HDD is that's got the root filesystem of the hypervisor, an
 
 Open a terminal, and switch to root.
 
-```
+```sh
 sudo su root
 ```
 
 Once you're in a terminal, and you're inside the mounted drive, make sure you're in the right place. If you run the 
 
-```
+```sh
 pwd
 ```
 
 command, it should tell you where you are in the folder structure. It should be something like 
-```
+```sh
 /media/lvmdrive21/
 ```
 but it could vary. As above, check what the other folders in that directory look like to make sure you're in the right place.  You want to be in the _root directory_ of the busted server; that's really important and if you don't get that right then nothing will work and you're going to feel really bad.  
 
 Now you're ready for the fun stuff.  Note that as of this moment you have total root access to the data contained in the victim computer; you can do whatever you want, and I'm just pointing out one little nasty thing that could be done. 
 
-```
+```sh
 chroot .
 ```
 
@@ -48,20 +48,20 @@ This command _changes root_ so that after you run it, the shell you're in uses t
 
 Now you can run commands and the shell will look inside the filesystem of the _victim's drive_ for the wherewithall to execute them.  So, for instance, now you can run 
 
-```
+```sh
 cat /etc/passwd
 ```
 
 and instead of listing the users on your live usb (not that many there), it'll list the users on the victim's drive.  Let's back that file up, and /etc/shadow, which is where the verification hashes for the user passwords go.  
 
-```
+```sh
 cp /etc/passwd /root/
 cp /etc/shadow /root/
 ```
 
 Can you guess what happens next? Time to change the root password.
 
-```
+```sh
 passwd root
 ```
 

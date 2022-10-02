@@ -19,7 +19,7 @@ So after I gave myself access to that particular box, I went rooting through the
 
 I don't remember what the previous dude was looking for, but it was a situation where there's a file _somewhere_ on the system, buried in any number of layers of `/opt/usr/local/bin/local/tryagain/` system folders.
 
-```
+```bash
 find / . | grep "search term"
 ```
 

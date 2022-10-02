@@ -14,7 +14,7 @@ It's been a real pain to figure out how to mess with packages in Alpine Linux.
 
 Here's a quick overview of how to edit a preexisting package. 
 
-```
+```bash
 sudo apk add alpine-sdk
 git clone git://git.alpinelinux.org/aports 
 cd aports
@@ -22,19 +22,19 @@ cd aports
 
 Enter the subdirectory of the package you want to mess with.
 
-```
+```bash
 cd community/<pkg name>
 ```
 
 Now there's a file called APKBUILD in that directory. That file is a complete description of how to build and install a package.  To build the package as-is, run
 
-```
+```bash
 abuild -r
 ```
 
 If you make and adjustments -- e.g., change the version number -- you'll have to run
 
-```
+```bash
 abuild checksum
 ```
 

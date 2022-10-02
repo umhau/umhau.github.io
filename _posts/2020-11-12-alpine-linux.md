@@ -17,7 +17,7 @@ The [installation process](https://wiki.alpinelinux.org/wiki/Installation#3._Boo
 
 The disk image, optimized for virtual systems, weighs in at 39MB. After installation (ssh server included, just like the ubuntu variants), running 
 
-```
+```bash
 du -h -d 0 /
 ``` 
 
@@ -29,13 +29,13 @@ By the way: logging in as root over ssh with a password doesn't work. I was even
 
 Alternately, just create a new user after installation and use the new account for ssh access. 
 
-```
+```bash
 adduser myself
 ```
 
 Once logged in, you can easily switch to the root account.
 
-```
+```bash
 su
 ```
 
@@ -45,7 +45,7 @@ That command, in general, switches you to the specified account. If no argument 
 
 The shutdown command isn't used on Alpine. Instead, use:
 
-```
+```bash
 poweroff
 ```
 
@@ -53,6 +53,6 @@ poweroff
 
 Turns out, it doesn't come with man pages installed. Install them:
 
-```
+```bash
 apk add mandoc man-pages
 ```

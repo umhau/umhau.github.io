@@ -25,7 +25,7 @@ Obviously, there's going to be some trickery involved. Having multiple virtual c
 
 Instead, it looks like what xen does is allocate slices of time in a round-robin format: virtual machine A gets a few milliseconds of execution time, then virtual machine B gets a turn, and so on. This accomplishes the sharing -- it lets several virtual cores exist on the same physical core.  These timeslices measure the minimum time a VCPU is generally given every time it gets a turn on the physical core.  The variable is called `tslice_ms`, the units are milliseconds, and it can be adjusted at runtime with:
 
-```
+```bash
 xl sched-credit -s -t 10
 ``` 
 
@@ -35,7 +35,7 @@ Every time a new VCPU takes a turn on the physical core, the data needed by the 
 
 Similarly: different VCPUs can be given different priorities, and if a high priority VCPU wakes up and tries to interrupt a low-priority VCPU, then the low-priority VCPU will be interrupted before its timeslice is over. To maintain efficiency and prevent cores from wasting their preparation time, there is a bare minimum execution time guaranteed to every VCPU, regardless of priority. The default for this is 1000 microseconds, which is considered good.  The variable is called `ratelimit_us`, and the unit is microseconds. If it needs to be changed at runtime, the command is:
 
-```
+```bash
 xl sched-credit -s -r 1000
 ```
 
@@ -67,7 +67,7 @@ Clear as mud? Keep going.
 
 The weight assigned to a domain (read: virtual machine) can range from 1 to 65535. By default it's 256. 
 
-```
+```bash
 xl sched-credit -d [domain] -w [weight]
 ```
 
@@ -79,13 +79,13 @@ A domain with a weight of 200 will get twice as much time on the physical CPU as
 
 The cap ranges from 0 to 100, and represents the percent of the physical CPU's time that should be taken up by the particular domain / virtual machine / VCPU.  A 100 percent cap means the VCPU get's the whole core; 50 means the VCPU gets half the core; 0 is the default and means there's no cap.
 
-```
+```bash
 xl sched-credit -d [domain] -c [cap]
 ```
 
 You can view the current settings with:
 
-```
+```bash
 xl sched-credit
 ```
 
@@ -108,7 +108,7 @@ alpine standard                             19   256     1     -b----     152.1
 
 There's two commands you can use to get that list:
 
-```
+```bash
 list_domains
 xl list
 ```
@@ -132,43 +132,43 @@ Note: in order to actually set the parameters for the whole pool, you have to us
 
 Get the domain from the list.
 
-```
+```bash
 xl list
 ```
 
 Change the timeslice to something shorter - 5ms is good, 1ms might be better, depending. Remember to use `-s`.
 
-```
+```bash
 xl sched-credit -s -t 5
 ```
 
 Set the execution cap for the vm. Since this is relative to the speed of the physical core, check what that speed is:
 
-```
+```bash
 cat /proc/cpuinfo
 ```
 
 You want the line that says `cpu MHz`. That's the current speed. The `model name` line has a speed as well, but that's just the marketing.  I got:
 
-```
+```bash
 cpu MHz         : 3292.542
 ```
 
 Since I want to try and run my 'alpine standard' VM at 1GHz, the percent I need is:
 
-```
+```bash
 1 GHz / 3.293 GHz = 0.3037 = 30%
 ```
 
 Thus:
 
-```
+```bash
 xl sched-credit -d 'alpine standard' -c 30
 ```
 
 Done.  You can test it by spiking the CPU usage on the virtual machine; notice that on the VM, `htop` will show the usage at 100%, and XCP-ng Center will barely notice an uptick.  Spike the usage by copying a ton of zeros into 'nothing':
 
-```
+```bash
 dd if=/dev/zero of=/dev/null
 ```
 

@@ -47,7 +47,7 @@ Now we go through the steps that should be scripted, and run sequentially every 
 
 Identify the UUID of the virtual machine you created:
 
-```
+```bash
 xe vm-list
 ```
 
@@ -55,19 +55,19 @@ It may be useful to store that UUID in a file for easy access, since it'll be ne
 
 e.g.:
 
-```
+```bash
 echo "long-uuid-string" > vm-template.uuid
 ```
 
 And pull it into a variable again when needed:
 
-```
+```bash
 vm_template_uuid=`cat vm-template.uuid`
 ```
 
 Now we can create a new copy of the VM. There's two potential commands available: `vm-copy` and `vm-clone`. We want the former: it will copy an existing VM, but without using storage-level fast disk clone operation (even if this is available). The disk images of the copied VM are guaranteed to be 'full images' - i.e. not part of a CoW chain. 
 
-```
+```bash
 xe vm-copy new-name-label=<new name for the new VM> vm=<name or UUID of the copied VM>
 ```
 
@@ -83,7 +83,7 @@ It looks like the virtual disks on a xen server are some weird hybrid of files a
 
 In order to manipulate a virtual disk, an 'actual' file has to be created. This can be done by directly exporting it, which is relatively easy. 
 
-```
+```bash
 xe vm-export vm=<name-of-vm-get-it-from-the-console> filename=<output_file.xva>
 ```
 
@@ -110,7 +110,7 @@ However, if:
 
 then we can jot down the IP address of the initial template VM and it will be the same as the IP address for the new VM.  So go back to the template VM, start it up in xcp-ng center, open the console, get the ip address and shut it down again.
 
-```
+```bash
 ip address
 ```
 
@@ -120,13 +120,13 @@ Just for completeness, and because I'll probably need this method in the end any
 
 First, get the MAC address. This is hardware-defined, so we can ask xen for it; but you'll need the UUID of the VM. You saved it, right? (See above, when you made the copy.) 
 
-```
+```bash
 xe vm-vif-list vm=<UUID of the VM> | grep -Po 'MAC \( RO\): \K.*$'
 ```
 
 If there's multiple MAC addresses associated with the VM, you'll get more than one in the output. Once we have the MAC, we can search the local network for the IP address associated with that MAC address.  Note that your local network IP range might be different from the one here; however, the example below uses the most common range. If it's different, you'll probably know what should go instead. 
 
-```
+```bash
 nmap -sP 192.168.1.0/24 >/dev/null && arp -an | grep <mac address> | awk '{print $2}' | sed 's/[()]//g'
 ```
 
@@ -138,13 +138,13 @@ I don't yet have anything specific in mind; so I'm just going to provide two exa
 
 Upload a file into the VM:
 
-```
+```bash
 scp /local/path/to/file.txt root@<IP address>:/place/to/put/file/on/VM/
 ```
 
 Execute a command or run a script inside the VM. You can do as much as you can fit on a single line; but try to implement some error checking in case something fails.
 
-```
+```bash
 ssh root@<IP address> "set.sh;of.sh;commands.sh;to.sh;run.sh"
 ```
 

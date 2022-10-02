@@ -13,7 +13,7 @@ categories: memos
 
 Wish I'd known about this little gem years ago. When you can't get a disk to unmount, because it's 'busy', and you can't figure out what could possibly be occupying its attention, try this:
 
-```
+```bash
 lsof +D /dev/diskpartition
 ```
 

@@ -24,7 +24,7 @@ This works with a variety of RAID levels - and if your raid array is currently m
 
 If you ever want to see what's up with all your RAID arrays, use this command: 
 
-```
+```bash
 cat /proc/mdstat
 ```
 

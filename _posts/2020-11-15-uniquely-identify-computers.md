@@ -23,19 +23,19 @@ So, here's how to pull the hardware IDs for various components.
 
 **motherboard** requires a recent linux kernel. A virtual machine will present a faux ID to the guest OS.
 
-```
+```bash
 cat /sys/class/dmi/id/board_serial
 ```
 
 **MAC address** easily changed in software, but the original number remains constant.
 
-```
+```bash
 ifconfig -a | awk '/^[a-z]/ { iface=$1; mac=$NF; next } /inet addr:/ { print iface, mac }'
 ```
 
 **Hard drive serial number** will change every time you swap disks.  Don't forget to specify which device you want: `/dev/sdX`.
 
-```
+```bash
 udevadm info --query=all --name=/dev/sdX | grep ID_SERIAL
 ```
 

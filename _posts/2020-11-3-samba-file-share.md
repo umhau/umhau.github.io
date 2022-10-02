@@ -16,14 +16,14 @@ I've done this before, but it's super annoying and I keep forgetting how. So her
 
 I'm going to use Samba.  This is for my media collection, which I usually access either on the windows laptop or through VLC on my android phone. In both cases, SMB works far better than NFS. Note that there is a vast number of configurations that are possible; this setup is intended for sharing a folder to myself on a local network that isn't compromised, and where I don't mind anyone on the network accessing and modifying the files.
 
-```
+```bash
 su
 apt-get install samba smbclient samba-common
 ```
 
 Choose a folder to share. It's simpler, sometimes, to create a new folder somewhere out-of-the-way, that you can toss shared files into.  You could even share a mounted external drive this way.
 
-```
+```bash
 su
 mkdir -pv  /network/sambashare
 chmod -R 0775 /network/sambashare
@@ -32,7 +32,7 @@ chown -R nobody:nobody /network/sambashare
 
 Backup the samba configuration file before editing.  Always a nice practice.
 
-```
+```bash
 cp -v /etc/samba/smb.conf /etc/samba/smb.conf.bak
 su 
 nano /etc/samba/smb.conf
@@ -40,7 +40,7 @@ nano /etc/samba/smb.conf
 
 Inside smb.conf, put this new entry at the end of the file:
 
-```
+```bash
 [shared_folder] 
   path = /network/sambashare 
   writable = yes 

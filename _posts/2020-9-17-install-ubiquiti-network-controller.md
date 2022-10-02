@@ -17,7 +17,7 @@ The official docs are a royal pain, and didn't actually work that great when I t
 
 I used an ubuntu server virtual machine on my hypervisor for this. First step, `ssh` into that virtual machine. 
 
-```
+```sh
 ssh username@ip-address
 ```
 
@@ -27,7 +27,7 @@ Remember that IP address. You'll need it to access the controller interface when
 
 Install java.
 
-```
+```sh
 sudo apt-get update
 sudo apt-get install openjdk-8-jre-headless
 java -version
@@ -35,7 +35,7 @@ java -version
 
 Pull down the unifi package into the `/tmp/` folder and install it.
 
-```
+```sh
 cd /tmp/
 wget https://dl.ui.com/unifi/6.0.22/unifi_sysvinit_all.deb
 sudo apt-get install ./unifi_sysvinit_all.deb
@@ -44,26 +44,26 @@ cd
 
 When that finishes, the controller should be installed and working.  Access the network interface: 
 
-```
+```sh
 https://ip-address-of-server:8443
 ```
 
 ### Some useful commands
 
 To start UniFi if the webpage prompt does not appear:
-```
+```sh
 sudo service unifi start
 ```
 To stop the UniFi service:
-```
+```sh
 sudo service unifi stop
 ```
 To restart the UniFi service:
-```
+```sh
 sudo service unifi restart
 ```
 To see the status of UniFi service:
-```
+```sh
 sudo service unifi status
 ```
 

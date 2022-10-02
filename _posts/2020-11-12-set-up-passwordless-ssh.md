@@ -14,7 +14,7 @@ categories: walkthroughs
 
 Using ssh without a password involves encryption keys -- a public key and a private key -- to authenticate you. Those keys are usually stored in `~/.ssh/`. Though they can go anywhere else, too - just have to tell ssh where to find them.
 
-```
+```bash
 ~/.ssh/id_rsa
 ~/.ssh/id_rsa.pub
 ```
@@ -23,7 +23,7 @@ The contents of those keys are really simple, too.  One of them is the text repr
 
 For instance: I can create a new key really easily, with an empty password:
 
-```
+```bash
 ssh-keygen -N '' -f demokey
 ```
 
@@ -77,17 +77,17 @@ Good? Good.
 
 **On the laptop:** check to see if you've already got ssh keys generated in the default location, if not generate them, then open the public key and copy the contents, which will be moved (in a moment) over to the other computer.
 
-```
+```bash
 ls ~/.ssh/
 ```
 If you see a file named id_rsa, you're good. _If you do not see that file_, then run this command:
-```
+```bash
 ssh-keygen
 ```
 It will prompt you for a location - press enter to accept the default. It will ask you for a password - you don't want one, press enter to give an empty password.
 
 Now you have your keys.  Open the public key:
-```
+```bash
 cat ~/.ssh/id_rsa.pub
 ```
 Copy the contents.
@@ -96,16 +96,16 @@ Copy the contents.
 
 Get into the root account, then confirm.
 
-```
+```bash
 su
 whoami
 ```
 The result of the second command should be "root". If not, back up and make sure it is. Switch to the home folder of the root account.
-```
+```bash
 cd
 ```
 Now open the `authorized_keys` file and paste in the public key.
-```
+```bash
 nano /root/.ssh/authorized_keys
 ```
 Save and close nano with `CTRL+O` and `CTRL+X`. You're done! Try logging into the remote computer from the laptop with the public key you used, and it should put you right in without prompting. 
@@ -116,7 +116,7 @@ Be aware, it is very dangerous to allow root ssh; no password is needed after th
 
 Now that we've done the whole thing by hand, here's the shortcut (do this from the laptop):
 
-```
+```bash
 ssh-keygen  # if you haven't already
 ssh-copy-id root@<remote computer IP address>
 ```

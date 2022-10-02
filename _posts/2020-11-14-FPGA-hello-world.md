@@ -38,7 +38,7 @@ Create a new file, with the extension `.v` to hold the test code. It doesn't do 
 
 Put the following code in that file, and save it somewhere. I don't remember where I found this scrap, but I definitely didn't write it myself. I don't even know if it works the way it should - but it compiles, and it gets pushed to the FPGA, and the light blinks, so it does its job.
 
-```
+```vhdl
 module counter (clk, reset, enable, count);
 
 // (t9) turns on the LEDs, no oscillation

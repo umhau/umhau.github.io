@@ -18,13 +18,13 @@ So all the windows machines on the network slowly drifted out of sync with the r
 
 Do this in powershell. First make sure the machine has a list of time servers to synchronize from.
 
-```
+```bash
 w32tm /config /update /manualpeerlist:"0.pool.ntp.org,0x8 1.pool.ntp.org,0x8 2.pool.ntp.org,0x8 3.pool.ntp.org,0x8" /syncfromflags:MANUAL
 ```
 
 Then force windows to actually synchronize.
 
-```
+```bash
 w32tm /resync /force
 ```
 

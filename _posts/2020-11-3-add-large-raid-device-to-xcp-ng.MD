@@ -34,7 +34,7 @@ either be added to the new RAID device, or removed from the old one. e.g., "c e"
 corresponds to "/dev/sdc" and "/dev/sde". Be sure to include the quotation 
 marks.
 
-```
+```sh
 bash remove_raid_device.sh -m md0 -d "c e b d"
 bash raid-autoconf.sh -r 5 -m md0 -e ext4 -d "c e b d" -c 4
 ```
@@ -51,7 +51,7 @@ While the autoconf script created partitions on the constituents of the RAID
 device, the conglomerate does not have either a partition or a filesystem.  To
 create these, run another script:
 
-```
+```sh
 bash format_block_device.sh \
   -d /dev/xyz \
   -f ext4 \
@@ -72,7 +72,7 @@ virtual machines on, then the RAID device should be made into a storage
 repository.  This is the type of storage that can be managed within the 
 management consoles built for xen server. 
 
-```
+```sh
 xe sr-create \
     name-label=<Storage ID> \
     shared=false \
@@ -83,7 +83,7 @@ xe sr-create \
 
 The storage ID is the name you want to assign to the storage repository - for 
 example, 'raid_storage_1'.  The path of the storage device is something like 
-```
+```sh
 /dev/md0
 ```
 to use the example above.  After running that command, the storage 
@@ -113,13 +113,13 @@ through to the VM as a block device.
 Open the file with the related rules (which seems to manage what xen server does
 with attached block devices):
 
-```
+```sh
 nano /etc/udev/rules.d/65-md-incremental.rules
 ```
 
 And then, just before the end of the file, add these lines:
 
-```
+```sh
 # passthrough the RAID device md0 for attachment to VM
 KERNEL=="md0", SUBSYSTEM=="block", ACTION=="change", \
     SYMLINK+="xapi/block/%k", \
@@ -132,7 +132,7 @@ you're using; it's consistent with the previous examples where we're using
 
 The only line that follows the one you added should be this one:
 
-```
+```sh
 LABEL="md_end"
 ```
 
@@ -146,7 +146,7 @@ The autobuild script at the beginning of this post also formatted the drive and
 added it to be automatically mounted with fstab.  You'll have to undo that.  Go 
 into the fstab and remove the line referencing the /dev/md0 device.
 
-```
+```sh
 nano /etc/fstab
 ```
 
@@ -164,7 +164,7 @@ Once it's attached to the VM, enter the VM and figure out what the device is.
 Since the drive is new, there will not be a partition scheme on it yet. In that 
 case, use 
 
-```
+```sh
 parted -l | grep Error
 ```
 
@@ -173,7 +173,7 @@ they have no partitions. Once the `/dev/xyz` drive is identified, run the
 following script (again, inside the virtual machine) to format the drive and add
 it to fstab for automatic mounting. 
 
-```
+```sh
 bash format_block_device.sh \
   -d /dev/xyz \
   -f ext4 \
