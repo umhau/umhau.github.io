@@ -7,13 +7,9 @@ tags:
 - ip address
 - ipv4
 - ipv6
+- binary
 categories: memos
 ---
-
-
-
-
-
 
 IP range specifications are weird; they're actually binary, and we use something called 'dot decimal notation' and convert them to decimal to make them a bit easier to read. 
 
